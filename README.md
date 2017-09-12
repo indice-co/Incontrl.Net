@@ -1,2 +1,2 @@
 # Incontrl.Net
-Http client to use the https://incontrl.io RESt API from the dotnet ecosystem
+Http client to use the https://incontrl.io REST API from the dotnet ecosystem.
