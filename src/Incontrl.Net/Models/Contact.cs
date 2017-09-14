@@ -2,7 +2,7 @@
 
 namespace Incontrl.Net.Models
 {
-    public class ContactInfo
+    public class Contact
     {
         public Guid? Id { get; set; }
         public string Code { get; set; }
@@ -25,7 +25,7 @@ namespace Incontrl.Net.Models
         /// <summary>
         /// Primary address of the organisation.
         /// </summary>
-        public AddressInfo Address { get; set; }
+        public Address Address { get; set; }
 
         /// <summary>
         /// Phone1

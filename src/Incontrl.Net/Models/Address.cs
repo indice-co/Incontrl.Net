@@ -1,6 +1,6 @@
 ﻿namespace Incontrl.Net.Models
 {
-    public class AddressInfo
+    public class Address
     {
         /// <summary>
         /// A Name for the address.
@@ -21,14 +21,17 @@
         /// City
         /// </summary>
         public string City { get; set; }
+
         /// <summary>
         /// ZipCode
         /// </summary>
         public string ZipCode { get; set; }
+
         /// <summary>
         /// Country ISO code
         /// </summary>
         public string CountryCode { get; set; }
+
         /// <summary>
         /// Country info
         /// </summary>
@@ -38,6 +41,7 @@
                 return countryInfo?.Name;
             }
         }
+
         /// <summary>
         /// Phone1
         /// </summary>

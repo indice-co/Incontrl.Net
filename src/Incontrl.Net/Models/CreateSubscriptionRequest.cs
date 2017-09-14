@@ -1,35 +1,29 @@
-﻿using System;
-
-namespace Incontrl.Net.Models
+﻿namespace Incontrl.Net.Models
 {
-    public class SubscriptionInfo
+    /// <summary>
+    /// Request model for subscriptions.
+    /// </summary>
+    public class CreateSubscriptionRequest
     {
-        public Guid? Id { get; set; }
-
         /// <summary>
         /// Custom lookup key for this subscription.
         /// </summary>
         public string Code { get; set; }
 
         /// <summary>
-        /// Unique alias.
+        /// The company alias - future replacement for the subscriptionId.
         /// </summary>
         public string Alias { get; set; }
 
         /// <summary>
-        /// 
-        /// </summary>
-        public SubscriptionStatus Status { get; set; }
-
-        /// <summary>
         /// The company entity assosiated with the subscription.
         /// </summary>
-        public OrganisationInfo Company { get; set; }
+        public Organisation Company { get; set; }
 
         /// <summary>
         /// The primary contact for the subscription (billing info will be added at some point).
         /// </summary>
-        public ContactInfo Contact { get; set; }
+        public Contact Contact { get; set; }
 
         /// <summary>
         /// Notes about this subscription.

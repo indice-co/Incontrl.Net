@@ -4,7 +4,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Incontrl.Net.Services
+namespace Incontrl.Net.Http
 {
     public class JsonResponse<T>
     {

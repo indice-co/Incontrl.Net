@@ -1,14 +1,8 @@
 ﻿namespace Incontrl.Net.Models
 {
-    public enum SubscriptionStatus
+    public class SubscriptionStatus
     {
-        Enabled = 1,
-        Disabled = 2,
-        Deleted = 3
-    }
-
-    public class SubscriptionStatusInfo {
         public string Id { get; set; }
-        public SubscriptionStatus Status { get; set; }
+        public StatusOfSubscription Status { get; set; }
     }
 }
