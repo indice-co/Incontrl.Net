@@ -8,12 +8,12 @@
         public string Name { get; set; }
 
         /// <summary>
-        /// AddressLine 1 (max length = 500)
+        /// AddressLine 1 (max length = 500).
         /// </summary>
         public string Line1 { get; set; }
 
         /// <summary>
-        /// AddressLine 2 (max length = 500)
+        /// AddressLine 2 (max length = 500).
         /// </summary>
         public string Line2 { get; set; }
 
@@ -23,7 +23,7 @@
         public string City { get; set; }
 
         /// <summary>
-        /// ZipCode
+        /// Zip code
         /// </summary>
         public string ZipCode { get; set; }
 
@@ -33,14 +33,9 @@
         public string CountryCode { get; set; }
 
         /// <summary>
-        /// Country info
+        /// Country info.
         /// </summary>
-        public string Country {
-            get {
-                CountryInfo.TryGetCountryByNameOrCode(CountryCode, out var countryInfo);
-                return countryInfo?.Name;
-            }
-        }
+        public string Country { get; set; }
 
         /// <summary>
         /// Phone1
@@ -56,9 +51,5 @@
         /// Notes for the address (max length 500).
         /// </summary>
         public string Notes { get; set; }
-
-        public override string ToString() {
-            return Name ?? $"{Line1}, {ZipCode}, {City} {Country}".TrimEnd(' ', ',');
-        }
     }
 }

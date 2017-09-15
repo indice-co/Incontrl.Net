@@ -11,4 +11,11 @@
     {
         public const string Authority = "http://localhost:20200";
     }
+
+    public static class ValuePresets
+    {
+        public const string INVOICE_NUMBER_FORMAT = "{0:000000}";
+        public const string FALLBACK_CULTURE = "en-US";
+        public const string INVOICE_TEMPLATE_FILENAME_NAME = "invoice_template.docx";
+    }
 }

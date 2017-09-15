@@ -9,6 +9,7 @@ namespace Incontrl.Net.Services
 {
     public sealed class IncontrlClient
     {
+        // Private fields.
         private ClientBase _clientBase;
 
         /// <summary>
@@ -16,9 +17,8 @@ namespace Incontrl.Net.Services
         /// </summary>
         /// <param name="clientName">The name of the registered client.</param>
         /// <param name="clientSecret">The secret key of the client.</param>
-        public IncontrlClient(string clientName, string clientSecret, string apiVersion = null) {
+        public IncontrlClient(string clientName, string clientSecret, string apiVersion = null) =>
             _clientBase = new ClientBase(apiVersion == null ? Api.BaseAddress : $"{Api.BaseAddress}/{apiVersion}", clientName, clientSecret);
-        }
 
         #region Subscriptions
 
@@ -165,7 +165,7 @@ namespace Incontrl.Net.Services
 
         #endregion
 
-        #region Contacts
+        #region Invoices
 
         #region GET Operations
         /// <summary>
@@ -197,6 +197,164 @@ namespace Incontrl.Net.Services
         /// <returns>The task object representing the asynchronous operation.</returns>
         public async Task<JsonResponse<InvoiceStatus>> GetInvoiceStatusAsync(Guid subscriptionId, Guid invoiceId, CancellationToken cancellationToken = default(CancellationToken)) =>
             await _clientBase.GetAsync<InvoiceStatus>($"{Api.SubscriptionEndpointsPrefix}/{subscriptionId}/invoices/{invoiceId}/status", cancellationToken);
+
+        /// <summary>
+        /// Gets type information for a specified invoice.
+        /// </summary>
+        /// <param name="subscriptionId">The unique id of the subscription.</param>
+        /// <param name="invoiceId">The unique id of the invoice.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public async Task<JsonResponse<InvoiceType>> GetInvoiceTypeAsync(Guid subscriptionId, Guid invoiceId, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.GetAsync<InvoiceType>($"{Api.SubscriptionEndpointsPrefix}/{subscriptionId}/invoices/{invoiceId}/type", cancellationToken);
+        #endregion
+
+        #region POST Operations
+        /// <summary>
+        /// Creates a new invoice for a specified subscription.
+        /// </summary>
+        /// <param name="subscriptionId">The unique id of the subscription.</param>
+        /// <param name="invoice">An object of type <see cref="CreateInvoiceRequest"/> that contains information about the newly created invoice.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public async Task<JsonResponse<Invoice>> CreateInvoiceAsync(Guid subscriptionId, CreateInvoiceRequest invoice, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.PostAsync<CreateInvoiceRequest, Invoice>($"{Api.SubscriptionEndpointsPrefix}/{subscriptionId}/invoices", invoice, cancellationToken);
+        #endregion
+
+        #region PUT Operations
+        /// <summary>
+        /// Updates a specified invoice.
+        /// </summary>
+        /// <param name="subscriptionId">The unique id of the subscription.</param>
+        /// <param name="invoiceId">The unique id of the invoice.</param>
+        /// <param name="invoice">An object of type <see cref="UpdateInvoiceRequest"/> that contains information about the invoice to be updated.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public async Task<JsonResponse<Invoice>> UpdateInvoiceAsync(Guid subscriptionId, Guid invoiceId, UpdateInvoiceRequest invoice, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.PutAsync<UpdateInvoiceRequest, Invoice>($"{Api.SubscriptionEndpointsPrefix}/{subscriptionId}/invoices/{invoiceId}", invoice, cancellationToken);
+
+        /// <summary>
+        /// Changes the status of a specified invoice.
+        /// </summary>
+        /// <param name="subscriptionId">The unique id of the subscription.</param>
+        /// <param name="invoiceId">The unique id of the invoice.</param>
+        /// <param name="status">An object of type <see cref="UpdateInvoiceStatusRequest"/> that contains information about the status of the invoice to be updated.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public async Task<JsonResponse<InvoiceStatus>> UpdateInvoiceStatusAsync(Guid subscriptionId, Guid invoiceId, UpdateInvoiceStatusRequest status, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.PutAsync<UpdateInvoiceStatusRequest, InvoiceStatus>($"{Api.SubscriptionEndpointsPrefix}/{subscriptionId}/invoices/{invoiceId}/status", status, cancellationToken);
+
+        /// <summary>
+        /// Updates the type of a specified invoice.
+        /// </summary>
+        /// <param name="subscriptionId">The unique id of the subscription.</param>
+        /// <param name="invoiceId">The unique id of the invoice.</param>
+        /// <param name="type">An object of type <see cref="UpdateInvoiceTypeRequest"/> that contains information about the status of the invoice to be updated.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public async Task<JsonResponse<InvoiceType>> UpdateInvoiceTypeAsync(Guid subscriptionId, Guid invoiceId, UpdateInvoiceTypeRequest type, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.PutAsync<UpdateInvoiceTypeRequest, InvoiceType>($"{Api.SubscriptionEndpointsPrefix}/{subscriptionId}/invoices/{invoiceId}/type", type, cancellationToken);
+        #endregion
+
+        #region DELETE Operations
+        /// <summary>
+        /// Deletes the specified invoice.
+        /// </summary>
+        /// <param name="subscriptionId">The unique id of the subscription.</param>
+        /// <param name="invoiceId">The unique id of the invoice.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public async Task<JsonResponse<bool>> DeleteInvoiceAsync(Guid subscriptionId, Guid invoiceId, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.DeleteAsync<bool>($"{Api.SubscriptionEndpointsPrefix}/{subscriptionId}", cancellationToken);
+        #endregion
+
+        #endregion
+
+        #region Invoice Types
+
+        #region GET Operations
+        /// <summary>
+        /// Gets the invoice types for a specified subscription.
+        /// </summary>
+        /// <param name="subscriptionId">The unique id of the subscription.</param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public async Task<JsonResponse<ResultSet<SubscriptionInvoiceType>>> GetInvoiceTypesAsync(Guid subscriptionId, ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.GetAsync<ResultSet<SubscriptionInvoiceType>>($"{Api.SubscriptionEndpointsPrefix}/{subscriptionId}/invoice-types", options, cancellationToken);
+
+        /// <summary>
+        /// Gets a specific invoice type by using it's id.
+        /// </summary>
+        /// <param name="subscriptionId">The unique id of the subscription.</param>
+        /// <param name="invoiceTypeId">The unique id of the invoice type.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public async Task<JsonResponse<SubscriptionInvoiceType>> GetInvoiceTypeByIdAsync(Guid subscriptionId, Guid invoiceTypeId, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.GetAsync<SubscriptionInvoiceType>($"{Api.SubscriptionEndpointsPrefix}/{subscriptionId}/invoice-types/{invoiceTypeId}", cancellationToken);
+        #endregion
+
+        #region POST Operations
+        /// <summary>
+        /// Creates a new invoice type for the specified subscription.
+        /// </summary>
+        /// <param name="subscriptionId">The unique id of the subscription.</param>
+        /// <param name="invoiceType">An object of type <see cref="CreateInvoiceTypeRequest"/> that contains information about the newly created invoice type.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public async Task<JsonResponse<SubscriptionInvoiceType>> CreateInvoiceTypeAsync(Guid subscriptionId, CreateInvoiceTypeRequest invoiceType, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.PostAsync<CreateInvoiceTypeRequest, SubscriptionInvoiceType>($"{Api.SubscriptionEndpointsPrefix}/{subscriptionId}/invoice-types", invoiceType, cancellationToken);
+        #endregion
+
+        #region PUT Operations
+        /// <summary>
+        /// Updates a specific invoice type by it's id.
+        /// </summary>
+        /// <param name="subscriptionId">The unique id of the subscription.</param>
+        /// <param name="invoiceTypeId">The unique id of the invoice type.</param>
+        /// <param name="invoiceType"></param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public async Task<JsonResponse<Invoice>> UpdateInvoiceTypeAsync(Guid subscriptionId, Guid invoiceTypeId, UpdateSubscriptionInvoiceTypeRequest invoiceType, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.PutAsync<UpdateSubscriptionInvoiceTypeRequest, Invoice>($"{Api.SubscriptionEndpointsPrefix}/{subscriptionId}/invoices/{invoiceTypeId}", invoiceType, cancellationToken);
+        #endregion
+
+        #region DELETE Operations
+        /// <summary>
+        /// Deletes a specific invoice type by it's id.
+        /// </summary>
+        /// <param name="subscriptionId">The unique id of the subscription.</param>
+        /// <param name="invoiceTypeId">The unique id of the invoice type.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public async Task<JsonResponse<bool>> DeleteInvoiceTypeAsync(Guid subscriptionId, Guid invoiceTypeId, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.DeleteAsync<bool>($"{Api.SubscriptionEndpointsPrefix}/{subscriptionId}/invoice-types/{invoiceTypeId}", cancellationToken);
+        #endregion
+
+        #endregion
+
+        #region Organisations
+
+        #region GET Operations
+        /// <summary>
+        /// Gets a list of all organisations of a subscription.
+        /// </summary>
+        /// <param name="subscriptionId">The unique id of the subscription.</param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public async Task<JsonResponse<ResultSet<Organisation>>> GetOrganisationsAsync(Guid subscriptionId, ListOptions<OrganisationFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.GetAsync<ResultSet<Organisation>>($"{Api.SubscriptionEndpointsPrefix}/{subscriptionId}/organisations", options, cancellationToken);
+
+        /// <summary>
+        /// Gets an organisation by it's unique id.
+        /// </summary>
+        /// <param name="subscriptionId">The unique id of the subscription.</param>
+        /// <param name="organisationId">The unique id of the organisation.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public async Task<JsonResponse<Organisation>> GetOrganisationByIdAsync(Guid subscriptionId, Guid organisationId, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.GetAsync<Organisation>($"{Api.SubscriptionEndpointsPrefix}/{subscriptionId}/organisations/{organisationId}", cancellationToken);
         #endregion
 
         #endregion

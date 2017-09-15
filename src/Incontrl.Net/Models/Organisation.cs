@@ -11,7 +11,6 @@ namespace Incontrl.Net.Models
         /// <summary>
         /// Short code for the organisation (max length 6).
         /// </summary>
-        /// 
         public string Code { get; set; }
 
         /// <summary>
