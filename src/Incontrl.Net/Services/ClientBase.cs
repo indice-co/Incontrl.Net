@@ -131,9 +131,9 @@ namespace Incontrl.Net.Services
                 BaseAddress = new Uri(address)
             };
 
-            var discoveryResponse = await DiscoveryClient.GetAsync(IdentityServerConstants.Authority);
+            var discoveryResponse = await DiscoveryClient.GetAsync(IdentityServerConstants.AUTHORITY);
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, clientName, clientSecret);
-            var tokenResponse = await tokenClient.RequestClientCredentialsAsync(Api.ResourceName);
+            var tokenResponse = await tokenClient.RequestClientCredentialsAsync(Api.RESOURCE_NAME);
 
             if (tokenResponse.IsError) {
                 // We need to handle this properly.

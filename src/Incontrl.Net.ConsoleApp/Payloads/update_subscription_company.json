@@ -1,0 +1,37 @@
+﻿{
+  "address": {
+    "city": "Athens",
+    "country": "Greece",
+    "countryCode": "GR",
+    "line1": "Kimothois 332",
+    "name": "Primary",
+    "zipCode": "11146"
+  },
+  "currencyCode": "EUR",
+  "email": "contact@acme.com",
+  "legalName": "Asimakis Stavropoulos",
+  "lineOfBusiness": "Finance & Administration Services",
+  "logoPath": "http://graph.facebook.com/557074234/picture?type=square&type=normal",
+  "name": "Asimakis Stavropoulos",
+  "paymentMethods": [
+    {
+      "code": "1",
+      "description": "GRXX 0XX0 0X00 0000 0X0X XXXX XXX",
+      "name": "Alpha Bank"
+    },
+    {
+      "code": "2",
+      "description": "GRXX 0XX0 0X00 0000 0X0X XXXX XXX",
+      "name": "National Bank of Greece"
+    },
+    {
+      "code": "3",
+      "description": "https://paypal.link?paymentcode={0}",
+      "name": "Paypal",
+      "type": "Online"
+    }
+  ],
+  "taxCode": "EL000000024",
+  "taxOffice": "Galatsiou",
+  "website": "http://www.acme.com"
+}

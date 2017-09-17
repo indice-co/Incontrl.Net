@@ -1,0 +1,124 @@
+﻿{
+  "lines": [
+    {
+      "description": "Software development services",
+      "product": {
+        "id": "44ab7635-61dc-42ee-bf5c-f8717279ba2e",
+        "taxes": []
+      },
+      "quantity": 1,
+      "taxes": [
+        {
+          "isSalesTax": true,
+          "name": "ΦΠΑ",
+          "rate": 0.24
+        },
+        {
+          "inclusive": true,
+          "name": "ΕΦΚΑ",
+          "rate": -0.0922
+        },
+        {
+          "inclusive": true,
+          "name": "ΦΟΡ. ΠΑΡΑΚ.",
+          "rate": -0.2
+        }
+      ],
+      "unitAmount": 1000
+    },
+    {
+      "description": "Software support services",
+      "product": {
+        "amount": 10,
+        "id": "a330a25e-ea4f-49a1-979e-be353d705ab8",
+        "name": "Software support services",
+        "taxes": [
+          {
+            "isSalesTax": true,
+            "name": "ΦΠΑ",
+            "rate": 0.24
+          },
+          {
+            "inclusive": true,
+            "name": "ΕΦΚΑ",
+            "rate": -0.0922
+          },
+          {
+            "inclusive": true,
+            "name": "ΦΟΡ. ΠΑΡΑΚ.",
+            "rate": -0.2
+          }
+        ]
+      },
+      "quantity": 1,
+      "taxes": [
+        {
+          "name": "ΦΠΑ",
+          "rate": 0.24,
+          "isSalesTax": true
+        },
+        {
+          "name": "ΕΦΚΑ",
+          "rate": -0.0922,
+          "inclusive": true
+        },
+        {
+          "name": "ΦΟΡ. ΠΑΡΑΚ.",
+          "rate": -0.2,
+          "inclusive": true
+        }
+      ],
+      "unitAmount": 600
+    },
+    {
+      "description": "Design services",
+      "discountRate": 0.05,
+      "quantity": 4,
+      "taxes": [
+        {
+          "isSalesTax": true,
+          "name": "ΦΠΑ",
+          "rate": 0.24
+        },
+        {
+          "inclusive": true,
+          "name": "ΕΦΚΑ",
+          "rate": -0.0922
+        },
+        {
+          "inclusive": true,
+          "name": "ΦΟΡ. ΠΑΡΑΚ.",
+          "rate": -0.2
+        }
+      ],
+      "unitAmount": 350
+    }
+  ],
+  "recipient": {
+    "contact": {
+      "firstName": "Petroula",
+      "lastName": "Nounou"
+    },
+    "organisation": {
+      "address": {
+        "city": "Athens",
+        "country": "Greece",
+        "countryCode": "GR",
+        "line1": "Iakchou 22",
+        "phone1": "+302106985955",
+        "zipCode": "11854"
+      },
+      "currencyCode": "EUR",
+      "email": "info@indice.gr",
+      "legalName": "ΙΝΝΤΑΙΣ ΟΕ||Indice",
+      "lineOfBusiness": "Independent software vendor (ISV)",
+      "name": "Indice",
+      "paymentMethods": [],
+      "taxCode": "EL998132816",
+      "taxOffice": "ST' Athinon",
+      "website": "www.indice.gr"
+    }
+  },
+  "serverCalculations": true,
+  "status": "Paid"
+}

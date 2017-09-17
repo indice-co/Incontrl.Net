@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Incontrl.Net.Models
 {
@@ -43,7 +42,7 @@ namespace Incontrl.Net.Models
         /// <summary>
         /// Default currency code for the organisation.
         /// </summary>
-        public string CurrencyCode { get; set; } = "EUR";
+        public string CurrencyCode { get; set; }
 
         /// <summary>
         /// Primary address of the organisation
@@ -65,12 +64,6 @@ namespace Incontrl.Net.Models
         /// </summary>
         public string Notes { get; set; }
 
-        [JsonIgnore]
-        public string CustomDataJson {
-            get => CustomData != null ? JsonConvert.SerializeObject(CustomData) : null;
-            set => CustomData = value != null ? JsonConvert.DeserializeObject(value) : null;
-        }
-
         /// <summary>
         /// additional/custom information for the organisation
         /// </summary>
@@ -79,6 +72,6 @@ namespace Incontrl.Net.Models
         /// <summary>
         /// This is for keeping track of the available methods for the company to recieve payment.
         /// </summary>
-        public ICollection<PaymentOption> PaymentMethods { get; set; } = new List<PaymentOption>();
+        public ICollection<PaymentOption> PaymentMethods { get; set; }
     }
 }

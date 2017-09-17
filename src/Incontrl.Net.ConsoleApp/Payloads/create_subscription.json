@@ -1,0 +1,48 @@
+﻿{
+  "code": "my-sandbox-01",
+  "company": {
+    "address": {
+      "city": "Athens",
+      "country": "Greece",
+      "countryCode": "GR",
+      "line1": "Kimothois 332",
+      "name": "Primary",
+      "zipCode": "11146"
+    },
+    "currencyCode": "EUR",
+    "email": "info@acme.gr",
+    "legalName": "Makis Stavropoulos",
+    "lineOfBusiness": "Finance & Administration Services",
+    "logoPath": "http://graph.facebook.com/557074234/picture?type=square&type=normal",
+    "name": "Makis Stavropoulos",
+    "paymentMethods": [
+      {
+        "code": "1",
+        "description": "GRXX 0XX0 0X00 0000 0X0X XXXX XXX",
+        "name": "Alpha Bank"
+      },
+      {
+        "code": "2",
+        "description": "GRXX 0XX0 0X00 0000 0X0X XXXX XXX",
+        "name": "Eurobank"
+      },
+      {
+        "code": "3",
+        "description": "https://paypal.link?paymentcode={0}",
+        "name": "Paypal",
+        "type": "Online"
+      }
+    ],
+    "taxCode": "EL000000024",
+    "taxOffice": "Galatsiou",
+    "website": "www.acme.gr"
+  },
+  "contact": {
+    "email": "makis@acme.gr",
+    "firstName": "Makis",
+    "lastName": "Stavropoulos",
+    "phone1": "+306900000000",
+    "skype": "summon"
+  },
+  "type": "Basic"
+}
