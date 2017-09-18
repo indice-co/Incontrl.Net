@@ -196,8 +196,8 @@ namespace Incontrl.Net.Services
         /// <param name="format"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<JsonResponse<InvoiceDocument>> GetInvoiceByIdAsync(Guid subscriptionId, Guid invoiceId, InvoiceFormat format, CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.GetAsync<InvoiceDocument>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{subscriptionId}/invoices/{invoiceId}", new { format = "pdf" }, cancellationToken);
+        public async Task<FileResult> GetInvoiceByIdAsync(Guid subscriptionId, Guid invoiceId, InvoiceFormat format, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.GetStreamAsync($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{subscriptionId}/invoices/{invoiceId}", new { format = "pdf" }, cancellationToken);
 
         /// <summary>
         /// Gets the status of a specific invoice.
@@ -303,6 +303,16 @@ namespace Incontrl.Net.Services
         /// <returns>The task object representing the asynchronous operation.</returns>
         public async Task<JsonResponse<SubscriptionInvoiceType>> GetInvoiceTypeByIdAsync(Guid subscriptionId, Guid invoiceTypeId, CancellationToken cancellationToken = default(CancellationToken)) =>
             await _clientBase.GetAsync<SubscriptionInvoiceType>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{subscriptionId}/invoice-types/{invoiceTypeId}", cancellationToken);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subscriptionId"></param>
+        /// <param name="invoiceTypeId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<FileResult> GetInvoiceTypeTemplateAsync(Guid subscriptionId, Guid invoiceTypeId, CancellationToken cancellationToken = default(CancellationToken)) => 
+            await _clientBase.GetStreamAsync($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{subscriptionId}/invoice-types/{invoiceTypeId}/template", cancellationToken);
         #endregion
 
         #region POST Operations
@@ -315,6 +325,18 @@ namespace Incontrl.Net.Services
         /// <returns>The task object representing the asynchronous operation.</returns>
         public async Task<JsonResponse<SubscriptionInvoiceType>> CreateInvoiceTypeAsync(Guid subscriptionId, CreateInvoiceTypeRequest invoiceType, CancellationToken cancellationToken = default(CancellationToken)) =>
             await _clientBase.PostAsync<CreateInvoiceTypeRequest, SubscriptionInvoiceType>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{subscriptionId}/invoice-types", invoiceType, cancellationToken);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subscriptionId"></param>
+        /// <param name="invoiceTypeId"></param>
+        /// <param name="fileContent"></param>
+        /// <param name="fileName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateInvoiceTypeTemplateAsync(Guid subscriptionId, Guid invoiceTypeId, byte[] fileContent, string fileName, CancellationToken cancellationToken = default(CancellationToken)) => 
+            await _clientBase.PostFileAsync($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{subscriptionId}/invoice-types/{invoiceTypeId}/template", fileContent, fileName, cancellationToken);
         #endregion
 
         #region PUT Operations

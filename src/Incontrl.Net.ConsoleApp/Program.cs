@@ -16,7 +16,10 @@ namespace Incontrl.Net.ConsoleApp
         }
 
         public static void Main(string[] args) {
-            var subscriptionId = Guid.Parse("EFBB4655-27C1-47C8-8840-F65FE58A4793");
+            // Remember to change these when you create new items.
+            var subscriptionId = Guid.Parse("570B8D08-7F9E-4E04-86B8-7CBFD3817F99");
+            var invoiceId = Guid.Parse("C1B9A211-E61C-4192-BCE2-08D4FE7A289C");
+            var invoiceTypeId = Guid.Parse("5F06D184-FBED-4AAE-D3BB-08D4FE79D1C5");
 
             // Example 01 - Create a new subscription.
             //CreateSubscription();
@@ -35,7 +38,16 @@ namespace Incontrl.Net.ConsoleApp
             //})).Result;
 
             // Example 05 - Create a new invoice.
-            CreateInvoice(subscriptionId);
+            //CreateInvoice(subscriptionId);
+
+            // Example 06 - Get an invoice by id.
+            //var invoice = Task.Run(() => _incontrlClient.GetInvoiceByIdAsync(subscriptionId, invoiceId, InvoiceFormat.Pdf)).Result;
+
+            // Example 07 - Get invoice type template.
+            //var template = Task.Run(() => _incontrlClient.GetInvoiceTypeTemplateAsync(subscriptionId, invoiceTypeId)).Result;
+
+            // Example 08 - Update invoice type template
+            UpdateInvoiceTemplate(subscriptionId, invoiceTypeId);
 
             Console.ReadLine();
         }
@@ -67,6 +79,16 @@ namespace Incontrl.Net.ConsoleApp
                 var createInvoiceJson = File.ReadAllText(createInvoiceJsonPath);
                 var newInvoice = JsonConvert.DeserializeObject<CreateInvoiceRequest>(createInvoiceJson);
                 var createdInvoice = Task.Run(() => _incontrlClient.CreateInvoiceAsync(subscriptionId, newInvoice)).Result;
+            }
+        }
+
+        private static void UpdateInvoiceTemplate(Guid subscriptionId, Guid InvoiceTypeId) {
+            var newTemplateFilePath = Path.Combine(Environment.CurrentDirectory, @"Templates\new-invoice-template.docx");
+
+            if (File.Exists(newTemplateFilePath)) {
+                var fileContent = File.ReadAllBytes(newTemplateFilePath);
+                var fileName = Path.GetFileName(newTemplateFilePath);
+                var isSuccessful = Task.Run(() => _incontrlClient.UpdateInvoiceTypeTemplateAsync(subscriptionId, InvoiceTypeId, fileContent, fileName)).Result;
             }
         }
     }
