@@ -10,8 +10,8 @@ namespace Incontrl.Net.Types
     {
         public class Sorting
         {
-            const string ASC = nameof(ASC);
-            const string DESC = nameof(DESC);
+            internal const string ASC = nameof(ASC);
+            internal const string DESC = nameof(DESC);
             public string Path { get; set; }
             public string Direction { get; set; }
             public override string ToString() => $"{Path} ({Direction})";
@@ -64,6 +64,15 @@ namespace Incontrl.Net.Types
 
                 yield return Sorting.Parse(item);
             }
+        }
+
+        public void SortBy(string path, string direction) {
+            var list = GetSortings().ToList();
+            list.Add(new Sorting {
+                Path = path,
+                Direction = Sorting.DESC.Equals(direction, StringComparison.InvariantCultureIgnoreCase) ? Sorting.DESC : Sorting.ASC
+            });
+            Sort = string.Join(",", list);
         }
 
         public virtual IDictionary<string, object> ToDictionary() {
