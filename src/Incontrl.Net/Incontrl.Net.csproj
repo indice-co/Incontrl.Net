@@ -13,17 +13,16 @@
   <PropertyGroup Label="Package">
     <PackageId>Incontrl.Net</PackageId>
     <PackageTags>incontrl;incontrl.io;http client</PackageTags>
-    <PackageReleaseNotes>
-      Re-organise project structure
-    </PackageReleaseNotes>
+    <PackageReleaseNotes>Re-organise project structure
+</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/indice-co/Incontrl.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/indice-co/Incontrl.Net/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/indice-co/Incontrl.Net</RepositoryUrl>
     <Company>Indice</Company>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="2.11.0" />
+    <PackageReference Include="IdentityModel" Version="2.12.0" />
   </ItemGroup>
 </Project>
