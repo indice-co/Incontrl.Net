@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Incontrl.Net.Experimental;
 using Incontrl.Net.Types;
 using Xunit;
@@ -14,7 +12,7 @@ namespace Incontrl.Net.Tests
             var api = default(ICoreApi);
 
             var options = new ListOptions();
-                options.GetSortings()
+            options.GetSortings();
             //api.LoginAsync(authorizationCode); // client credentials
             //api.LoginAsync(); // client credentials
             //api.LoginAsync(refreshToken); // with refresh token

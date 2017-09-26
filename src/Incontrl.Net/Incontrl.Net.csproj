@@ -4,7 +4,7 @@
     <Copyright>Copyright (c) 2017 Indice</Copyright>
     <VersionPrefix>1.0.0</VersionPrefix>
     <VersionSuffix>beta3</VersionSuffix>
-    <Authors>c.leftheris</Authors>
+    <Authors>c.leftheris, giorgos07</Authors>
     <TargetFrameworks>netstandard2.0;</TargetFrameworks>
     <AssemblyTitle>Incontrl.Net</AssemblyTitle>
     <AssemblyName>Incontrl.Net</AssemblyName>
@@ -14,9 +14,8 @@
     <PackageId>Incontrl.Net</PackageId>
     <PackageTags>incontrl;incontrl.io;http client</PackageTags>
     <PackageReleaseNotes>
-      Minor glitch.
+      Re-organise project structure
     </PackageReleaseNotes>
-    <!--PackageIconUrl>https://github.com/indice-co/Incontrl.Net/blob/master/design/icon-128.png?raw=true</PackageIconUrl-->
     <PackageProjectUrl>https://github.com/indice-co/Incontrl.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/indice-co/Incontrl.Net/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
