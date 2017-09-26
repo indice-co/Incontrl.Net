@@ -3,7 +3,7 @@
 namespace Incontrl.Net.Models
 {
     /// <summary>
-    /// Message  to update an existing invoice
+    /// Message  to update an existing invoice.
     /// </summary>
     public class UpdateInvoiceRequest
     {

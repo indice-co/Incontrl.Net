@@ -18,9 +18,9 @@ namespace Incontrl.Net.Services
         protected static HttpClient _client;
         private static string AccessToken { get; set; }
 
-        public ClientBase(string address, string clientName, string clientSecret) : this(address, clientName, clientSecret, new HttpClientHandler()) { }
+        public ClientBase(string address, string clientName, string clientSecret, string userName, string password) : this(address, clientName, clientSecret, userName, password, new HttpClientHandler()) { }
 
-        public ClientBase(string address, string clientName, string clientSecret, HttpMessageHandler innerHttpClientHandler) {
+        public ClientBase(string address, string clientName, string clientSecret, string userName, string password, HttpMessageHandler innerHttpClientHandler) {
             if (address == null) {
                 throw new ArgumentNullException(nameof(address));
             }
@@ -29,8 +29,10 @@ namespace Incontrl.Net.Services
                 throw new ArgumentNullException(nameof(innerHttpClientHandler));
             }
 
-            _client = _client ?? Task.Run(() => CreateHttpClientAsync(address, clientName, clientSecret, innerHttpClientHandler)).Result;
+            _client = _client ?? Task.Run(() => CreateHttpClientAsync(address, clientName, clientSecret, userName, password, innerHttpClientHandler)).Result;
         }
+
+        ~ClientBase() => _client?.Dispose();
 
         public async Task<JsonResponse<TResponse>> GetAsync<TResponse>(string requestUri, object query = null, CancellationToken cancellationToken = default(CancellationToken)) {
             var queryString = string.Empty;
@@ -90,15 +92,13 @@ namespace Incontrl.Net.Services
             return response;
         }
 
-        public async Task<bool> PostFileAsync(string requestUri, byte[] fileContent, string fileName, CancellationToken cancellationToken = default(CancellationToken)) {
+        public async Task PostFileAsync(string requestUri, byte[] fileContent, string fileName, CancellationToken cancellationToken = default(CancellationToken)) {
             using (var formDataContent = new MultipartFormDataContent("upload-" + Guid.NewGuid().ToString().ToLower())) {
                 var streamContent = new StreamContent(new MemoryStream(fileContent));
-                streamContent.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+                var fileExtension = Path.GetExtension(fileName);
+                streamContent.Headers.ContentType = new MediaTypeHeaderValue(GetMimeTypeFromExtension(fileExtension));
                 formDataContent.Add(streamContent, "file", fileName);
-                var httpMessage = await _client.PostAsync(requestUri, formDataContent, cancellationToken).ConfigureAwait(false);
-                var content = await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                return httpMessage.IsSuccessStatusCode;
+                await _client.PostAsync(requestUri, formDataContent, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -133,36 +133,29 @@ namespace Incontrl.Net.Services
             return response;
         }
 
-        public async Task<JsonResponse<TResponse>> DeleteAsync<TResponse>(string requestUri, object query = null, CancellationToken cancellationToken = default(CancellationToken)) {
+        public async Task DeleteAsync(string requestUri, object query = null, CancellationToken cancellationToken = default(CancellationToken)) {
             var queryString = string.Empty;
 
             if (query != null) {
                 queryString = $"?{string.Join("&", ObjectToDictionary(query).Select(kv => string.Format("{0}={1}", kv.Key, kv.Value)))}";
             }
 
-            var response = default(JsonResponse<TResponse>);
             var httpMessage = await _client.DeleteAsync(requestUri, cancellationToken).ConfigureAwait(false);
-            var content = await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            if (httpMessage.IsSuccessStatusCode) {
-                response = new JsonResponse<TResponse>(content);
-            } else {
-                response = new JsonResponse<TResponse>(content, httpMessage.StatusCode, httpMessage.ReasonPhrase);
-                HandleHttpError(response);
+            if (!httpMessage.IsSuccessStatusCode) {
+                //HandleHttpError(response);
             }
-
-            return response;
         }
 
         #region Private Methods
-        private async static Task<HttpClient> CreateHttpClientAsync(string address, string clientName, string clientSecret, HttpMessageHandler innerHttpClientHandler) {
+        private async static Task<HttpClient> CreateHttpClientAsync(string address, string clientName, string clientSecret, string userName, string password, HttpMessageHandler innerHttpClientHandler) {
             var client = new HttpClient(innerHttpClientHandler) {
                 BaseAddress = new Uri(address)
             };
 
             var discoveryResponse = await DiscoveryClient.GetAsync(IdentityServerConstants.AUTHORITY);
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, clientName, clientSecret);
-            var tokenResponse = await tokenClient.RequestClientCredentialsAsync(Api.RESOURCE_NAME);
+            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(userName, password, Api.RESOURCE_NAME);
 
             if (tokenResponse.IsError) {
                 // We need to handle this properly.
@@ -200,6 +193,16 @@ namespace Incontrl.Net.Services
         }
 
         private static void HandleHttpError<TResponse>(JsonResponse<TResponse> httpResponse) { }
+
+        private static string GetMimeTypeFromExtension(string extension) {
+            var mappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {
+                {".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
+                {".htm", "text/html"},
+                {".html", "text/html"}
+            };
+
+            return mappings.ContainsKey(extension) ? mappings[extension] : string.Empty;
+        }
         #endregion
     }
 }
