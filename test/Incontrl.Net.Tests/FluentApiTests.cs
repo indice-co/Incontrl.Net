@@ -1,6 +1,6 @@
 ﻿using System;
-using Incontrl.Net.Experimental;
-using Incontrl.Net.Types;
+using System.Threading.Tasks;
+using Incontrl.Net.Models;
 using Xunit;
 
 namespace Incontrl.Net.Tests
@@ -8,20 +8,58 @@ namespace Incontrl.Net.Tests
     public class FluentApiTests
     {
         [Fact]
-        public void StructureTest() {
-            var api = default(ICoreApi);
+        public async Task SyntaxTest() {
+            var api = new IncontrlApi("{my-app-id}", "{my-api-key}");
+            var subscriptionId = Guid.NewGuid();
+            var subscriptionAlias = "my-subscription";
 
-            var options = new ListOptions();
-            options.GetSortings();
-            //api.LoginAsync(authorizationCode); // client credentials
-            //api.LoginAsync(); // client credentials
-            //api.LoginAsync(refreshToken); // with refresh token
-            //api.LoginAsync(username, password); //resource owner
+            #region Subscriptions
+            // Get a list of all subscriptions.
+            var subscriptions = await api.Subscriptions()
+                                         .ListAsync();
 
-            var result = api.Subscriptions().ListAsync();
-            var result2 = api.Subscriptions().CreateAsync(new Models.CreateSubscriptionRequest());
-            var result3 = api.Subscriptions(new Guid()).GetAsync();
-            //api.Subscriptions(new Guid()).Organisations(new Guid()).
+            // Create a new subscription.
+            var newSubscription = await api.Subscriptions()
+                                           .CreateAsync(new CreateSubscriptionRequest { });
+
+            // Get a subscription by id.
+            var subscription = await api.Subscription(subscriptionId)
+                                        .GetAsync();
+
+            // Get a subscription by alias.
+            subscription = await api.Subscription(subscriptionAlias)
+                                    .GetAsync();
+
+            // Get a subscription's company.
+            var company = await api.Subscription(subscriptionId)
+                                   .Company()
+                                   .GetAsync();
+
+            // Updates a subscription's company.
+            company = await api.Subscription(subscriptionId)
+                               .Company()
+                               .UpdateAsync(new UpdateCompanyRequest { });
+
+            // Get a subscription's contact.
+            var contact = await api.Subscription(subscriptionId)
+                                   .Contact()
+                                   .GetAsync();
+
+            // Update a subscription's contact.
+            contact = await api.Subscription(subscriptionId)
+                               .Contact()
+                               .UpdateAsync(new UpdateContactRequest { });
+
+            // Get a subscription's status.
+            var status = await api.Subscription(subscriptionId)
+                                  .Status()
+                                  .GetAsync();
+
+            // Update a subscription's status.
+            status = await api.Subscription(subscriptionId)
+                              .Status()
+                              .UpdateAsync(new UpdateSubscriptionStatusRequest { });
+            #endregion
         }
     }
 }

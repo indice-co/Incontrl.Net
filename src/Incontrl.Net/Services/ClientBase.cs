@@ -18,9 +18,9 @@ namespace Incontrl.Net.Services
         protected static HttpClient _client;
         private static string AccessToken { get; set; }
 
-        public ClientBase(string address, string clientName, string clientSecret, string userName, string password) : this(address, clientName, clientSecret, userName, password, new HttpClientHandler()) { }
+        public ClientBase(string address, string appId, string apiKey) : this(address, appId, apiKey, new HttpClientHandler()) { }
 
-        public ClientBase(string address, string clientName, string clientSecret, string userName, string password, HttpMessageHandler innerHttpClientHandler) {
+        public ClientBase(string address, string appId, string apiKey, HttpMessageHandler innerHttpClientHandler) {
             if (address == null) {
                 throw new ArgumentNullException(nameof(address));
             }
@@ -29,10 +29,8 @@ namespace Incontrl.Net.Services
                 throw new ArgumentNullException(nameof(innerHttpClientHandler));
             }
 
-            _client = _client ?? Task.Run(() => CreateHttpClientAsync(address, clientName, clientSecret, userName, password, innerHttpClientHandler)).Result;
+            _client = _client ?? Task.Run(() => CreateHttpClientAsync(address, appId, apiKey, innerHttpClientHandler)).Result;
         }
-
-        ~ClientBase() => _client?.Dispose();
 
         public async Task<JsonResponse<TResponse>> GetAsync<TResponse>(string requestUri, object query = null, CancellationToken cancellationToken = default(CancellationToken)) {
             var queryString = string.Empty;
@@ -148,14 +146,14 @@ namespace Incontrl.Net.Services
         }
 
         #region Private Methods
-        private async static Task<HttpClient> CreateHttpClientAsync(string address, string clientName, string clientSecret, string userName, string password, HttpMessageHandler innerHttpClientHandler) {
+        private async static Task<HttpClient> CreateHttpClientAsync(string address, string appId, string apiKey, HttpMessageHandler innerHttpClientHandler) {
             var client = new HttpClient(innerHttpClientHandler) {
                 BaseAddress = new Uri(address)
             };
 
             var discoveryResponse = await DiscoveryClient.GetAsync(IdentityServerConstants.AUTHORITY);
-            var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, clientName, clientSecret);
-            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(userName, password, Api.RESOURCE_NAME);
+            var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, appId, apiKey);
+            var tokenResponse = await tokenClient.RequestClientCredentialsAsync(Api.RESOURCE_NAME);
 
             if (tokenResponse.IsError) {
                 // We need to handle this properly.
@@ -204,5 +202,7 @@ namespace Incontrl.Net.Services
             return mappings.ContainsKey(extension) ? mappings[extension] : string.Empty;
         }
         #endregion
+
+        ~ClientBase() => _client?.Dispose();
     }
 }
