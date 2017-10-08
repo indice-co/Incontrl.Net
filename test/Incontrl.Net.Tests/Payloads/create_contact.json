@@ -1,0 +1,16 @@
+﻿{
+  "firstName": "Georgios",
+  "lastName": "Manoltzas",
+  "email": "g.manoltzas@indice.gr",
+  "address": {
+    "name": "Primary",
+    "line1": "Kyprou 14",
+    "city": "Agia Varvara",
+    "zipCode": "12351",
+    "countryCode": "GR",
+    "country": "Greece",
+    "phone1": "+30 2105452885"
+  },
+  "phone1": "+30 6981908600",
+  "skype": "giorgos_manoltzas"
+}

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Incontrl.Net.Models;
+using Incontrl.Net.Types;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Xunit;
@@ -11,7 +12,8 @@ namespace Incontrl.Net.Tests
     public class IncontrlApiTests
     {
         private static IncontrlApi _api;
-        private const string subscriptionId = "B85CDF3A-750F-4FED-8E26-E420AA71D0D3";
+        private IConfigurationRoot _configuration;
+        private const string subscriptionId = "98b09f36-d170-4ecd-973b-c103f081442c";
         private const string invoiceTypeId = "ed72da36-d08e-4b2a-6ff4-08d4ce74911e";
 
         public IncontrlApiTests() {
@@ -23,8 +25,8 @@ namespace Incontrl.Net.Tests
                 // %APPDATA%\microsoft\UserSecrets\77780817-305E-4CDC-8256-635C6538D2F3\secrets.json
                 .AddUserSecrets<IncontrlApiTests>();
 
-            var configuration = builder.Build();
-            _api = new IncontrlApi(configuration["AppId"], configuration["ApiKey"]);
+            _configuration = builder.Build();
+            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"]);
         }
 
         [Fact]
@@ -34,6 +36,7 @@ namespace Incontrl.Net.Tests
             if (File.Exists(createSubscriptionJsonPath)) {
                 var createSubscriptionJson = File.ReadAllText(createSubscriptionJsonPath);
                 var newSubscription = JsonConvert.DeserializeObject<CreateSubscriptionRequest>(createSubscriptionJson);
+                await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
 
                 var createdSubscription = await _api.Subscriptions()
                                                     .CreateAsync(newSubscription);
@@ -47,10 +50,59 @@ namespace Incontrl.Net.Tests
         [Theory]
         [InlineData(subscriptionId)]
         public async Task CanRetrieveSubscription(string subscriptionId) {
+            await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
+
             var subscription = await _api.Subscription(Guid.Parse(subscriptionId))
                                          .GetAsync();
 
             Assert.True(subscription.Data != null);
+        }
+
+        [Theory]
+        [InlineData(subscriptionId)]
+        public async Task CanRetrieveSubscriptionCompany(string subscriptionId) {
+            await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
+
+            var company = await _api.Subscription(Guid.Parse(subscriptionId))
+                                    .Company()
+                                    .GetAsync();
+
+            Assert.True(company.Data != null);
+        }
+
+        [Theory]
+        [InlineData(subscriptionId)]
+        public async Task CanRetrieveContacts(string subscriptionId) {
+            await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
+
+            var contacts = await _api.Subscription(Guid.Parse(subscriptionId))
+                                     .Contacts()
+                                     .ListAsync(new ListOptions<ContactFilter> {
+                                         Page = 1,
+                                         Size = 25
+                                     });
+
+            Assert.True(contacts.Data != null);
+        }
+
+        [Theory]
+        [InlineData(subscriptionId)]
+        public async Task CanCreateContact(string subscriptionId) {
+            var createContactJsonPath = Path.Combine(Environment.CurrentDirectory, @"Payloads\create_contact.json");
+
+            if (File.Exists(createContactJsonPath)) {
+                var createContactJson = File.ReadAllText(createContactJsonPath);
+                var newContact = JsonConvert.DeserializeObject<CreateContactRequest>(createContactJson);
+                await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
+
+                var createdContact = await _api.Subscription(subscriptionId)
+                                               .Contacts()
+                                               .CreateAsync(newContact);
+
+                Assert.True(createdContact.Data != null);
+            } else {
+                Assert.True(false);
+            }
         }
 
         //[Theory]
@@ -96,19 +148,24 @@ namespace Incontrl.Net.Tests
         //    Assert.True(true);
         //}
 
-        //[Theory]
-        //[InlineData(subscriptionId, invoiceTypeId)]
-        //public async Task CanCreateInvoice(string subscriptionId) {
-        //    var createInvoiceJsonPath = Path.Combine(Environment.CurrentDirectory, @"Payloads\create_invoice.json");
+        [Theory]
+        [InlineData(subscriptionId)]
+        public async Task CanCreateInvoice(string subscriptionId) {
+            var createInvoiceJsonPath = Path.Combine(Environment.CurrentDirectory, @"Payloads\create_invoice.json");
 
-        //    if (File.Exists(createInvoiceJsonPath)) {
-        //        var createInvoiceJson = File.ReadAllText(createInvoiceJsonPath);
-        //        var newInvoice = JsonConvert.DeserializeObject<CreateInvoiceRequest>(createInvoiceJson);
-        //        var createdInvoice = await _incontrlClient.Invoices.CreateAsync(Guid.Parse(subscriptionId), newInvoice);
-        //        Assert.True(createdInvoice.Data != null);
-        //    } else {
-        //        Assert.True(false);
-        //    }
-        //}
+            if (File.Exists(createInvoiceJsonPath)) {
+                var createInvoiceJson = File.ReadAllText(createInvoiceJsonPath);
+                var newInvoice = JsonConvert.DeserializeObject<CreateInvoiceRequest>(createInvoiceJson);
+                await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
+                
+                var createdInvoice = await _api.Subscription(subscriptionId)
+                                               .Invoices()
+                                               .CreateAsync(newInvoice);
+
+                Assert.True(createdInvoice.Data != null);
+            } else {
+                Assert.True(false);
+            }
+        }
     }
 }

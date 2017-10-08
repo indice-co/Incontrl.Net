@@ -16,21 +16,31 @@ namespace Incontrl.Net.Services
     internal class ClientBase
     {
         protected static HttpClient _client;
-        private static string AccessToken { get; set; }
+        private string _address;
+        private string _appId;
+        private string _apiKey;
+        private HttpMessageHandler _innerHttpClientHandler;
+        private string _accessToken;
 
         public ClientBase(string address, string appId, string apiKey) : this(address, appId, apiKey, new HttpClientHandler()) { }
 
         public ClientBase(string address, string appId, string apiKey, HttpMessageHandler innerHttpClientHandler) {
-            if (address == null) {
-                throw new ArgumentNullException(nameof(address));
+            if (string.IsNullOrWhiteSpace(appId)) {
+                throw new ArgumentNullException(nameof(appId), "Please specify an application id.");
             }
 
-            if (innerHttpClientHandler == null) {
-                throw new ArgumentNullException(nameof(innerHttpClientHandler));
+            if (string.IsNullOrWhiteSpace(apiKey)) {
+                throw new ArgumentNullException(nameof(apiKey), "Please specify and API key.");
             }
 
-            _client = _client ?? Task.Run(() => CreateHttpClientAsync(address, appId, apiKey, innerHttpClientHandler)).Result;
+            _appId = appId;
+            _apiKey = apiKey;
+            _address = address ?? throw new ArgumentNullException(nameof(address));
+            _innerHttpClientHandler = innerHttpClientHandler ?? throw new ArgumentNullException(nameof(innerHttpClientHandler));
         }
+
+        public async Task LoginAsync(string userName, string password) => 
+            _client = _client ?? await CreateHttpClientAsync(_address, _appId, _apiKey, userName, password, _innerHttpClientHandler);
 
         public async Task<JsonResponse<TResponse>> GetAsync<TResponse>(string requestUri, object query = null, CancellationToken cancellationToken = default(CancellationToken)) {
             var queryString = string.Empty;
@@ -146,14 +156,14 @@ namespace Incontrl.Net.Services
         }
 
         #region Private Methods
-        private async static Task<HttpClient> CreateHttpClientAsync(string address, string appId, string apiKey, HttpMessageHandler innerHttpClientHandler) {
+        private async static Task<HttpClient> CreateHttpClientAsync(string address, string appId, string apiKey, string userName, string password, HttpMessageHandler innerHttpClientHandler) {
             var client = new HttpClient(innerHttpClientHandler) {
                 BaseAddress = new Uri(address)
             };
 
             var discoveryResponse = await DiscoveryClient.GetAsync(IdentityServerConstants.AUTHORITY);
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, appId, apiKey);
-            var tokenResponse = await tokenClient.RequestClientCredentialsAsync(Api.RESOURCE_NAME);
+            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(userName, password);
 
             if (tokenResponse.IsError) {
                 // We need to handle this properly.
