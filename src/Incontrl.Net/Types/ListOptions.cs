@@ -68,10 +68,12 @@ namespace Incontrl.Net.Types
 
         public void SortBy(string path, string direction) {
             var list = GetSortings().ToList();
+
             list.Add(new Sorting {
                 Path = path,
                 Direction = Sorting.DESC.Equals(direction, StringComparison.InvariantCultureIgnoreCase) ? Sorting.DESC : Sorting.ASC
             });
+
             Sort = string.Join(",", list);
         }
 

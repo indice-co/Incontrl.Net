@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using IdentityModel.Client;
 using Incontrl.Net.Http;
 using Incontrl.Net.Models;
+using Incontrl.Net.Types;
 
 namespace Incontrl.Net.Services
 {
@@ -36,10 +38,47 @@ namespace Incontrl.Net.Services
             _apiKey = apiKey;
             _address = address ?? throw new ArgumentNullException(nameof(address));
             _innerHttpClientHandler = innerHttpClientHandler ?? throw new ArgumentNullException(nameof(innerHttpClientHandler));
+
+            _client = _client ?? new HttpClient(innerHttpClientHandler) {
+                BaseAddress = new Uri(address)
+            };
         }
 
-        public async Task LoginAsync(string userName, string password) => 
-            _client = _client ?? await CreateHttpClientAsync(_address, _appId, _apiKey, userName, password, _innerHttpClientHandler);
+        public async Task RequestResourceOwnerPasswordAsync(string userName, string password) {
+            var discoveryResponse = await DiscoveryClient.GetAsync(IdentityServerConstants.AUTHORITY);
+            var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
+            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(userName, password, Api.RESOURCE_NAME);
+
+            if (tokenResponse.IsError) {
+                HandleHttpError(tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason);
+            }
+
+            _client.SetBearerToken(tokenResponse.AccessToken);
+        }
+
+        public async Task RequestClientCredentialsAsync() {
+            var discoveryResponse = await DiscoveryClient.GetAsync(IdentityServerConstants.AUTHORITY);
+            var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
+            var tokenResponse = await tokenClient.RequestClientCredentialsAsync(Api.RESOURCE_NAME);
+
+            if (tokenResponse.IsError) {
+                HandleHttpError(tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason);
+            }
+
+            _client.SetBearerToken(tokenResponse.AccessToken);
+        }
+
+        public async Task RequestRefreshTokenAsync(string refreshToken) {
+            var discoveryResponse = await DiscoveryClient.GetAsync(IdentityServerConstants.AUTHORITY);
+            var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
+            var tokenResponse = await tokenClient.RequestRefreshTokenAsync(refreshToken);
+
+            if (tokenResponse.IsError) {
+                HandleHttpError(tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason);
+            }
+
+            _client.SetBearerToken(tokenResponse.AccessToken);
+        }
 
         public async Task<JsonResponse<TResponse>> GetAsync<TResponse>(string requestUri, object query = null, CancellationToken cancellationToken = default(CancellationToken)) {
             var queryString = string.Empty;
@@ -56,8 +95,7 @@ namespace Incontrl.Net.Services
             if (httpMessage.IsSuccessStatusCode) {
                 response = new JsonResponse<TResponse>(content);
             } else {
-                response = new JsonResponse<TResponse>(content, httpMessage.StatusCode, httpMessage.ReasonPhrase);
-                HandleHttpError(response);
+                HandleHttpError(httpMessage.StatusCode, httpMessage.ReasonPhrase);
             }
 
             return response;
@@ -92,8 +130,7 @@ namespace Incontrl.Net.Services
             if (httpMessage.IsSuccessStatusCode) {
                 response = new JsonResponse<TResponse>(content);
             } else {
-                response = new JsonResponse<TResponse>(content, httpMessage.StatusCode, httpMessage.ReasonPhrase);
-                HandleHttpError(response);
+                HandleHttpError(httpMessage.StatusCode, httpMessage.ReasonPhrase);
             }
 
             return response;
@@ -118,8 +155,7 @@ namespace Incontrl.Net.Services
             if (httpMessage.IsSuccessStatusCode) {
                 response = new JsonResponse<TResponse>(content);
             } else {
-                response = new JsonResponse<TResponse>(content, httpMessage.StatusCode, httpMessage.ReasonPhrase);
-                HandleHttpError(response);
+                HandleHttpError(httpMessage.StatusCode, httpMessage.ReasonPhrase);
             }
 
             return response;
@@ -133,8 +169,7 @@ namespace Incontrl.Net.Services
             if (httpMessage.IsSuccessStatusCode) {
                 response = new JsonResponse<TResponse>(content);
             } else {
-                response = new JsonResponse<TResponse>(content, httpMessage.StatusCode, httpMessage.ReasonPhrase);
-                HandleHttpError(response);
+                HandleHttpError(httpMessage.StatusCode, httpMessage.ReasonPhrase);
             }
 
             return response;
@@ -147,32 +182,10 @@ namespace Incontrl.Net.Services
                 queryString = $"?{string.Join("&", ObjectToDictionary(query).Select(kv => string.Format("{0}={1}", kv.Key, kv.Value)))}";
             }
 
-            var httpMessage = await _client.DeleteAsync(requestUri, cancellationToken).ConfigureAwait(false);
-
-            if (!httpMessage.IsSuccessStatusCode) {
-                //HandleHttpError(response);
-            }
+            await _client.DeleteAsync(requestUri, cancellationToken).ConfigureAwait(false);
         }
 
         #region Private Methods
-        private async static Task<HttpClient> CreateHttpClientAsync(string address, string appId, string apiKey, string userName, string password, HttpMessageHandler innerHttpClientHandler) {
-            var client = new HttpClient(innerHttpClientHandler) {
-                BaseAddress = new Uri(address)
-            };
-
-            var discoveryResponse = await DiscoveryClient.GetAsync(IdentityServerConstants.AUTHORITY);
-            var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, appId, apiKey);
-            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(userName, password);
-
-            if (tokenResponse.IsError) {
-                // We need to handle this properly.
-                return null;
-            }
-
-            client.SetBearerToken(tokenResponse.AccessToken);
-            return client;
-        }
-
         private static Dictionary<string, string> ObjectToDictionary(object values) {
             if (values == null) {
                 return null;
@@ -199,7 +212,16 @@ namespace Incontrl.Net.Services
             return dictionary;
         }
 
-        private static void HandleHttpError<TResponse>(JsonResponse<TResponse> httpResponse) { }
+        private static void HandleHttpError(HttpStatusCode httpStatusCode, string reasonPhrase) {
+            switch (httpStatusCode) {
+                case HttpStatusCode.Forbidden:
+                    throw new IncontrlException($"It seems that you have no right to access this resource. Reason Phrase: {reasonPhrase}");
+                case HttpStatusCode.Unauthorized:
+                    throw new IncontrlException($"It seems that your credentials are not correct. Reason Phrase: {reasonPhrase}");
+                case HttpStatusCode.BadRequest:
+                    throw new IncontrlException($"The request you performed is not valid. Reason Phrase: {reasonPhrase}");
+            }
+        }
 
         private static string GetMimeTypeFromExtension(string extension) {
             var mappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {

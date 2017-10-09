@@ -13,8 +13,8 @@ namespace Incontrl.Net.Tests
     {
         private static IncontrlApi _api;
         private IConfigurationRoot _configuration;
-        private const string subscriptionId = "98b09f36-d170-4ecd-973b-c103f081442c";
-        private const string invoiceTypeId = "ed72da36-d08e-4b2a-6ff4-08d4ce74911e";
+        private const string subscriptionId = "A1DABCB4-5696-4A3F-AB6C-BF555E7AC29D";
+        private const string invoiceTypeId = "3F9EE6D7-C0D4-4E0A-0EBC-08D50F1E7DBA";
 
         public IncontrlApiTests() {
             var builder = new ConfigurationBuilder()
@@ -45,6 +45,12 @@ namespace Incontrl.Net.Tests
             } else {
                 Assert.True(false);
             }
+        }
+
+        [Fact]
+        public async Task CanRetrieveLicense() {
+            var licenseText = await _api.License().GetAsync();
+            Assert.True(!string.IsNullOrEmpty(licenseText.Data));
         }
 
         [Theory]

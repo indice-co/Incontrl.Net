@@ -11,6 +11,7 @@ namespace Incontrl.Net
         private ClientBase _clientBase;
         private Lazy<ISubscriptionsApi> _subscriptionsApi;
         private Lazy<ISubscriptionApi> _subscriptionApi;
+        private Lazy<ILicenseApi> _licenseApi;
 
         /// <summary>
         /// Class overloaded constructor.
@@ -23,9 +24,13 @@ namespace Incontrl.Net
             // Lazy load available services.
             _subscriptionsApi = new Lazy<ISubscriptionsApi>(() => new SubscriptionsApi(_clientBase));
             _subscriptionApi = new Lazy<ISubscriptionApi>(() => new SubscriptionApi(_clientBase));
+            _licenseApi = new Lazy<ILicenseApi>(() => new LicenseApi(_clientBase));
         }
 
-        public Task LoginAsync(string userName, string password) => _clientBase.LoginAsync(userName, password);
+        public ILicenseApi License() => _licenseApi.Value;
+        public Task LoginAsync(string userName, string password) => _clientBase.RequestResourceOwnerPasswordAsync(userName, password);
+        public Task LoginAsync() => _clientBase.RequestClientCredentialsAsync();
+        public Task LoginAsync(string refreshToken) => _clientBase.RequestRefreshTokenAsync(refreshToken);
 
         public ISubscriptionApi Subscription(Guid subscriptionId) {
             var subscriptionApi = _subscriptionApi.Value;

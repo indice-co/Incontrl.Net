@@ -210,8 +210,8 @@ namespace Incontrl.Net.Tests
 
             #region Products
             var products = await api.Subscription(subscriptionId)
-                                        .Products()
-                                        .ListAsync();
+                                    .Products()
+                                    .ListAsync();
 
             var newProduct = await api.Subscription(subscriptionId)
                                       .Products()
