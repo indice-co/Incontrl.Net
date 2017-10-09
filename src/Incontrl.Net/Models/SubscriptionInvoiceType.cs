@@ -4,7 +4,6 @@ namespace Incontrl.Net.Models
 {
     public class SubscriptionInvoiceType
     {
-
         public Guid Id { get; set; }
         public string Code { get; set; }
         public RecordType RecordType { get; set; }
@@ -18,6 +17,7 @@ namespace Incontrl.Net.Models
         /// Notes for this item.
         /// </summary>
         public string Notes { get; set; }
+
         /// <summary>
         /// Tags for this item.
         /// </summary>

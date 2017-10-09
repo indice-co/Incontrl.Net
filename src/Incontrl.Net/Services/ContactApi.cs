@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Incontrl.Net.Experimental;
+using Incontrl.Net.Abstract;
 using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 

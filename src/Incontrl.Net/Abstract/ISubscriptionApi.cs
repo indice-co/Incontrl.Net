@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 
-namespace Incontrl.Net.Experimental
+namespace Incontrl.Net.Abstract
 {
     public interface ISubscriptionApi
     {
@@ -17,5 +17,11 @@ namespace Incontrl.Net.Experimental
         IContactApi Contact(Guid contactId);
         IInvoicesApi Invoices();
         IInvoiceApi Invoice(Guid invoiceId);
+        IInvoiceTypesApi InvoiceTypes();
+        ISubscriptionInvoiceTypeApi InvoiceType(Guid invoiceTypeId);
+        IOrganisationsApi Organisations();
+        IOrganisationApi Organisation(Guid organisationId);
+        IProductsApi Products();
+        IProductApi Product(Guid productId);
     }
 }

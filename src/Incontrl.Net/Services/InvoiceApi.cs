@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Incontrl.Net.Experimental;
+using Incontrl.Net.Abstract;
 using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 
@@ -32,7 +32,7 @@ namespace Incontrl.Net.Services
         public async Task<JsonResponse<Invoice>> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             await _clientBase.GetAsync<Invoice>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/invoices/{InvoiceId}", cancellationToken);
 
-        public IInvoiceDocumentApi Format(InvoiceFormat format) {
+        public IInvoiceDocumentApi As(InvoiceFormat format) {
             var invoiceDocumentApi = _invoiceDocumentApi.Value;
             invoiceDocumentApi.SubscriptionId = SubscriptionId;
             invoiceDocumentApi.InvoiceId = InvoiceId;

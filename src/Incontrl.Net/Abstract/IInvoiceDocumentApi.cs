@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Incontrl.Net.Models;
 
-namespace Incontrl.Net.Experimental
+namespace Incontrl.Net.Abstract
 {
     public interface IInvoiceDocumentApi
     {

@@ -105,48 +105,62 @@ namespace Incontrl.Net.Tests
             }
         }
 
-        //[Theory]
-        //[InlineData(subscriptionId, invoiceTypeId)]
-        //public async Task CanDownloadInvoiceTypeTemplate(string subscriptionId, string invoiceTypeId) {
-        //    var fileResult = await _incontrlClient.InvoiceTypes.GetTemplateAsync(Guid.Parse(subscriptionId), Guid.Parse(invoiceTypeId));
+        [Theory]
+        [InlineData(subscriptionId, invoiceTypeId)]
+        public async Task CanDownloadInvoiceTypeTemplate(string subscriptionId, string invoiceTypeId) {
+            await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
 
-        //    if (fileResult == null) {
-        //        Assert.True(false);
-        //    }
+            var fileResult = await _api.Subscription(Guid.Parse(subscriptionId))
+                                       .InvoiceType(Guid.Parse(invoiceTypeId))
+                                       .Template()
+                                       .DownloadAsync();
 
-        //    var templatesSaveDirectory = Path.Combine(Environment.CurrentDirectory, @"downloaded-templates");
-        //    var templateFilePath = Path.Combine(templatesSaveDirectory, fileResult.FileName);
+            if (fileResult == null) {
+                Assert.True(false);
+            }
 
-        //    if (!Directory.Exists(templatesSaveDirectory)) {
-        //        Directory.CreateDirectory(templatesSaveDirectory);
-        //    }
+            var templatesSaveDirectory = Path.Combine(Environment.CurrentDirectory, @"downloaded-templates");
+            var templateFilePath = Path.Combine(templatesSaveDirectory, fileResult.FileName);
 
-        //    using (var fileStream = File.OpenWrite(templateFilePath)) {
-        //        await fileResult.Stream.CopyToAsync(fileStream);
-        //    }
+            if (!Directory.Exists(templatesSaveDirectory)) {
+                Directory.CreateDirectory(templatesSaveDirectory);
+            }
 
-        //    Assert.True(File.Exists(templateFilePath));
-        //}
+            using (var fileStream = File.OpenWrite(templateFilePath)) {
+                await fileResult.Stream.CopyToAsync(fileStream);
+            }
 
-        //[Theory]
-        //[InlineData(subscriptionId, invoiceTypeId)]
-        //public async Task CanUploadInvoiceTypeTemplate(string subscriptionId, string invoiceTypeId) {
-        //    var templateFilePath = Path.Combine(Environment.CurrentDirectory, @"Templates\new-invoice-template.docx");
+            Assert.True(File.Exists(templateFilePath));
+        }
 
-        //    if (!File.Exists(templateFilePath)) {
-        //        Assert.True(false, $"The file {templateFilePath} could not be found.");
-        //    }
+        [Theory]
+        [InlineData(subscriptionId, invoiceTypeId)]
+        public async Task CanUploadInvoiceTypeTemplate(string subscriptionId, string invoiceTypeId) {
+            var templateFilePath = Path.Combine(Environment.CurrentDirectory, @"Templates\new-invoice-template.docx");
 
-        //    var invoiceType = await _incontrlClient.InvoiceTypes.GetByIdAsync(Guid.Parse(subscriptionId), Guid.Parse(invoiceTypeId));
+            if (!File.Exists(templateFilePath)) {
+                Assert.True(false, $"The file {templateFilePath} could not be found.");
+            }
 
-        //    if (invoiceType.IsHttpError || invoiceType.Data == null) {
-        //        Assert.True(false, $"The invoice type with id {invoiceTypeId} could not be found.");
-        //    }
+            await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
 
-        //    var stream = File.ReadAllBytes(templateFilePath);
-        //    await _incontrlClient.InvoiceTypes.UpdateTemplateAsync(Guid.Parse(subscriptionId), invoiceType.Data.Id, stream, invoiceType.Data.Template.Name);
-        //    Assert.True(true);
-        //}
+            var invoiceType = await _api.Subscription(Guid.Parse(subscriptionId))
+                                        .InvoiceType(Guid.Parse(invoiceTypeId))
+                                        .GetAsync();
+
+            if (invoiceType.IsHttpError || invoiceType.Data == null) {
+                Assert.True(false, $"The invoice type with id {invoiceTypeId} could not be found.");
+            }
+
+            var stream = File.ReadAllBytes(templateFilePath);
+
+            await _api.Subscription(Guid.Parse(subscriptionId))
+                      .InvoiceType(invoiceType.Data.Id)
+                      .Template()
+                      .UploadAsync(stream, invoiceType.Data.Template.Name);
+
+            Assert.True(true);
+        }
 
         [Theory]
         [InlineData(subscriptionId)]

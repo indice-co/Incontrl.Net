@@ -20,7 +20,6 @@ namespace Incontrl.Net.Services
         private string _appId;
         private string _apiKey;
         private HttpMessageHandler _innerHttpClientHandler;
-        private string _accessToken;
 
         public ClientBase(string address, string appId, string apiKey) : this(address, appId, apiKey, new HttpClientHandler()) { }
 
@@ -212,7 +211,5 @@ namespace Incontrl.Net.Services
             return mappings.ContainsKey(extension) ? mappings[extension] : string.Empty;
         }
         #endregion
-
-        ~ClientBase() => _client?.Dispose();
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Incontrl.Net.Experimental;
+using Incontrl.Net.Abstract;
 using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 using Incontrl.Net.Types;
@@ -11,9 +11,7 @@ namespace Incontrl.Net.Services
     {
         private ClientBase _clientBase;
 
-        public InvoicesApi(ClientBase clientBase) {
-            _clientBase = clientBase;
-        }
+        public InvoicesApi(ClientBase clientBase) => _clientBase = clientBase;
 
         public string SubscriptionId { get; set; }
 

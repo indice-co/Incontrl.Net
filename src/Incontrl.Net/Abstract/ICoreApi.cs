@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Incontrl.Net.Experimental
+namespace Incontrl.Net.Abstract
 {
     public interface ICoreApi
     {

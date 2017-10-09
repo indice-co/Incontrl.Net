@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 
-namespace Incontrl.Net.Experimental
+namespace Incontrl.Net.Abstract
 {
     public interface IInvoiceApi
     {
@@ -12,7 +12,7 @@ namespace Incontrl.Net.Experimental
         Task<JsonResponse<Invoice>> GetAsync(CancellationToken cancellationToken = default(CancellationToken));
         Task<JsonResponse<Invoice>> UpdateAsync(UpdateInvoiceRequest invoice, CancellationToken cancellationToken = default(CancellationToken));
         Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken));
-        IInvoiceDocumentApi Format(InvoiceFormat format);
+        IInvoiceDocumentApi As(InvoiceFormat format);
         IInvoiceStatusApi Status();
         IInvoiceTrackingApi Trackings();
         IInvoiceTypeApi Type();

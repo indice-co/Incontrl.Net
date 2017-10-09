@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Incontrl.Net.Experimental;
+using Incontrl.Net.Abstract;
 using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 
@@ -17,6 +17,12 @@ namespace Incontrl.Net.Services
         private Lazy<ISubscriptionCompanyApi> _subscriptionCompanyApi;
         private Lazy<IInvoicesApi> _invoicesApi;
         private Lazy<IInvoiceApi> _invoiceApi;
+        private Lazy<IInvoiceTypesApi> _invoiceTypesApi;
+        private Lazy<ISubscriptionInvoiceTypeApi> _subscriptionInvoiceTypeApi;
+        private Lazy<IOrganisationsApi> _organisationsApi;
+        private Lazy<IOrganisationApi> _organisationApi;
+        private Lazy<IProductsApi> _productsApi;
+        private Lazy<IProductApi> _productApi;
 
         public SubscriptionApi(ClientBase clientBase) {
             _clientBase = clientBase;
@@ -27,6 +33,12 @@ namespace Incontrl.Net.Services
             _subscriptionCompanyApi = new Lazy<ISubscriptionCompanyApi>(() => new SubscriptionCompanyApi(_clientBase));
             _invoicesApi = new Lazy<IInvoicesApi>(() => new InvoicesApi(_clientBase));
             _invoiceApi = new Lazy<IInvoiceApi>(() => new InvoiceApi(_clientBase));
+            _invoiceTypesApi = new Lazy<IInvoiceTypesApi>(() => new InvoiceTypesApi(_clientBase));
+            _subscriptionInvoiceTypeApi = new Lazy<ISubscriptionInvoiceTypeApi>(() => new SubscriptionInvoiceTypeApi(_clientBase));
+            _organisationsApi = new Lazy<IOrganisationsApi>(() => new OrganisationsApi(_clientBase));
+            _organisationApi = new Lazy<IOrganisationApi>(() => new OrganisationApi(_clientBase));
+            _productsApi = new Lazy<IProductsApi>(() => new ProductsApi(_clientBase));
+            _productApi = new Lazy<IProductApi>(() => new ProductApi(_clientBase));
         }
 
         public string SubscriptionId { get; set; }
@@ -76,6 +88,51 @@ namespace Incontrl.Net.Services
             invoicesApi.SubscriptionId = SubscriptionId;
 
             return invoicesApi;
+        }
+
+        public ISubscriptionInvoiceTypeApi InvoiceType(Guid invoiceTypeId) {
+            var subscriptionInvoiceTypeApi = _subscriptionInvoiceTypeApi.Value;
+            subscriptionInvoiceTypeApi.SubscriptionId = SubscriptionId;
+            subscriptionInvoiceTypeApi.InvoiceTypeId = invoiceTypeId.ToString();
+
+            return subscriptionInvoiceTypeApi;
+        }
+
+        public IInvoiceTypesApi InvoiceTypes() {
+            var invoiceTypesApi = _invoiceTypesApi.Value;
+            invoiceTypesApi.SubscriptionId = SubscriptionId;
+
+            return invoiceTypesApi;
+        }
+
+        public IOrganisationApi Organisation(Guid organisationId) {
+            var organisationApi = _organisationApi.Value;
+            organisationApi.SubscriptionId = SubscriptionId;
+            organisationApi.OrganisationId = organisationId.ToString();
+
+            return organisationApi;
+        }
+
+        public IOrganisationsApi Organisations() {
+            var organisationsApi = _organisationsApi.Value;
+            organisationsApi.SubscriptionId = SubscriptionId;
+
+            return organisationsApi;
+        }
+
+        public IProductApi Product(Guid productId) {
+            var productApi = _productApi.Value;
+            productApi.SubscriptionId = SubscriptionId;
+            productApi.ProductId = productId.ToString();
+
+            return productApi;
+        }
+
+        public IProductsApi Products() {
+            var productsApi = _productsApi.Value;
+            productsApi.SubscriptionId = SubscriptionId;
+
+            return productsApi;
         }
 
         public ISubscriptionStatusApi Status() {

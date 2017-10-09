@@ -15,6 +15,10 @@ namespace Incontrl.Net.Tests
             var subscriptionAlias = "my-subscription";
             var contactId = Guid.NewGuid();
             var invoiceId = Guid.NewGuid();
+            var invoiceTypeId = Guid.NewGuid();
+            var organisationId = Guid.NewGuid();
+            var productId = Guid.NewGuid();
+            await api.LoginAsync("{my-username}", "{my-password}");
 
             #region Subscriptions
             // Get a list of all subscriptions.
@@ -116,7 +120,7 @@ namespace Incontrl.Net.Tests
 
             var invoiceDocument = await api.Subscription(subscriptionId)
                                            .Invoice(invoiceId)
-                                           .Format(InvoiceFormat.Pdf)
+                                           .As(InvoiceFormat.Pdf)
                                            .DownloadAsync();
 
             var invoiceStatus = await api.Subscription(subscriptionId)
@@ -152,6 +156,74 @@ namespace Incontrl.Net.Tests
                                    .Invoice(invoiceId)
                                    .Type()
                                    .UpdateAsync(new UpdateInvoiceTypeRequest { });
+            #endregion
+
+            #region Invoice Types
+            var invoiceTypes = await api.Subscription(subscriptionId)
+                                            .InvoiceTypes()
+                                            .ListAsync();
+
+            var newInvoiceType = await api.Subscription(subscriptionId)
+                                          .InvoiceTypes()
+                                          .CreateAsync(new CreateInvoiceTypeRequest { });
+
+            var subscriptionInvoiceType = await api.Subscription(subscriptionId)
+                                                   .InvoiceType(invoiceTypeId)
+                                                   .GetAsync();
+
+            subscriptionInvoiceType = await api.Subscription(subscriptionId)
+                                               .InvoiceType(invoiceTypeId)
+                                               .UpdateAsync(new UpdateSubscriptionInvoiceTypeRequest { });
+
+            await api.Subscription(subscriptionId)
+                     .InvoiceType(invoiceTypeId)
+                     .DeleteAsync();
+
+            var invoiceTypeTemplate = await api.Subscription(subscriptionAlias)
+                                               .InvoiceType(invoiceTypeId)
+                                               .Template()
+                                               .DownloadAsync();
+
+            await api.Subscription(subscriptionId)
+                     .InvoiceType(invoiceTypeId)
+                     .Template()
+                     .UploadAsync(new byte[0], string.Empty);
+            #endregion
+
+            #region Organisations
+            var organisations = await api.Subscription(subscriptionId)
+                                             .Organisations()
+                                             .ListAsync();
+
+            var newOrganisation = await api.Subscription(subscriptionId)
+                                           .Organisations()
+                                           .CreateAsync(new CreateOrganisationRequest { });
+
+            var organisation = await api.Subscription(subscriptionId)
+                                        .Organisation(organisationId)
+                                        .GetAsync();
+
+            organisation = await api.Subscription(subscriptionId)
+                                    .Organisation(organisationId)
+                                    .UpdateAsync(new UpdateOrganisationRequest { });
+            #endregion
+
+            #region Products
+            var products = await api.Subscription(subscriptionId)
+                                        .Products()
+                                        .ListAsync();
+
+            var newProduct = await api.Subscription(subscriptionId)
+                                      .Products()
+                                      .CreateAsync(new CreateProductRequest { });
+
+            var product = await api.Subscription(subscriptionId)
+                                   .Product(productId)
+                                   .GetAsync();
+
+            product = await api.Subscription(subscriptionId)
+                               .Product(productId)
+                               .UpdateAsync(new UpdateProductRequest { }); 
             #endregion
         }
     }

@@ -4,7 +4,7 @@ using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 using Incontrl.Net.Types;
 
-namespace Incontrl.Net.Experimental
+namespace Incontrl.Net.Abstract
 {
     public interface IInvoiceTrackingApi
     {
