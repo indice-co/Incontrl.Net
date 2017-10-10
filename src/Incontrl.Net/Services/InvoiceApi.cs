@@ -13,24 +13,24 @@ namespace Incontrl.Net.Services
         private Lazy<IInvoiceDocumentApi> _invoiceDocumentApi;
         private Lazy<IInvoiceStatusApi> _invoiceStatusApi;
         private Lazy<IInvoiceTrackingApi> _invoiceTrackingApi;
-        private Lazy<IInvoiceTypeApi> _invoiceTypeApi;
+        private Lazy<IInvoiceInvoiceTypeApi> _invoiceInvoiceTypeApi;
 
         public InvoiceApi(ClientBase clientBase) {
             _clientBase = clientBase;
             _invoiceDocumentApi = new Lazy<IInvoiceDocumentApi>(() => new InvoiceDocumentApi(_clientBase));
             _invoiceStatusApi = new Lazy<IInvoiceStatusApi>(() => new InvoiceStatusApi(_clientBase));
             _invoiceTrackingApi = new Lazy<IInvoiceTrackingApi>(() => new InvoiceTrackingApi(_clientBase));
-            _invoiceTypeApi = new Lazy<IInvoiceTypeApi>(() => new InvoiceTypeApi(_clientBase));
+            _invoiceInvoiceTypeApi = new Lazy<IInvoiceInvoiceTypeApi>(() => new InvoiceInvoiceTypeApi(_clientBase));
         }
 
         public string SubscriptionId { get; set; }
         public string InvoiceId { get; set; }
 
         public async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.DeleteAsync($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/invoices/{InvoiceId}", cancellationToken);
+            await _clientBase.DeleteAsync($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}", cancellationToken);
 
         public async Task<Invoice> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.GetAsync<Invoice>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/invoices/{InvoiceId}", cancellationToken);
+            await _clientBase.GetAsync<Invoice>($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}", cancellationToken);
 
         public IInvoiceDocumentApi As(InvoiceFormat format) {
             var invoiceDocumentApi = _invoiceDocumentApi.Value;
@@ -42,7 +42,7 @@ namespace Incontrl.Net.Services
         }
 
         public async Task<Invoice> UpdateAsync(UpdateInvoiceRequest invoice, CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.PutAsync<UpdateInvoiceRequest, Invoice>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/invoices/{InvoiceId}", invoice, cancellationToken);
+            await _clientBase.PutAsync<UpdateInvoiceRequest, Invoice>($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}", invoice, cancellationToken);
 
         public IInvoiceStatusApi Status() {
             var invoiceStatusApi = _invoiceStatusApi.Value;
@@ -60,12 +60,12 @@ namespace Incontrl.Net.Services
             return invoiceTrackingApi;
         }
 
-        public IInvoiceTypeApi Type() {
-            var invoiceTypeApi = _invoiceTypeApi.Value;
-            invoiceTypeApi.SubscriptionId = SubscriptionId;
-            invoiceTypeApi.InvoiceId = InvoiceId;
+        public IInvoiceInvoiceTypeApi Type() {
+            var invoiceInvoiceTypeApi = _invoiceInvoiceTypeApi.Value;
+            invoiceInvoiceTypeApi.SubscriptionId = SubscriptionId;
+            invoiceInvoiceTypeApi.InvoiceId = InvoiceId;
 
-            return invoiceTypeApi;
+            return invoiceInvoiceTypeApi;
         }
     }
 }

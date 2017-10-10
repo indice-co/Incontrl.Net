@@ -16,9 +16,9 @@ namespace Incontrl.Net.Services
         public string OrganisationId { get; set; }
 
         public async Task<Organisation> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.GetAsync<Organisation>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/organisations/{OrganisationId}", cancellationToken);
+            await _clientBase.GetAsync<Organisation>($"subscriptions/{SubscriptionId}/organisations/{OrganisationId}", cancellationToken);
 
         public async Task<Organisation> UpdateAsync(UpdateOrganisationRequest organisation, CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.PutAsync<UpdateOrganisationRequest, Organisation>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/organisations/{OrganisationId}", organisation, cancellationToken);
+            await _clientBase.PutAsync<UpdateOrganisationRequest, Organisation>($"subscriptions/{SubscriptionId}/organisations/{OrganisationId}", organisation, cancellationToken);
     }
 }

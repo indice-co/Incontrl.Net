@@ -16,11 +16,10 @@ namespace Incontrl.Net.Services
         public string SubscriptionId { get; set; }
         public string ProductId { get; set; }
 
-        public Task<Product> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) {
-            throw new NotImplementedException();
-        }
+        public async Task<Product> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.GetAsync<Product>($"subscriptions/{SubscriptionId}/products/{ProductId}", cancellationToken);
 
         public async Task<Product> UpdateAsync(UpdateProductRequest product, CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.PutAsync<UpdateProductRequest, Product>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/products/{ProductId}", product, cancellationToken);
+            await _clientBase.PutAsync<UpdateProductRequest, Product>($"subscriptions/{SubscriptionId}/products/{ProductId}", product, cancellationToken);
     }
 }

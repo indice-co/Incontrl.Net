@@ -16,9 +16,9 @@ namespace Incontrl.Net.Services
         public string InvoiceId { get; set; }
 
         public async Task<InvoiceStatus> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.GetAsync<InvoiceStatus>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/invoices/{InvoiceId}/status", cancellationToken);
+            (await _clientBase.GetAsync<InvoiceStatusResponse>($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}/status", cancellationToken)).Status;
 
-        public async Task<InvoiceStatus> UpdateAsync(UpdateInvoiceStatusRequest status, CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.PutAsync<UpdateInvoiceStatusRequest, InvoiceStatus>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/invoices/{InvoiceId}/status", status, cancellationToken);
+        public async Task<InvoiceStatus> UpdateAsync(InvoiceStatus status, CancellationToken cancellationToken = default(CancellationToken)) =>
+            (await _clientBase.PutAsync<UpdateInvoiceStatusRequest, InvoiceStatusResponse>($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}/status", new UpdateInvoiceStatusRequest { Status = status }, cancellationToken)).Status;
     }
 }

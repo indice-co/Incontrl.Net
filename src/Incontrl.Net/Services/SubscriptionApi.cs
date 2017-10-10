@@ -18,7 +18,7 @@ namespace Incontrl.Net.Services
         private Lazy<IInvoicesApi> _invoicesApi;
         private Lazy<IInvoiceApi> _invoiceApi;
         private Lazy<IInvoiceTypesApi> _invoiceTypesApi;
-        private Lazy<ISubscriptionInvoiceTypeApi> _subscriptionInvoiceTypeApi;
+        private Lazy<IInvoiceTypeApi> _invoiceTypeApi;
         private Lazy<IOrganisationsApi> _organisationsApi;
         private Lazy<IOrganisationApi> _organisationApi;
         private Lazy<IProductsApi> _productsApi;
@@ -33,8 +33,8 @@ namespace Incontrl.Net.Services
             _subscriptionCompanyApi = new Lazy<ISubscriptionCompanyApi>(() => new SubscriptionCompanyApi(_clientBase));
             _invoicesApi = new Lazy<IInvoicesApi>(() => new InvoicesApi(_clientBase));
             _invoiceApi = new Lazy<IInvoiceApi>(() => new InvoiceApi(_clientBase));
+            _invoiceTypeApi = new Lazy<IInvoiceTypeApi>(() => new InvoiceTypeApi(_clientBase));
             _invoiceTypesApi = new Lazy<IInvoiceTypesApi>(() => new InvoiceTypesApi(_clientBase));
-            _subscriptionInvoiceTypeApi = new Lazy<ISubscriptionInvoiceTypeApi>(() => new SubscriptionInvoiceTypeApi(_clientBase));
             _organisationsApi = new Lazy<IOrganisationsApi>(() => new OrganisationsApi(_clientBase));
             _organisationApi = new Lazy<IOrganisationApi>(() => new OrganisationApi(_clientBase));
             _productsApi = new Lazy<IProductsApi>(() => new ProductsApi(_clientBase));
@@ -73,7 +73,7 @@ namespace Incontrl.Net.Services
         }
 
         public async Task<Subscription> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.GetAsync<Subscription>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}", cancellationToken);
+            await _clientBase.GetAsync<Subscription>($"subscriptions/{SubscriptionId}", cancellationToken);
 
         public IInvoiceApi Invoice(Guid invoiceId) {
             var invoiceApi = _invoiceApi.Value;
@@ -90,12 +90,12 @@ namespace Incontrl.Net.Services
             return invoicesApi;
         }
 
-        public ISubscriptionInvoiceTypeApi InvoiceType(Guid invoiceTypeId) {
-            var subscriptionInvoiceTypeApi = _subscriptionInvoiceTypeApi.Value;
-            subscriptionInvoiceTypeApi.SubscriptionId = SubscriptionId;
-            subscriptionInvoiceTypeApi.InvoiceTypeId = invoiceTypeId.ToString();
+        public IInvoiceTypeApi InvoiceType(Guid invoiceTypeId) {
+            var invoiceTypeApi = _invoiceTypeApi.Value;
+            invoiceTypeApi.SubscriptionId = SubscriptionId;
+            invoiceTypeApi.InvoiceTypeId = invoiceTypeId.ToString();
 
-            return subscriptionInvoiceTypeApi;
+            return invoiceTypeApi;
         }
 
         public IInvoiceTypesApi InvoiceTypes() {

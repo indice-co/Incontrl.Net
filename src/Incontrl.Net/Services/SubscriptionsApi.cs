@@ -14,9 +14,9 @@ namespace Incontrl.Net.Services
         public SubscriptionsApi(ClientBase clientBase) => _clientBase = clientBase;
 
         public async Task<Subscription> CreateAsync(CreateSubscriptionRequest subscription, CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.PostAsync<CreateSubscriptionRequest, Subscription>(Api.SUBSCRIPTION_ENDPOINTS_PREFIX, subscription, cancellationToken);
+            await _clientBase.PostAsync<CreateSubscriptionRequest, Subscription>("subscriptions", subscription, cancellationToken);
 
         public async Task<ResultSet<Subscription>> ListAsync(ListOptions<SubscriptionListFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.GetAsync<ResultSet<Subscription>>(Api.SUBSCRIPTION_ENDPOINTS_PREFIX, options, cancellationToken);
+            await _clientBase.GetAsync<ResultSet<Subscription>>("subscriptions", options, cancellationToken);
     }
 }

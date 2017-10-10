@@ -19,7 +19,7 @@ namespace Incontrl.Net.Models
         /// <summary>
         /// Subscription status.
         /// </summary>
-        public StatusOfSubscription Status { get; set; }
+        public SubscriptionStatus Status { get; set; }
 
         /// <summary>
         /// The company entity assosiated with the subscription.

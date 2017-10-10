@@ -1,6 +1,6 @@
 ﻿namespace Incontrl.Net.Models
 {
-    public class UpdateInvoiceStatusRequest
+    public class InvoiceStatusResponse
     {
         public InvoiceStatus Status { get; set; }
     }

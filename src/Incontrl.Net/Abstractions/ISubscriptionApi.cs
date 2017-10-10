@@ -18,7 +18,7 @@ namespace Incontrl.Net.Abstractions
         IInvoicesApi Invoices();
         IInvoiceApi Invoice(Guid invoiceId);
         IInvoiceTypesApi InvoiceTypes();
-        ISubscriptionInvoiceTypeApi InvoiceType(Guid invoiceTypeId);
+        IInvoiceTypeApi InvoiceType(Guid invoiceTypeId);
         IOrganisationsApi Organisations();
         IOrganisationApi Organisation(Guid organisationId);
         IProductsApi Products();

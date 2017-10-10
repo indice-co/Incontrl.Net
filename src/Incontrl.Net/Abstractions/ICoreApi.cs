@@ -12,5 +12,6 @@ namespace Incontrl.Net.Abstractions
         ISubscriptionApi Subscription(Guid subscriptionId);
         ISubscriptionApi Subscription(string subscriptionAlias);
         ILicenseApi License();
+        ICoreApi Configure(string apiAddress, string authorityAddress = null);
     }
 }

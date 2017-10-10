@@ -9,7 +9,7 @@ namespace Incontrl.Net.Abstractions
     public interface IInvoiceTypesApi
     {
         string SubscriptionId { get; set; }
-        Task<SubscriptionInvoiceType> CreateAsync(CreateInvoiceTypeRequest invoiceType, CancellationToken cancellationToken = default(CancellationToken));
-        Task<ResultSet<SubscriptionInvoiceType>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<InvoiceType> CreateAsync(CreateInvoiceTypeRequest invoiceType, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ResultSet<InvoiceType>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

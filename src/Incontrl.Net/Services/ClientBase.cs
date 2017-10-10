@@ -23,6 +23,12 @@ namespace Incontrl.Net.Services
         private string _apiKey;
         private HttpMessageHandler _innerHttpClientHandler;
 
+        public Uri AuthorityAddress { get; set; }
+        public Uri ApiAddress {
+            get => _client.BaseAddress;
+            set => _client.BaseAddress = value;
+        }
+
         public ClientBase(string address, string appId, string apiKey) : this(address, appId, apiKey, new HttpClientHandler()) { }
 
         public ClientBase(string address, string appId, string apiKey, HttpMessageHandler innerHttpClientHandler) {
@@ -42,10 +48,12 @@ namespace Incontrl.Net.Services
             _client = _client ?? new HttpClient(innerHttpClientHandler) {
                 BaseAddress = new Uri(address)
             };
+
+            AuthorityAddress = new Uri(IdentityServerConstants.AUTHORITY);
         }
 
         public async Task RequestResourceOwnerPasswordAsync(string userName, string password) {
-            var discoveryResponse = await DiscoveryClient.GetAsync(IdentityServerConstants.AUTHORITY);
+            var discoveryResponse = await DiscoveryClient.GetAsync(AuthorityAddress.AbsoluteUri);
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
             var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(userName, password, Api.RESOURCE_NAME);
 
@@ -57,7 +65,7 @@ namespace Incontrl.Net.Services
         }
 
         public async Task RequestClientCredentialsAsync() {
-            var discoveryResponse = await DiscoveryClient.GetAsync(IdentityServerConstants.AUTHORITY);
+            var discoveryResponse = await DiscoveryClient.GetAsync(AuthorityAddress.AbsoluteUri);
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
             var tokenResponse = await tokenClient.RequestClientCredentialsAsync(Api.RESOURCE_NAME);
 
@@ -69,7 +77,7 @@ namespace Incontrl.Net.Services
         }
 
         public async Task RequestRefreshTokenAsync(string refreshToken) {
-            var discoveryResponse = await DiscoveryClient.GetAsync(IdentityServerConstants.AUTHORITY);
+            var discoveryResponse = await DiscoveryClient.GetAsync(AuthorityAddress.AbsoluteUri);
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
             var tokenResponse = await tokenClient.RequestRefreshTokenAsync(refreshToken);
 
@@ -195,9 +203,9 @@ namespace Incontrl.Net.Services
         private static void HandleHttpError<TResponse>(JsonResponse<TResponse> httpResponse) {
             switch (httpResponse.HttpErrorStatusCode) {
                 case HttpStatusCode.Forbidden:
-                    throw new IncontrlHttpForbiddenException($"It seems that you have no right to access this resource. Reason Phrase: {httpResponse.HttpErrorReason}");
+                    throw new IncontrlHttpForbiddenException($"It seems that you have no right to access this resource. Reason Phrase: \\n{httpResponse.HttpErrorReason}");
                 case HttpStatusCode.Unauthorized:
-                    throw new IncontrlHttpUnauthorizedException($"It seems that your credentials are not correct. Reason Phrase: {httpResponse.HttpErrorReason}");
+                    throw new IncontrlHttpUnauthorizedException($"It seems that your credentials are not correct. Reason Phrase: \\n{httpResponse.HttpErrorReason}");
                 case HttpStatusCode.BadRequest:
                     throw new IncontrlHttpBadRequestException(httpResponse.HttpErrorReason, httpResponse.Errors);
             }

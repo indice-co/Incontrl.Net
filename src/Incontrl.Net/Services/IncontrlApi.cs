@@ -27,6 +27,13 @@ namespace Incontrl.Net
             _licenseApi = new Lazy<ILicenseApi>(() => new LicenseApi(_clientBase));
         }
 
+        public ICoreApi Configure(string apiAddress, string authorityAddress = null) {
+            _clientBase.ApiAddress = new Uri(apiAddress);
+            if (authorityAddress != null)
+                _clientBase.AuthorityAddress = new Uri(authorityAddress);
+            return this;
+        }
+
         public ILicenseApi License() => _licenseApi.Value;
         public Task LoginAsync(string userName, string password) => _clientBase.RequestResourceOwnerPasswordAsync(userName, password);
         public Task LoginAsync() => _clientBase.RequestClientCredentialsAsync();

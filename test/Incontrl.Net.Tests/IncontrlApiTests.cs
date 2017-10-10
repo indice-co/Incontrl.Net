@@ -22,11 +22,11 @@ namespace Incontrl.Net.Tests
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables()
                 // Configure your user secrets in the following location. You may need to create the directory first.
-                // %APPDATA%\microsoft\UserSecrets\77780817-305E-4CDC-8256-635C6538D2F3\secrets.json
                 .AddUserSecrets<IncontrlApiTests>();
 
             _configuration = builder.Build();
             _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"]);
+            _api.Configure("http://api-vnext.incontrl.io", "https://incontrl.io");
         }
 
         [Fact]

@@ -17,9 +17,9 @@ namespace Incontrl.Net.Services
         public string InvoiceId { get; set; }
 
         public async Task<Tracker> CreateAsync(CreateInvoiceTrackingRequest tracking, CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.PostAsync<CreateInvoiceTrackingRequest, Tracker>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/invoices/{InvoiceId}/trackings", tracking, cancellationToken);
+            await _clientBase.PostAsync<CreateInvoiceTrackingRequest, Tracker>($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}/trackings", tracking, cancellationToken);
 
         public async Task<ResultSet<InvoiceTracking>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.GetAsync<ResultSet<InvoiceTracking>>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/invoices/{InvoiceId}/trackings", cancellationToken);
+            await _clientBase.GetAsync<ResultSet<InvoiceTracking>>($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}/trackings", cancellationToken);
     }
 }

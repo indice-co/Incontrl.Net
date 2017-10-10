@@ -9,7 +9,7 @@ namespace Incontrl.Net.Models
         public int? Number { get; set; }
         public DateTime? Date { get; set; }
         public DateTime? DueDate { get; set; }
-        public StatusOfInvoice? Status { get; set; }
+        public InvoiceStatus? Status { get; set; }
         public string CurrencyCode { get; set; }
         public double? CurrencyRate { get; set; } = 1;
         public Recipient Recipient { get; set; }

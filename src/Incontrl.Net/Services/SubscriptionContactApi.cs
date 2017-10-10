@@ -16,7 +16,7 @@ namespace Incontrl.Net.Services
         public string SubscriptionId { get; set; }
 
         public async Task<Contact> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.GetAsync<Contact>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/contact", cancellationToken);
+            await _clientBase.GetAsync<Contact>($"subscriptions/{SubscriptionId}/contact", cancellationToken);
 
         public Task<Contact> UpdateAsync(UpdateContactRequest contact, CancellationToken cancellationToken = default(CancellationToken)) {
             throw new NotImplementedException();

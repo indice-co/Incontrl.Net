@@ -132,7 +132,7 @@ namespace Incontrl.Net.Tests
                                      .Invoice(invoiceId)
                                      .Status()
                                      .UpdateAsync(new UpdateInvoiceStatusRequest {
-                                         Status = StatusOfInvoice.Void
+                                         Status = InvoiceStatus.Void
                                      });
 
             var invoiceTrackings = await api.Subscription(subscriptionId)
@@ -173,7 +173,7 @@ namespace Incontrl.Net.Tests
 
             subscriptionInvoiceType = await api.Subscription(subscriptionId)
                                                .InvoiceType(invoiceTypeId)
-                                               .UpdateAsync(new UpdateSubscriptionInvoiceTypeRequest { });
+                                               .UpdateAsync(new UpdateInvoiceTypeRequest { });
 
             await api.Subscription(subscriptionId)
                      .InvoiceType(invoiceTypeId)

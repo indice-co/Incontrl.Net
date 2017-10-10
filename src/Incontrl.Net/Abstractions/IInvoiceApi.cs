@@ -15,6 +15,6 @@ namespace Incontrl.Net.Abstractions
         IInvoiceDocumentApi As(InvoiceFormat format);
         IInvoiceStatusApi Status();
         IInvoiceTrackingApi Trackings();
-        IInvoiceTypeApi Type();
+        IInvoiceInvoiceTypeApi Type();
     }
 }

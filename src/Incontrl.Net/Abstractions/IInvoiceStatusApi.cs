@@ -10,6 +10,6 @@ namespace Incontrl.Net.Abstractions
         string SubscriptionId { get; set; }
         string InvoiceId { get; set; }
         Task<InvoiceStatus> GetAsync(CancellationToken cancellationToken = default(CancellationToken));
-        Task<InvoiceStatus> UpdateAsync(UpdateInvoiceStatusRequest status, CancellationToken cancellationToken = default(CancellationToken));
+        Task<InvoiceStatus> UpdateAsync(InvoiceStatus status, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

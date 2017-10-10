@@ -1,10 +1,13 @@
-﻿using System;
-
-namespace Incontrl.Net.Models
+﻿namespace Incontrl.Net.Models
 {
-    public class InvoiceStatus
+    public enum InvoiceStatus : short
     {
-        public Guid Id { get; set; }
-        public StatusOfInvoice Status { get; set; }
+        Draft = 0,
+        Issued = 1,
+        Overdue = 2,
+        Partial = 3,
+        Paid = 4,
+        Void = 5,
+        Deleted = 6
     }
 }
