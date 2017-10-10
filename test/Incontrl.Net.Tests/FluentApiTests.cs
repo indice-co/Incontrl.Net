@@ -65,7 +65,7 @@ namespace Incontrl.Net.Tests
             // Update a subscription's status.
             status = await api.Subscription(subscriptionId)
                               .Status()
-                              .UpdateAsync(new UpdateSubscriptionStatusRequest { });
+                              .UpdateAsync(new SubscriptionStatus { });
             #endregion
 
             #region Contacts
@@ -131,9 +131,7 @@ namespace Incontrl.Net.Tests
             invoiceStatus = await api.Subscription(subscriptionId)
                                      .Invoice(invoiceId)
                                      .Status()
-                                     .UpdateAsync(new UpdateInvoiceStatusRequest {
-                                         Status = InvoiceStatus.Void
-                                     });
+                                     .UpdateAsync(new InvoiceStatus { });
 
             var invoiceTrackings = await api.Subscription(subscriptionId)
                                             .Invoice(invoiceId)
