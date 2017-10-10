@@ -16,6 +16,7 @@
     <PackageReleaseNotes>
       First release
     </PackageReleaseNotes>
+    <PackageIconUrl>https://github.com/indice-co/Incontrl.Net/blob/master/icon/icon-128.png?raw=true</PackageIconUrl>
     <PackageProjectUrl>https://github.com/indice-co/Incontrl.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/indice-co/Incontrl.Net/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
