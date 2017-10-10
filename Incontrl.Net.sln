@@ -11,6 +11,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{21D22BE9-C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incontrl.Net.Tests", "test\Incontrl.Net.Tests\Incontrl.Net.Tests.csproj", "{EFBB0D92-1965-4939-B19B-CD5BE4C4A6CD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{D1C761FA-BAF9-4581-BFB0-0229DF597A1A}"
+	ProjectSection(SolutionItems) = preProject
+		icon\icon-128.png = icon\icon-128.png
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
