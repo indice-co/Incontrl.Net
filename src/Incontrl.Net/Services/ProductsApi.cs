@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Incontrl.Net.Abstract;
+using Incontrl.Net.Abstractions;
 using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 using Incontrl.Net.Types;
@@ -15,10 +15,10 @@ namespace Incontrl.Net.Services
 
         public string SubscriptionId { get; set; }
 
-        public async Task<JsonResponse<Product>> CreateAsync(CreateProductRequest product, CancellationToken cancellationToken = default(CancellationToken)) => 
+        public async Task<Product> CreateAsync(CreateProductRequest product, CancellationToken cancellationToken = default(CancellationToken)) => 
             await _clientBase.PostAsync<CreateProductRequest, Product>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/products", product, cancellationToken);
 
-        public async Task<JsonResponse<ResultSet<Product>>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
+        public async Task<ResultSet<Product>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
             await _clientBase.GetAsync<ResultSet<Product>>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/products", options, cancellationToken);
     }
 }

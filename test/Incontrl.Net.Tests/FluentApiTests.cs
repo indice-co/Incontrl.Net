@@ -8,7 +8,7 @@ namespace Incontrl.Net.Tests
 {
     public class FluentApiTests
     {
-        [Fact]
+        [Fact(Skip = "This is not a test")]
         public async Task SyntaxTest() {
             var api = new IncontrlApi("{my-app-id}", "{my-api-key}");
             var subscriptionId = Guid.NewGuid();

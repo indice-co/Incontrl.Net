@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Incontrl.Net.Abstract;
+using Incontrl.Net.Abstractions;
 using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 
@@ -29,7 +29,7 @@ namespace Incontrl.Net.Services
         public async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             await _clientBase.DeleteAsync($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/invoices/{InvoiceId}", cancellationToken);
 
-        public async Task<JsonResponse<Invoice>> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+        public async Task<Invoice> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             await _clientBase.GetAsync<Invoice>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/invoices/{InvoiceId}", cancellationToken);
 
         public IInvoiceDocumentApi As(InvoiceFormat format) {
@@ -41,7 +41,7 @@ namespace Incontrl.Net.Services
             return invoiceDocumentApi;
         }
 
-        public async Task<JsonResponse<Invoice>> UpdateAsync(UpdateInvoiceRequest invoice, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public async Task<Invoice> UpdateAsync(UpdateInvoiceRequest invoice, CancellationToken cancellationToken = default(CancellationToken)) =>
             await _clientBase.PutAsync<UpdateInvoiceRequest, Invoice>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/invoices/{InvoiceId}", invoice, cancellationToken);
 
         public IInvoiceStatusApi Status() {

@@ -10,11 +10,14 @@ namespace Incontrl.Net.Types
     {
         public class Sorting
         {
-            internal const string ASC = nameof(ASC);
-            internal const string DESC = nameof(DESC);
+            const string ASC = nameof(ASC);
+            const string DESC = nameof(DESC);
             public string Path { get; set; }
             public string Direction { get; set; }
-            public override string ToString() => $"{Path} ({Direction})";
+
+            public override string ToString() {
+                return $"{Path} ({Direction})";
+            }
 
             public Sorting NextState() {
                 switch (Direction) {
@@ -23,7 +26,7 @@ namespace Incontrl.Net.Types
                     case DESC:
                         return null;
                     default:
-                        throw new Exception($"Unexpected direction: {Direction}.");
+                        throw new Exception($"unexpected direction {Direction}");
                 }
             }
 
@@ -31,14 +34,11 @@ namespace Incontrl.Net.Types
                 if (string.IsNullOrWhiteSpace(text)) {
                     throw new ArgumentOutOfRangeException(nameof(text));
                 }
-
                 var raw = text.Trim();
-
                 var sort = new Sorting {
                     Path = raw.TrimEnd('-', '+'),
                     Direction = raw.EndsWith("-", StringComparison.OrdinalIgnoreCase) ? DESC : ASC
                 };
-
                 return sort;
             }
         }
@@ -56,25 +56,12 @@ namespace Incontrl.Net.Types
 
         public IEnumerable<Sorting> GetSortings() {
             var list = (Sort ?? string.Empty).Split(',');
-
             foreach (var item in list) {
                 if (string.IsNullOrWhiteSpace(item)) {
                     continue;
                 }
-
                 yield return Sorting.Parse(item);
             }
-        }
-
-        public void SortBy(string path, string direction) {
-            var list = GetSortings().ToList();
-
-            list.Add(new Sorting {
-                Path = path,
-                Direction = Sorting.DESC.Equals(direction, StringComparison.InvariantCultureIgnoreCase) ? Sorting.DESC : Sorting.ASC
-            });
-
-            Sort = string.Join(",", list);
         }
 
         public virtual IDictionary<string, object> ToDictionary() {
@@ -82,15 +69,10 @@ namespace Incontrl.Net.Types
                 { nameof(Page).ToLower(), Page.ToString() },
                 { nameof(Size).ToLower(), Size.ToString() },
             };
-
-            if (!string.IsNullOrWhiteSpace(Sort)) {
+            if (!string.IsNullOrWhiteSpace(Sort))
                 dictionary.Add(nameof(Sort).ToLower(), Sort);
-            }
-
-            if (!string.IsNullOrWhiteSpace(Search)) {
+            if (!string.IsNullOrWhiteSpace(Search))
                 dictionary.Add(nameof(Search).ToLower(), Search);
-            }
-
             return dictionary;
         }
     }
@@ -105,24 +87,23 @@ namespace Incontrl.Net.Types
 
         public override IDictionary<string, object> ToDictionary() {
             var dictionary = base.ToDictionary();
+
             return dictionary.Merge(Filter, typeof(TFilter), "filter.");
         }
+
+
     }
 
     public static class ListOptionsExtensions
     {
         public static IDictionary<string, object> ToDictionary<TReplacements>(this ListOptions options, TReplacements replacements) where TReplacements : class {
-            if (null == replacements) {
+            if (null == replacements)
                 throw new ArgumentNullException(nameof(replacements));
-            }
-
             var overrides = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase).Merge(replacements, typeof(TReplacements));
             var sortings = options.GetSortings();
             var sortKey = nameof(options.Sort).ToLower();
-
             if (overrides.ContainsKey(sortKey)) {
                 var sort = overrides[sortKey].ToString();
-
                 if (sortings.Any(s => s.Path.Equals(sort))) {
                     overrides[sortKey] = sortings.Select(s => s.Path.Equals(sort) ? s.NextState() : s).Where(s => s != null).ToUriString();
                 } else {
@@ -130,94 +111,100 @@ namespace Incontrl.Net.Types
                 }
             }
 
+            // now replace accordingly.
             return options.ToDictionary().Merge(overrides, null);
         }
-        public static IDictionary<string, object> Merge(this IDictionary<string, object> dictionary, object instance, Type type, string prefix = null) {
+        public static IDictionary<string, object> Merge(this IDictionary<string, object> dictionary, object instance, Type type = null, string prefix = null) {
             if (instance is IDictionary<string, object>) {
                 var other = instance as IDictionary<string, object>;
-
                 foreach (var keyValue in other) {
-                    if (dictionary.ContainsKey(keyValue.Key)) {
+                    if (dictionary.ContainsKey(keyValue.Key))
                         dictionary[keyValue.Key] = keyValue.Value;
-                    } else {
+                    else
                         dictionary.Add(keyValue.Key, keyValue.Value);
-                    }
                 }
-
                 return dictionary;
             }
-
+            type = type ?? instance?.GetType();
             foreach (var prop in type.GetRuntimeProperties()) {
                 var value = prop.GetValue(instance);
-
                 if (value != null) {
                     var textValue = GetStructValue(prop.PropertyType, value);
                     var key = $"{prefix}{prop.Name}";
-
                     if (!string.IsNullOrEmpty(textValue)) {
-                        if (dictionary.ContainsKey(key)) {
+                        if (dictionary.ContainsKey(key))
                             dictionary[key] = textValue;
-                        } else {
+                        else
                             dictionary.Add(key, textValue);
-                        }
-
                         continue;
                     }
-
                     var itemType = default(Type);
-
-                    if (prop.PropertyType.IsArray || (itemType = prop.PropertyType.GetElementType()) != null) {
+                    if (prop.PropertyType.IsArray ||
+                        (itemType = prop.PropertyType.GetElementType()) != null) {
                         var array = ((IEnumerable)value).Cast<object>().Select(i => GetStructValue(itemType ?? i.GetType(), i)).ToArray();
-
-                        if (dictionary.ContainsKey(key)) {
+                        if (dictionary.ContainsKey(key))
                             dictionary[key] = array;
-                        } else {
+                        else
                             dictionary.Add(key, array);
-                        }
                     }
                 }
             }
-
             return dictionary;
         }
 
-        public static string ToUriString(this IEnumerable<ListOptions.Sorting> source) => string.Join(",", source.Select(s => $"{s.Path}{(s.Direction == "DESC" ? "-" : "")}"));
+        public static string ToUriString(this IEnumerable<ListOptions.Sorting> source) {
+            return string.Join(",", source.Select(s => $"{s.Path}{(s.Direction == "DESC" ? "-" : "")}"));
+        }
+
 
         private static string GetStructValue(Type type, object value) {
             var textValue = string.Empty;
-
             if (type == typeof(DateTime?) && ((DateTime?)value).HasValue) {
                 textValue = ((DateTime?)value).Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
             } else if (type == typeof(DateTime) && ((DateTime)value) != default(DateTime)) {
                 textValue = ((DateTime)value).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
-            } else if (type == typeof(string)
-                    || type == typeof(int)
-                    || type == typeof(int?)
-                    || type == typeof(decimal)
-                    || type == typeof(decimal?)
-                    || type == typeof(double)
-                    || type == typeof(double?)
-                    || type == typeof(Guid)
-                    || type == typeof(Guid?)
-                    || type.GetTypeInfo().IsEnum) {
+            } else if (
+                type == typeof(string) ||
+                type == typeof(int) ||
+                type == typeof(int?) ||
+                type == typeof(decimal) ||
+                type == typeof(decimal?) ||
+                type == typeof(double) ||
+                type == typeof(double?) ||
+                type == typeof(Guid) ||
+                type == typeof(Guid?) ||
+                type.GetTypeInfo().IsEnum ||
+#if NETSTANDARD14
+                Nullable.GetUnderlyingType(type)?.GetTypeInfo().IsEnum == true) {
+#else
+                Nullable.GetUnderlyingType(type)?.IsEnum == true) {
+#endif
                 textValue = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}", value);
             }
-
             return textValue;
         }
 
-        public static IDictionary<string, string> AsRouteValues(this IDictionary<string, object> values) => values.ToDictionary(kv => kv.Key, kv => {
-            if (kv.Value == null) {
-                return null;
-            }
 
-            if (kv.Value.GetType().IsArray) {
-                return string.Join(",", (IList)kv.Value);
-            }
 
-            return kv.Value.ToString();
-        });
+        public static IEnumerable<KeyValuePair<string, string>> AsRouteValues(this IDictionary<string, object> values) {
+            return values.SelectMany(kv => {
+                if (kv.Value == null)
+                    return null;
+                if (kv.Value.GetType().IsArray) {
+                    if (kv.Key.ToLowerInvariant() == nameof(ListOptions.Sort).ToLowerInvariant())
+                        return new[] { new KeyValuePair<string, string>(kv.Key, string.Join(",", (IList)kv.Value)) };
 
-        public static IDictionary<string, string> AsRouteValues(this ListOptions options) => options.ToDictionary().AsRouteValues();
+                    return ((IList)kv.Value).Cast<object>().Select(x => new KeyValuePair<string, string>(kv.Key, x?.ToString()));
+                }
+                return new[] { new KeyValuePair<string, string>(kv.Key, kv.Value.ToString()) };
+            });
+        }
+
+
+
+        public static string ToFormUrlEncodedString(this IDictionary<string, object> values) {
+            var parameters = values.AsRouteValues();
+            return string.Join("&", parameters.Select(kv => $"{kv.Key}={kv.Value}"));
+        }
     }
 }

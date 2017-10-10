@@ -50,7 +50,7 @@ namespace Incontrl.Net.Services
             var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(userName, password, Api.RESOURCE_NAME);
 
             if (tokenResponse.IsError) {
-                HandleHttpError(tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason);
+                HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
 
             _client.SetBearerToken(tokenResponse.AccessToken);
@@ -62,7 +62,7 @@ namespace Incontrl.Net.Services
             var tokenResponse = await tokenClient.RequestClientCredentialsAsync(Api.RESOURCE_NAME);
 
             if (tokenResponse.IsError) {
-                HandleHttpError(tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason);
+                HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
 
             _client.SetBearerToken(tokenResponse.AccessToken);
@@ -74,17 +74,17 @@ namespace Incontrl.Net.Services
             var tokenResponse = await tokenClient.RequestRefreshTokenAsync(refreshToken);
 
             if (tokenResponse.IsError) {
-                HandleHttpError(tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason);
+                HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
 
             _client.SetBearerToken(tokenResponse.AccessToken);
         }
 
-        public async Task<JsonResponse<TResponse>> GetAsync<TResponse>(string requestUri, object query = null, CancellationToken cancellationToken = default(CancellationToken)) {
+        public async Task<TResponse> GetAsync<TResponse>(string requestUri, object query = null, CancellationToken cancellationToken = default(CancellationToken)) {
             var queryString = string.Empty;
 
             if (query != null) {
-                queryString = $"?{string.Join("&", ObjectToDictionary(query).Select(kv => string.Format("{0}={1}", kv.Key, kv.Value)))}";
+                queryString = "?" + new Dictionary<string, object>().Merge(query).ToFormUrlEncodedString();
             }
 
             var response = default(JsonResponse<TResponse>);
@@ -95,17 +95,18 @@ namespace Incontrl.Net.Services
             if (httpMessage.IsSuccessStatusCode) {
                 response = new JsonResponse<TResponse>(content);
             } else {
-                HandleHttpError(httpMessage.StatusCode, httpMessage.ReasonPhrase);
+                response = new JsonResponse<TResponse>(content, httpMessage.StatusCode, httpMessage.ReasonPhrase);
+                HandleHttpError(response);
             }
 
-            return response;
+            return response.Data;
         }
 
         public async Task<FileResult> GetStreamAsync(string requestUri, object query = null, CancellationToken cancellationToken = default(CancellationToken)) {
             var queryString = string.Empty;
 
             if (query != null) {
-                queryString = $"?{string.Join("&", ObjectToDictionary(query).Select(kv => string.Format("{0}={1}", kv.Key, kv.Value)))}";
+                queryString = "?" + new Dictionary<string, object>().Merge(query).ToFormUrlEncodedString();
             }
 
             FileResult response = null;
@@ -122,7 +123,7 @@ namespace Incontrl.Net.Services
             return response;
         }
 
-        public async Task<JsonResponse<TResponse>> PostAsync<TRequest, TResponse>(string requestUri, TRequest model, CancellationToken cancellationToken = default(CancellationToken)) {
+        public async Task<TResponse> PostAsync<TRequest, TResponse>(string requestUri, TRequest model, CancellationToken cancellationToken = default(CancellationToken)) {
             var response = default(JsonResponse<TResponse>);
             var httpMessage = await _client.PostAsync(requestUri, JsonRequest.For(model), cancellationToken).ConfigureAwait(false);
             var content = await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -130,10 +131,11 @@ namespace Incontrl.Net.Services
             if (httpMessage.IsSuccessStatusCode) {
                 response = new JsonResponse<TResponse>(content);
             } else {
-                HandleHttpError(httpMessage.StatusCode, httpMessage.ReasonPhrase);
+                response = new JsonResponse<TResponse>(content, httpMessage.StatusCode, httpMessage.ReasonPhrase);
+                HandleHttpError(response);
             }
 
-            return response;
+            return response.Data;
         }
 
         public async Task PostFileAsync(string requestUri, byte[] fileContent, string fileName, CancellationToken cancellationToken = default(CancellationToken)) {
@@ -146,7 +148,7 @@ namespace Incontrl.Net.Services
             }
         }
 
-        public async Task<JsonResponse<TResponse>> PostAsync<TResponse>(string requestUri, MultipartContent multiPartContent, CancellationToken cancellationToken = default(CancellationToken)) {
+        public async Task<TResponse> PostAsync<TResponse>(string requestUri, MultipartContent multiPartContent, CancellationToken cancellationToken = default(CancellationToken)) {
             var response = default(JsonResponse<TResponse>);
             var uri = string.Format(requestUri);
             var httpMessage = await _client.PostAsync(requestUri, multiPartContent, cancellationToken).ConfigureAwait(false);
@@ -155,13 +157,14 @@ namespace Incontrl.Net.Services
             if (httpMessage.IsSuccessStatusCode) {
                 response = new JsonResponse<TResponse>(content);
             } else {
-                HandleHttpError(httpMessage.StatusCode, httpMessage.ReasonPhrase);
+                response = new JsonResponse<TResponse>(content, httpMessage.StatusCode, httpMessage.ReasonPhrase);
+                HandleHttpError(response);
             }
 
-            return response;
+            return response.Data;
         }
 
-        public async Task<JsonResponse<TResponse>> PutAsync<TRequest, TResponse>(string requestUri, TRequest model, CancellationToken cancellationToken = default(CancellationToken)) {
+        public async Task<TResponse> PutAsync<TRequest, TResponse>(string requestUri, TRequest model, CancellationToken cancellationToken = default(CancellationToken)) {
             var response = default(JsonResponse<TResponse>);
             var httpMessage = await _client.PutAsync(requestUri, JsonRequest.For(model), cancellationToken).ConfigureAwait(false);
             var content = await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -169,57 +172,34 @@ namespace Incontrl.Net.Services
             if (httpMessage.IsSuccessStatusCode) {
                 response = new JsonResponse<TResponse>(content);
             } else {
-                HandleHttpError(httpMessage.StatusCode, httpMessage.ReasonPhrase);
+                response = new JsonResponse<TResponse>(content, httpMessage.StatusCode, httpMessage.ReasonPhrase);
+                HandleHttpError(response);
             }
 
-            return response;
+            return response.Data;
         }
 
         public async Task DeleteAsync(string requestUri, object query = null, CancellationToken cancellationToken = default(CancellationToken)) {
             var queryString = string.Empty;
 
             if (query != null) {
-                queryString = $"?{string.Join("&", ObjectToDictionary(query).Select(kv => string.Format("{0}={1}", kv.Key, kv.Value)))}";
+                queryString = "?" + new Dictionary<string, object>().Merge(query).ToFormUrlEncodedString();
             }
 
             await _client.DeleteAsync(requestUri, cancellationToken).ConfigureAwait(false);
         }
 
         #region Private Methods
-        private static Dictionary<string, string> ObjectToDictionary(object values) {
-            if (values == null) {
-                return null;
-            }
 
-            if (values is Dictionary<string, string> dictionary) {
-                return dictionary;
-            }
 
-            dictionary = new Dictionary<string, string>();
-
-            foreach (var property in values.GetType().GetRuntimeProperties()) {
-                var value = property.GetValue(values);
-
-                if (value != null) {
-                    var textValue = value.ToString();
-
-                    if (!string.IsNullOrEmpty(textValue)) {
-                        dictionary.Add(property.Name, textValue);
-                    }
-                }
-            }
-
-            return dictionary;
-        }
-
-        private static void HandleHttpError(HttpStatusCode httpStatusCode, string reasonPhrase) {
-            switch (httpStatusCode) {
+        private static void HandleHttpError<TResponse>(JsonResponse<TResponse> httpResponse) {
+            switch (httpResponse.HttpErrorStatusCode) {
                 case HttpStatusCode.Forbidden:
-                    throw new IncontrlException($"It seems that you have no right to access this resource. Reason Phrase: {reasonPhrase}");
+                    throw new IncontrlHttpForbiddenException($"It seems that you have no right to access this resource. Reason Phrase: {httpResponse.HttpErrorReason}");
                 case HttpStatusCode.Unauthorized:
-                    throw new IncontrlException($"It seems that your credentials are not correct. Reason Phrase: {reasonPhrase}");
+                    throw new IncontrlHttpUnauthorizedException($"It seems that your credentials are not correct. Reason Phrase: {httpResponse.HttpErrorReason}");
                 case HttpStatusCode.BadRequest:
-                    throw new IncontrlException($"The request you performed is not valid. Reason Phrase: {reasonPhrase}");
+                    throw new IncontrlHttpBadRequestException(httpResponse.HttpErrorReason, httpResponse.Errors);
             }
         }
 

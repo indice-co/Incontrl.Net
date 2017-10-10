@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Incontrl.Net.Abstract;
+using Incontrl.Net.Abstractions;
 using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 using Incontrl.Net.Types;
@@ -16,7 +16,7 @@ namespace Incontrl.Net.Services
         public string SubscriptionId { get; set; }
         public string ContactId { get; set; }
 
-        public async Task<JsonResponse<ResultSet<Organisation>>> GetAsync(ListOptions<OrganisationFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
+        public async Task<ResultSet<Organisation>> GetAsync(ListOptions<OrganisationFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
             await _clientBase.GetAsync<ResultSet<Organisation>>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/contacts/{ContactId}/companies", options, cancellationToken);
     }
 }

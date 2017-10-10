@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Incontrl.Net.Abstract;
+using Incontrl.Net.Abstractions;
 using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 
@@ -72,7 +72,7 @@ namespace Incontrl.Net.Services
             return subscriptionContactsApi;
         }
 
-        public async Task<JsonResponse<Subscription>> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+        public async Task<Subscription> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             await _clientBase.GetAsync<Subscription>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}", cancellationToken);
 
         public IInvoiceApi Invoice(Guid invoiceId) {

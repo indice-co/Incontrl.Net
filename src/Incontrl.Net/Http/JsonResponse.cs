@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
@@ -6,6 +8,15 @@ using Newtonsoft.Json.Linq;
 
 namespace Incontrl.Net.Http
 {
+    public class JsonResponse : JsonResponse<string>
+    {
+        public JsonResponse(string raw) : base(raw) {
+        }
+
+        public JsonResponse(string raw, HttpStatusCode statusCode, string reason) : base(raw, statusCode, reason) {
+        }
+    }
+
     public class JsonResponse<T>
     {
         // Private variables.
@@ -42,48 +53,55 @@ namespace Incontrl.Net.Http
 
             try {
                 _errors = new JObject() { };
-
                 if (!string.IsNullOrEmpty(raw) && raw.StartsWith("{")) {
                     _errors = JObject.Parse(raw);
                 } else if (!string.IsNullOrEmpty(raw) && raw.StartsWith("<")) {
-                    // Errors are HTML so do nothing.
+                    // errors are html so do nothing
                 } else if (!string.IsNullOrEmpty(raw)) {
-                    _errors = JObject.Parse($@"{{""mesage"": ""{raw}""}}");
+                    _errors = JObject.Parse($@"{{""message"": """"}}");
+                    _errors["message"] = raw;
                 }
-            } catch (Exception exception) {
-                throw new InvalidOperationException($"Invalid JSON response: {exception}");
+                //Debug.WriteLine(_Errors);
+            } catch (Exception ex) {
+                throw new InvalidOperationException("Invalid JSON response", ex);
             }
         }
 
-        public string HttpErrorReason {
+        public string[] Errors {
             get {
+                var errors = new List<string>();
                 if (IsHttpError && _errors.Count > 0) {
                     if (_errors["ModelState"] != null) {
                         foreach (var item in _errors["ModelState"].Values()) {
                             foreach (var msg in item.Values<string>()) {
-                                new StringBuilder().AppendLine($"• {msg}");
+                                errors.Add(msg);
                             }
                         }
-
-                        return new StringBuilder().ToString();
+                        return errors.ToArray();
                     }
 
                     if (_errors["Message"] != null) {
-                        return _errors["Message"].ToString();
+                        return new[] { _errors["Message"].ToString() };
                     }
 
                     foreach (var item in _errors.Values()) {
+                        if (!item.HasValues) {
+                            errors.Add(item.Value<string>());
+                            continue;
+                        }
                         foreach (var msg in item.Values<string>()) {
-                            new StringBuilder().AppendLine($"• {msg}");
+                            errors.Add(msg);
                         }
                     }
 
-                    return new StringBuilder().ToString();
+                    return errors.ToArray();
 
                 }
 
-                return _httpErrorReason;
+                return new[] { _httpErrorReason };
             }
         }
+
+        public string HttpErrorReason => Errors.Aggregate(new StringBuilder(), (sb, msg) => sb.AppendLine($"• {msg}"), sb => sb.ToString());
     }
 }

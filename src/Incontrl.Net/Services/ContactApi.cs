@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Incontrl.Net.Abstract;
+using Incontrl.Net.Abstractions;
 using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 
@@ -28,10 +28,10 @@ namespace Incontrl.Net.Services
             return contactCompaniesApi;
         }
 
-        public async Task<JsonResponse<Contact>> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+        public async Task<Contact> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             await _clientBase.GetAsync<Contact>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/contacts/{ContactId}", cancellationToken);
 
-        public async Task<JsonResponse<Contact>> UpdateAsync(UpdateContactRequest contact, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public async Task<Contact> UpdateAsync(UpdateContactRequest contact, CancellationToken cancellationToken = default(CancellationToken)) =>
             await _clientBase.PutAsync<UpdateContactRequest, Contact>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/contacts/{ContactId}", contact, cancellationToken);
     }
 }

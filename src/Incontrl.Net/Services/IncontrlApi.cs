@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Incontrl.Net.Abstract;
+using Incontrl.Net.Abstractions;
 using Incontrl.Net.Services;
 
 namespace Incontrl.Net

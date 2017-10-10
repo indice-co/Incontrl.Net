@@ -41,7 +41,7 @@ namespace Incontrl.Net.Tests
                 var createdSubscription = await _api.Subscriptions()
                                                     .CreateAsync(newSubscription);
 
-                Assert.True(createdSubscription.Data != null);
+                Assert.True(createdSubscription != null);
             } else {
                 Assert.True(false);
             }
@@ -50,7 +50,7 @@ namespace Incontrl.Net.Tests
         [Fact]
         public async Task CanRetrieveLicense() {
             var licenseText = await _api.License().GetAsync();
-            Assert.True(!string.IsNullOrEmpty(licenseText.Data));
+            Assert.True(!string.IsNullOrEmpty(licenseText));
         }
 
         [Theory]
@@ -61,7 +61,7 @@ namespace Incontrl.Net.Tests
             var subscription = await _api.Subscription(Guid.Parse(subscriptionId))
                                          .GetAsync();
 
-            Assert.True(subscription.Data != null);
+            Assert.True(subscription != null);
         }
 
         [Theory]
@@ -73,7 +73,7 @@ namespace Incontrl.Net.Tests
                                     .Company()
                                     .GetAsync();
 
-            Assert.True(company.Data != null);
+            Assert.True(company != null);
         }
 
         [Theory]
@@ -88,7 +88,7 @@ namespace Incontrl.Net.Tests
                                          Size = 25
                                      });
 
-            Assert.True(contacts.Data != null);
+            Assert.True(contacts != null);
         }
 
         [Theory]
@@ -105,7 +105,7 @@ namespace Incontrl.Net.Tests
                                                .Contacts()
                                                .CreateAsync(newContact);
 
-                Assert.True(createdContact.Data != null);
+                Assert.True(createdContact != null);
             } else {
                 Assert.True(false);
             }
@@ -154,16 +154,16 @@ namespace Incontrl.Net.Tests
                                         .InvoiceType(Guid.Parse(invoiceTypeId))
                                         .GetAsync();
 
-            if (invoiceType.IsHttpError || invoiceType.Data == null) {
+            if (invoiceType == null) {
                 Assert.True(false, $"The invoice type with id {invoiceTypeId} could not be found.");
             }
 
             var stream = File.ReadAllBytes(templateFilePath);
 
             await _api.Subscription(Guid.Parse(subscriptionId))
-                      .InvoiceType(invoiceType.Data.Id)
+                      .InvoiceType(invoiceType.Id)
                       .Template()
-                      .UploadAsync(stream, invoiceType.Data.Template.Name);
+                      .UploadAsync(stream, invoiceType.Template.Name);
 
             Assert.True(true);
         }
@@ -182,7 +182,7 @@ namespace Incontrl.Net.Tests
                                                .Invoices()
                                                .CreateAsync(newInvoice);
 
-                Assert.True(createdInvoice.Data != null);
+                Assert.True(createdInvoice != null);
             } else {
                 Assert.True(false);
             }

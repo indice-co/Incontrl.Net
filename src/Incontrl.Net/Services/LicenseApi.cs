@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Incontrl.Net.Abstract;
+using Incontrl.Net.Abstractions;
 using Incontrl.Net.Http;
 
 namespace Incontrl.Net.Services
@@ -10,6 +10,6 @@ namespace Incontrl.Net.Services
 
         public LicenseApi(ClientBase clientBase) => _clientBase = clientBase;
 
-        public async Task<JsonResponse<string>> GetAsync() => await _clientBase.GetAsync<string>("license");
+        public async Task<string> GetAsync() => (await _clientBase.GetAsync<string>("license"));
     }
 }

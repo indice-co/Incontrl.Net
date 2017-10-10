@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 
-namespace Incontrl.Net.Abstract
+namespace Incontrl.Net.Abstractions
 {
     public interface ISubscriptionApi
     {
         string SubscriptionId { get; set; }
-        Task<JsonResponse<Subscription>> GetAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<Subscription> GetAsync(CancellationToken cancellationToken = default(CancellationToken));
         ISubscriptionCompanyApi Company();
         ISubscriptionStatusApi Status();
         IContactsApi Contacts();

@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Incontrl.Net.Http;
 
-namespace Incontrl.Net.Abstract
+namespace Incontrl.Net.Abstractions
 {
     public interface ILicenseApi
     {
-        Task<JsonResponse<string>> GetAsync();
+        Task<string> GetAsync();
     }
 }

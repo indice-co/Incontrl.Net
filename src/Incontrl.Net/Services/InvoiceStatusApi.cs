@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Incontrl.Net.Abstract;
+using Incontrl.Net.Abstractions;
 using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 
@@ -15,10 +15,10 @@ namespace Incontrl.Net.Services
         public string SubscriptionId { get; set; }
         public string InvoiceId { get; set; }
 
-        public async Task<JsonResponse<InvoiceStatus>> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
+        public async Task<InvoiceStatus> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
             await _clientBase.GetAsync<InvoiceStatus>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/invoices/{InvoiceId}/status", cancellationToken);
 
-        public async Task<JsonResponse<InvoiceStatus>> UpdateAsync(UpdateInvoiceStatusRequest status, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public async Task<InvoiceStatus> UpdateAsync(UpdateInvoiceStatusRequest status, CancellationToken cancellationToken = default(CancellationToken)) =>
             await _clientBase.PutAsync<UpdateInvoiceStatusRequest, InvoiceStatus>($"{Api.SUBSCRIPTION_ENDPOINTS_PREFIX}/{SubscriptionId}/invoices/{InvoiceId}/status", status, cancellationToken);
     }
 }
