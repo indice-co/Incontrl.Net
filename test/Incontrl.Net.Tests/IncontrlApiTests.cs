@@ -49,7 +49,9 @@ namespace Incontrl.Net.Tests
 
         [Fact]
         public async Task CanRetrieveLicense() {
-            var licenseText = await _api.License().GetAsync();
+            var licenseText = await _api.License()
+                                        .GetAsync();
+
             Assert.True(!string.IsNullOrEmpty(licenseText));
         }
 

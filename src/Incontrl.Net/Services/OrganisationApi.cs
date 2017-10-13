@@ -1,14 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Net.Abstractions;
-using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 
 namespace Incontrl.Net.Services
 {
     internal class OrganisationApi : IOrganisationApi
     {
-        private ClientBase _clientBase;
+        private readonly ClientBase _clientBase;
 
         public OrganisationApi(ClientBase clientBase) => _clientBase = clientBase;
 
@@ -18,7 +17,7 @@ namespace Incontrl.Net.Services
         public async Task<Organisation> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
             await _clientBase.GetAsync<Organisation>($"subscriptions/{SubscriptionId}/organisations/{OrganisationId}", cancellationToken);
 
-        public async Task<Organisation> UpdateAsync(UpdateOrganisationRequest organisation, CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.PutAsync<UpdateOrganisationRequest, Organisation>($"subscriptions/{SubscriptionId}/organisations/{OrganisationId}", organisation, cancellationToken);
+        public async Task<Organisation> UpdateAsync(UpdateOrganisationRequest request, CancellationToken cancellationToken = default(CancellationToken)) => 
+            await _clientBase.PutAsync<UpdateOrganisationRequest, Organisation>($"subscriptions/{SubscriptionId}/organisations/{OrganisationId}", request, cancellationToken);
     }
 }

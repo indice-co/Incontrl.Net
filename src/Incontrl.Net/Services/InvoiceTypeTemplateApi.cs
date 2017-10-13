@@ -7,7 +7,7 @@ namespace Incontrl.Net.Services
 {
     internal class InvoiceTypeTemplateApi : IInvoiceTypeTemplateApi
     {
-        private ClientBase _clientBase;
+        private readonly ClientBase _clientBase;
 
         public InvoiceTypeTemplateApi(ClientBase clientBase) => _clientBase = clientBase;
 

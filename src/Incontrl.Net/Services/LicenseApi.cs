@@ -1,12 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Incontrl.Net.Abstractions;
-using Incontrl.Net.Http;
 
 namespace Incontrl.Net.Services
 {
     internal class LicenseApi : ILicenseApi
     {
-        private ClientBase _clientBase;
+        private readonly ClientBase _clientBase;
 
         public LicenseApi(ClientBase clientBase) => _clientBase = clientBase;
 

@@ -7,7 +7,7 @@ namespace Incontrl.Net.Services
 {
     internal class InvoiceDocumentApi : IInvoiceDocumentApi
     {
-        private ClientBase _clientBase;
+        private readonly ClientBase _clientBase;
 
         public InvoiceDocumentApi(ClientBase clientBase) => _clientBase = clientBase;
 

@@ -2,27 +2,26 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Net.Abstractions;
-using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 
 namespace Incontrl.Net.Services
 {
     internal class SubscriptionApi : ISubscriptionApi
     {
-        private ClientBase _clientBase;
-        private Lazy<ISubscriptionContactApi> _subscriptionContactApi;
-        private Lazy<IContactsApi> _subscriptionContactsApi;
-        private Lazy<IContactApi> _contactApi;
-        private Lazy<ISubscriptionStatusApi> _subscriptionStatusApi;
-        private Lazy<ISubscriptionCompanyApi> _subscriptionCompanyApi;
-        private Lazy<IInvoicesApi> _invoicesApi;
-        private Lazy<IInvoiceApi> _invoiceApi;
-        private Lazy<IInvoiceTypesApi> _invoiceTypesApi;
-        private Lazy<IInvoiceTypeApi> _invoiceTypeApi;
-        private Lazy<IOrganisationsApi> _organisationsApi;
-        private Lazy<IOrganisationApi> _organisationApi;
-        private Lazy<IProductsApi> _productsApi;
-        private Lazy<IProductApi> _productApi;
+        private readonly ClientBase _clientBase;
+        private readonly Lazy<ISubscriptionContactApi> _subscriptionContactApi;
+        private readonly Lazy<IContactsApi> _subscriptionContactsApi;
+        private readonly Lazy<IContactApi> _contactApi;
+        private readonly Lazy<ISubscriptionStatusApi> _subscriptionStatusApi;
+        private readonly Lazy<ISubscriptionCompanyApi> _subscriptionCompanyApi;
+        private readonly Lazy<IInvoicesApi> _invoicesApi;
+        private readonly Lazy<IInvoiceApi> _invoiceApi;
+        private readonly Lazy<IInvoiceTypesApi> _invoiceTypesApi;
+        private readonly Lazy<IInvoiceTypeApi> _invoiceTypeApi;
+        private readonly Lazy<IOrganisationsApi> _organisationsApi;
+        private readonly Lazy<IOrganisationApi> _organisationApi;
+        private readonly Lazy<IProductsApi> _productsApi;
+        private readonly Lazy<IProductApi> _productApi;
 
         public SubscriptionApi(ClientBase clientBase) {
             _clientBase = clientBase;

@@ -2,18 +2,17 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Net.Abstractions;
-using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 
 namespace Incontrl.Net.Services
 {
     internal class InvoiceApi : IInvoiceApi
     {
-        private ClientBase _clientBase;
-        private Lazy<IInvoiceDocumentApi> _invoiceDocumentApi;
-        private Lazy<IInvoiceStatusApi> _invoiceStatusApi;
-        private Lazy<IInvoiceTrackingApi> _invoiceTrackingApi;
-        private Lazy<IInvoiceInvoiceTypeApi> _invoiceInvoiceTypeApi;
+        private readonly ClientBase _clientBase;
+        private readonly Lazy<IInvoiceDocumentApi> _invoiceDocumentApi;
+        private readonly Lazy<IInvoiceStatusApi> _invoiceStatusApi;
+        private readonly Lazy<IInvoiceTrackingApi> _invoiceTrackingApi;
+        private readonly Lazy<IInvoiceInvoiceTypeApi> _invoiceInvoiceTypeApi;
 
         public InvoiceApi(ClientBase clientBase) {
             _clientBase = clientBase;
@@ -41,8 +40,8 @@ namespace Incontrl.Net.Services
             return invoiceDocumentApi;
         }
 
-        public async Task<Invoice> UpdateAsync(UpdateInvoiceRequest invoice, CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.PutAsync<UpdateInvoiceRequest, Invoice>($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}", invoice, cancellationToken);
+        public async Task<Invoice> UpdateAsync(UpdateInvoiceRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.PutAsync<UpdateInvoiceRequest, Invoice>($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}", request, cancellationToken);
 
         public IInvoiceStatusApi Status() {
             var invoiceStatusApi = _invoiceStatusApi.Value;

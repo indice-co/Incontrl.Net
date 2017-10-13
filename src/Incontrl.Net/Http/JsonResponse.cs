@@ -10,11 +10,9 @@ namespace Incontrl.Net.Http
 {
     public class JsonResponse : JsonResponse<string>
     {
-        public JsonResponse(string raw) : base(raw) {
-        }
+        public JsonResponse(string raw) : base(raw) { }
 
-        public JsonResponse(string raw, HttpStatusCode statusCode, string reason) : base(raw, statusCode, reason) {
-        }
+        public JsonResponse(string raw, HttpStatusCode statusCode, string reason) : base(raw, statusCode, reason) { }
     }
 
     public class JsonResponse<T>
@@ -25,7 +23,6 @@ namespace Incontrl.Net.Http
         private HttpStatusCode _httpErrorstatusCode;
         private string _httpErrorReason;
         private JObject _errors;
-
         // Class properties.
         public bool IsHttpError => _isHttpError;
         public HttpStatusCode HttpErrorStatusCode => _httpErrorstatusCode;
@@ -52,24 +49,25 @@ namespace Incontrl.Net.Http
             _httpErrorReason = reason;
 
             try {
-                _errors = new JObject() { };
+                _errors = new JObject { };
+
                 if (!string.IsNullOrEmpty(raw) && raw.StartsWith("{")) {
                     _errors = JObject.Parse(raw);
                 } else if (!string.IsNullOrEmpty(raw) && raw.StartsWith("<")) {
-                    // errors are html so do nothing
+                    // Errors are html so do nothing.
                 } else if (!string.IsNullOrEmpty(raw)) {
                     _errors = JObject.Parse($@"{{""message"": """"}}");
                     _errors["message"] = raw;
                 }
-                //Debug.WriteLine(_Errors);
-            } catch (Exception ex) {
-                throw new InvalidOperationException("Invalid JSON response", ex);
+            } catch (Exception exception) {
+                throw new InvalidOperationException("Invalid JSON response", exception);
             }
         }
 
         public string[] Errors {
             get {
                 var errors = new List<string>();
+
                 if (IsHttpError && _errors.Count > 0) {
                     if (_errors["ModelState"] != null) {
                         foreach (var item in _errors["ModelState"].Values()) {
@@ -77,6 +75,7 @@ namespace Incontrl.Net.Http
                                 errors.Add(msg);
                             }
                         }
+
                         return errors.ToArray();
                     }
 
@@ -89,6 +88,7 @@ namespace Incontrl.Net.Http
                             errors.Add(item.Value<string>());
                             continue;
                         }
+
                         foreach (var msg in item.Values<string>()) {
                             errors.Add(msg);
                         }

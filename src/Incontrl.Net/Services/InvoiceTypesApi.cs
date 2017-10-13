@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Net.Abstractions;
-using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 using Incontrl.Net.Types;
 
@@ -9,7 +8,7 @@ namespace Incontrl.Net.Services
 {
     internal class InvoiceTypesApi : IInvoiceTypesApi
     {
-        private ClientBase _clientBase;
+        private readonly ClientBase _clientBase;
 
         public InvoiceTypesApi(ClientBase clientBase) => _clientBase = clientBase;
 

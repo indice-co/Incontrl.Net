@@ -8,7 +8,7 @@ namespace Incontrl.Net.Tests
 {
     public class FluentApiTests
     {
-        [Fact(Skip = "This is not a test")]
+        [Fact(Skip = "This is not an actual test")]
         public async Task SyntaxTest() {
             var api = new IncontrlApi("{my-app-id}", "{my-api-key}");
             var subscriptionId = Guid.NewGuid();
@@ -93,14 +93,14 @@ namespace Incontrl.Net.Tests
 
             #region Invoices
             var invoices = await api.Subscription(subscriptionId)
-                                        .Invoices()
-                                        .ListAsync(new ListOptions<InvoiceListFilter> {
-                                            Page = 1,
-                                            Size = 25,
-                                            Filter = new InvoiceListFilter {
-                                                TypeId = Guid.NewGuid()
-                                            }
-                                        });
+                                    .Invoices()
+                                    .ListAsync(new ListOptions<InvoiceListFilter> {
+                                        Page = 1,
+                                        Size = 25,
+                                        Filter = new InvoiceListFilter {
+                                            TypeId = Guid.NewGuid()
+                                        }
+                                    });
 
             var createdInvoice = await api.Subscription(subscriptionId)
                                           .Invoices()
@@ -158,8 +158,8 @@ namespace Incontrl.Net.Tests
 
             #region Invoice Types
             var invoiceTypes = await api.Subscription(subscriptionId)
-                                            .InvoiceTypes()
-                                            .ListAsync();
+                                        .InvoiceTypes()
+                                        .ListAsync();
 
             var newInvoiceType = await api.Subscription(subscriptionId)
                                           .InvoiceTypes()
@@ -190,8 +190,8 @@ namespace Incontrl.Net.Tests
 
             #region Organisations
             var organisations = await api.Subscription(subscriptionId)
-                                             .Organisations()
-                                             .ListAsync();
+                                         .Organisations()
+                                         .ListAsync();
 
             var newOrganisation = await api.Subscription(subscriptionId)
                                            .Organisations()

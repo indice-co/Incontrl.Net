@@ -1,10 +1,12 @@
 ﻿using System.Threading.Tasks;
-using Incontrl.Net.Http;
 
 namespace Incontrl.Net.Abstractions
 {
     public interface ILicenseApi
     {
+        /// <summary>
+        /// Retrieves InContrl's license information.
+        /// </summary>
         Task<string> GetAsync();
     }
 }

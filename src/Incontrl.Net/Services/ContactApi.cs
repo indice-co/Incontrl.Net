@@ -9,8 +9,8 @@ namespace Incontrl.Net.Services
 {
     internal class ContactApi : IContactApi
     {
-        private ClientBase _clientBase;
-        private Lazy<IContactCompaniesApi> _contactCompaniesApi;
+        private readonly ClientBase _clientBase;
+        private readonly Lazy<IContactCompaniesApi> _contactCompaniesApi;
 
         public ContactApi(ClientBase clientBase) {
             _clientBase = clientBase;
@@ -31,7 +31,7 @@ namespace Incontrl.Net.Services
         public async Task<Contact> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             await _clientBase.GetAsync<Contact>($"subscriptions/{SubscriptionId}/contacts/{ContactId}", cancellationToken);
 
-        public async Task<Contact> UpdateAsync(UpdateContactRequest contact, CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.PutAsync<UpdateContactRequest, Contact>($"subscriptions/{SubscriptionId}/contacts/{ContactId}", contact, cancellationToken);
+        public async Task<Contact> UpdateAsync(UpdateContactRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await _clientBase.PutAsync<UpdateContactRequest, Contact>($"subscriptions/{SubscriptionId}/contacts/{ContactId}", request, cancellationToken);
     }
 }

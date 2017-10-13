@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using IdentityModel.Client;
@@ -22,12 +20,6 @@ namespace Incontrl.Net.Services
         private string _appId;
         private string _apiKey;
         private HttpMessageHandler _innerHttpClientHandler;
-
-        public Uri AuthorityAddress { get; set; }
-        public Uri ApiAddress {
-            get => _client.BaseAddress;
-            set => _client.BaseAddress = value;
-        }
 
         public ClientBase(string address, string appId, string apiKey) : this(address, appId, apiKey, new HttpClientHandler()) { }
 
@@ -50,6 +42,13 @@ namespace Incontrl.Net.Services
             };
 
             AuthorityAddress = new Uri(IdentityServerConstants.AUTHORITY);
+        }
+
+        public Uri AuthorityAddress { get; set; }
+
+        public Uri ApiAddress {
+            get => _client.BaseAddress;
+            set => _client.BaseAddress = value;
         }
 
         public async Task RequestResourceOwnerPasswordAsync(string userName, string password) {
@@ -198,8 +197,6 @@ namespace Incontrl.Net.Services
         }
 
         #region Private Methods
-
-
         private static void HandleHttpError<TResponse>(JsonResponse<TResponse> httpResponse) {
             switch (httpResponse.HttpErrorStatusCode) {
                 case HttpStatusCode.Forbidden:
