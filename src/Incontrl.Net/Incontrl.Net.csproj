@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup Label="Assembly">
-    <Description>Incontrl.Net Class Library</Description>
+    <Description>Incontrl.io .Net SDK</Description>
+    <Title>Incontrl.Net Class Library</Title>
     <Copyright>Copyright (c) 2017 Indice</Copyright>
     <VersionPrefix>1.0.1</VersionPrefix>
     <!--<VersionSuffix>beta1</VersionSuffix>-->
@@ -14,7 +15,7 @@
     <PackageId>Incontrl.Net</PackageId>
     <PackageTags>incontrl;incontrl.io;http client</PackageTags>
     <PackageReleaseNotes>
-      First release
+      Provided guidance and documentation via XML comments
     </PackageReleaseNotes>
     <PackageIconUrl>https://github.com/indice-co/Incontrl.Net/blob/master/icon/icon-128.png?raw=true</PackageIconUrl>
     <PackageProjectUrl>https://github.com/indice-co/Incontrl.Net</PackageProjectUrl>
