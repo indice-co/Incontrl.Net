@@ -2,7 +2,7 @@
   <PropertyGroup Label="Assembly">
     <Description>Incontrl.Net Class Library</Description>
     <Copyright>Copyright (c) 2017 Indice</Copyright>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>1.0.1</VersionPrefix>
     <!--<VersionSuffix>beta1</VersionSuffix>-->
     <Authors>c.leftheris, giorgos07</Authors>
     <TargetFrameworks>net452;netstandard1.4;netstandard2.0</TargetFrameworks>
@@ -34,7 +34,7 @@
     <DefineConstants>$(DefineConstants);NETSTANDARD14;</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="2.12.0" />
+    <PackageReference Include="IdentityModel" Version="2.13.0" />
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
