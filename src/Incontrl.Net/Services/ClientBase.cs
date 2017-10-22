@@ -199,10 +199,12 @@ namespace Incontrl.Net.Services
         #region Private Methods
         private static void HandleHttpError<TResponse>(JsonResponse<TResponse> httpResponse) {
             switch (httpResponse.HttpErrorStatusCode) {
+                case HttpStatusCode.InternalServerError:
+                    throw new IncontrlHttpInternalServerErrorException($"There was an error on our server. It's recorded and it will be fixed. Reason Phrase: {httpResponse.HttpErrorReason}");
                 case HttpStatusCode.Forbidden:
-                    throw new IncontrlHttpForbiddenException($"It seems that you have no right to access this resource. Reason Phrase: \\n{httpResponse.HttpErrorReason}");
+                    throw new IncontrlHttpForbiddenException($"It seems that you have no right to access this resource. Reason Phrase: {httpResponse.HttpErrorReason}");
                 case HttpStatusCode.Unauthorized:
-                    throw new IncontrlHttpUnauthorizedException($"It seems that your credentials are not correct. Reason Phrase: \\n{httpResponse.HttpErrorReason}");
+                    throw new IncontrlHttpUnauthorizedException($"It seems that your credentials are not correct. Reason Phrase: {httpResponse.HttpErrorReason}");
                 case HttpStatusCode.BadRequest:
                     throw new IncontrlHttpBadRequestException(httpResponse.HttpErrorReason, httpResponse.Errors);
             }

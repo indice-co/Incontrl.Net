@@ -25,11 +25,11 @@ namespace Incontrl.Net.Services
         public string SubscriptionId { get; set; }
         public string InvoiceId { get; set; }
 
-        public async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.DeleteAsync($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}", cancellationToken);
+        public Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.DeleteAsync($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}", cancellationToken);
 
-        public async Task<Invoice> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.GetAsync<Invoice>($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}", cancellationToken);
+        public Task<Invoice> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.GetAsync<Invoice>($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}", cancellationToken);
 
         public IInvoiceDocumentApi As(InvoiceFormat format) {
             var invoiceDocumentApi = _invoiceDocumentApi.Value;
@@ -40,8 +40,8 @@ namespace Incontrl.Net.Services
             return invoiceDocumentApi;
         }
 
-        public async Task<Invoice> UpdateAsync(UpdateInvoiceRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.PutAsync<UpdateInvoiceRequest, Invoice>($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}", request, cancellationToken);
+        public Task<Invoice> UpdateAsync(UpdateInvoiceRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.PutAsync<UpdateInvoiceRequest, Invoice>($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}", request, cancellationToken);
 
         public IInvoiceStatusApi Status() {
             var invoiceStatusApi = _invoiceStatusApi.Value;

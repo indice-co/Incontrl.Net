@@ -15,7 +15,7 @@ namespace Incontrl.Net.Services
         public string InvoiceId { get; set; }
         public InvoiceFormat Format { get; set; }
 
-        public async Task<FileResult> DownloadAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.GetStreamAsync($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}", new { format = "pdf" }, cancellationToken);
+        public Task<FileResult> DownloadAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
+            _clientBase.GetStreamAsync($"subscriptions/{SubscriptionId}/invoices/{InvoiceId}", new { format = "pdf" }, cancellationToken);
     }
 }

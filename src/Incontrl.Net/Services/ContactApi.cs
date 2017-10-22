@@ -27,10 +27,10 @@ namespace Incontrl.Net.Services
             return contactCompaniesApi;
         }
 
-        public async Task<Contact> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.GetAsync<Contact>($"subscriptions/{SubscriptionId}/contacts/{ContactId}", cancellationToken);
+        public Task<Contact> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.GetAsync<Contact>($"subscriptions/{SubscriptionId}/contacts/{ContactId}", cancellationToken);
 
-        public async Task<Contact> UpdateAsync(UpdateContactRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.PutAsync<UpdateContactRequest, Contact>($"subscriptions/{SubscriptionId}/contacts/{ContactId}", request, cancellationToken);
+        public Task<Contact> UpdateAsync(UpdateContactRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.PutAsync<UpdateContactRequest, Contact>($"subscriptions/{SubscriptionId}/contacts/{ContactId}", request, cancellationToken);
     }
 }

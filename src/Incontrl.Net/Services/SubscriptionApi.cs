@@ -90,8 +90,8 @@ namespace Incontrl.Net.Services
             return subscriptionContactsApi;
         }
 
-        public async Task<Subscription> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.GetAsync<Subscription>($"subscriptions/{SubscriptionId}", cancellationToken);
+        public Task<Subscription> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.GetAsync<Subscription>($"subscriptions/{SubscriptionId}", cancellationToken);
 
         public IInvoiceApi Invoice(Guid invoiceId) {
             var invoiceApi = _invoiceApi.Value;

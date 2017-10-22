@@ -14,10 +14,10 @@ namespace Incontrl.Net.Services
 
         public string SubscriptionId { get; set; }
 
-        public async Task<Invoice> CreateAsync(CreateInvoiceRequest request, CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.PostAsync<CreateInvoiceRequest, Invoice>($"subscriptions/{SubscriptionId}/invoices", request, cancellationToken);
+        public Task<Invoice> CreateAsync(CreateInvoiceRequest request, CancellationToken cancellationToken = default(CancellationToken)) => 
+            _clientBase.PostAsync<CreateInvoiceRequest, Invoice>($"subscriptions/{SubscriptionId}/invoices", request, cancellationToken);
 
-        public async Task<ResultSet<Invoice>> ListAsync(ListOptions<InvoiceListFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.GetAsync<ResultSet<Invoice>>($"subscriptions/{SubscriptionId}/invoices", options, cancellationToken);
+        public Task<ResultSet<Invoice>> ListAsync(ListOptions<InvoiceListFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
+            _clientBase.GetAsync<ResultSet<Invoice>>($"subscriptions/{SubscriptionId}/invoices", options, cancellationToken);
     }
 }

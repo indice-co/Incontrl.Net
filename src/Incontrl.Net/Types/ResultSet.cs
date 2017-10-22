@@ -19,6 +19,7 @@ namespace Incontrl.Net.Types
     public class ResultSet<T, TSummary> : ResultSet<T>
     {
         public ResultSet() : base() { }
+
         public ResultSet(IEnumerable<T> collection, int totalCount, TSummary summary) : base(collection, totalCount) => Summary = summary;
 
         public TSummary Summary { get; set; }

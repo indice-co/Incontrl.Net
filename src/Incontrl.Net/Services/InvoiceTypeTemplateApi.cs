@@ -14,10 +14,10 @@ namespace Incontrl.Net.Services
         public string SubscriptionId { get; set; }
         public string InvoiceTypeId { get; set; }
 
-        public async Task<FileResult> DownloadAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.GetStreamAsync($"subscriptions/{SubscriptionId}/invoice-types/{InvoiceTypeId}/template", cancellationToken);
+        public Task<FileResult> DownloadAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
+            _clientBase.GetStreamAsync($"subscriptions/{SubscriptionId}/invoice-types/{InvoiceTypeId}/template", cancellationToken);
 
-        public async Task UploadAsync(byte[] fileContent, string fileName, CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.PostFileAsync($"subscriptions/{SubscriptionId}/invoice-types/{InvoiceTypeId}/template", fileContent, fileName, cancellationToken);
+        public Task UploadAsync(byte[] fileContent, string fileName, CancellationToken cancellationToken = default(CancellationToken)) => 
+            _clientBase.PostFileAsync($"subscriptions/{SubscriptionId}/invoice-types/{InvoiceTypeId}/template", fileContent, fileName, cancellationToken);
     }
 }

@@ -14,10 +14,10 @@ namespace Incontrl.Net.Services
         public string SubscriptionId { get; set; }
         public string OrganisationId { get; set; }
 
-        public async Task<Organisation> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.GetAsync<Organisation>($"subscriptions/{SubscriptionId}/organisations/{OrganisationId}", cancellationToken);
+        public Task<Organisation> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
+            _clientBase.GetAsync<Organisation>($"subscriptions/{SubscriptionId}/organisations/{OrganisationId}", cancellationToken);
 
-        public async Task<Organisation> UpdateAsync(UpdateOrganisationRequest request, CancellationToken cancellationToken = default(CancellationToken)) => 
-            await _clientBase.PutAsync<UpdateOrganisationRequest, Organisation>($"subscriptions/{SubscriptionId}/organisations/{OrganisationId}", request, cancellationToken);
+        public Task<Organisation> UpdateAsync(UpdateOrganisationRequest request, CancellationToken cancellationToken = default(CancellationToken)) => 
+            _clientBase.PutAsync<UpdateOrganisationRequest, Organisation>($"subscriptions/{SubscriptionId}/organisations/{OrganisationId}", request, cancellationToken);
     }
 }

@@ -14,10 +14,10 @@ namespace Incontrl.Net.Services
 
         public string SubscriptionId { get; set; }
 
-        public async Task<BankAccount> CreateAsync(BankAccount request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.PostAsync<BankAccount, BankAccount>($"subscriptions/{SubscriptionId}/bank-accounts", request, cancellationToken);
+        public Task<BankAccount> CreateAsync(BankAccount request, CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.PostAsync<BankAccount, BankAccount>($"subscriptions/{SubscriptionId}/bank-accounts", request, cancellationToken);
 
-        public async Task<ResultSet<BankAccount>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.GetAsync<ResultSet<BankAccount>>($"subscriptions/{SubscriptionId}/bank-accounts", options, cancellationToken);
+        public Task<ResultSet<BankAccount>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.GetAsync<ResultSet<BankAccount>>($"subscriptions/{SubscriptionId}/bank-accounts", options, cancellationToken);
     }
 }
