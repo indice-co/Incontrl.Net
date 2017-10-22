@@ -7,7 +7,6 @@
 #elif RELEASE
         public const string BASE_ADDRESS = "https://api.incontrl.io";
 #endif
-        public const string RESOURCE_NAME = "core";
     }
 
     internal class IdentityServerConstants

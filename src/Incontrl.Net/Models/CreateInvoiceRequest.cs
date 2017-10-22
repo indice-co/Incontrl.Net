@@ -7,11 +7,11 @@ namespace Incontrl.Net.Models
     {
         public Guid? TypeId { get; set; }
         public int? Number { get; set; }
-        public DateTime? Date { get; set; }
-        public DateTime? DueDate { get; set; }
+        public DateTimeOffset? Date { get; set; }
+        public DateTimeOffset? DueDate { get; set; }
         public InvoiceStatus? Status { get; set; }
         public string CurrencyCode { get; set; }
-        public double? CurrencyRate { get; set; } = 1;
+        public double? CurrencyRate { get; set; }
         public Recipient Recipient { get; set; }
         public string PaymentCode { get; set; }
         public ICollection<InvoiceLine> Lines { get; set; } = new InvoiceLine[0];

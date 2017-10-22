@@ -13,8 +13,9 @@ namespace Incontrl.Net.Tests
     {
         private static IncontrlApi _api;
         private IConfigurationRoot _configuration;
-        private const string subscriptionId = "A1DABCB4-5696-4A3F-AB6C-BF555E7AC29D";
+        private const string subscriptionId = "bf56fc6d-6936-4c4e-8461-716e9ebaa1f9";
         private const string invoiceTypeId = "3F9EE6D7-C0D4-4E0A-0EBC-08D50F1E7DBA";
+        private const string invoiceId = "646eef13-072d-42f1-6c57-08d518b9565b";
 
         public IncontrlApiTests() {
             var builder = new ConfigurationBuilder()
@@ -22,6 +23,7 @@ namespace Incontrl.Net.Tests
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables()
                 // Configure your user secrets in the following location. You may need to create the directory first.
+                // %APPDATA%\microsoft\UserSecrets\<userSecretsId>\secrets.json
                 .AddUserSecrets<IncontrlApiTests>();
 
             _configuration = builder.Build();
@@ -36,15 +38,36 @@ namespace Incontrl.Net.Tests
             if (File.Exists(createSubscriptionJsonPath)) {
                 var createSubscriptionJson = File.ReadAllText(createSubscriptionJsonPath);
                 var newSubscription = JsonConvert.DeserializeObject<CreateSubscriptionRequest>(createSubscriptionJson);
-                await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
+                await _api.LoginAsync(ScopeFlags.Core);
 
                 var createdSubscription = await _api.Subscriptions()
                                                     .CreateAsync(newSubscription);
 
-                Assert.True(createdSubscription != null);
+                Assert.True(createdSubscription != null, $"A subscription was created with id: {createdSubscription.Id}");
             } else {
                 Assert.True(false);
             }
+        }
+
+        [Theory]
+        [InlineData(subscriptionId, invoiceId)]
+        public async Task CanChangeInvoiceStatus(string subscriptionId, string invoiceId) {
+            await _api.LoginAsync(ScopeFlags.Core);
+
+            var invoice = await _api.Subscription(Guid.Parse(subscriptionId))
+                                    .Invoice(Guid.Parse(invoiceId))
+                                    .GetAsync();
+
+            if (invoice == null) {
+                Assert.True(false);
+            }
+
+            var result = await _api.Subscription(Guid.Parse(subscriptionId))
+                                   .Invoice(Guid.Parse(invoiceId))
+                                   .Status()
+                                   .UpdateAsync(InvoiceStatus.Paid);
+            
+            Assert.True(invoice.Status.Value != result);
         }
 
         [Fact]
@@ -64,6 +87,18 @@ namespace Incontrl.Net.Tests
                                          .GetAsync();
 
             Assert.True(subscription != null);
+        }
+
+        [Theory]
+        [InlineData(subscriptionId)]
+        public async Task CanRetrieveBankAccounts(string subscriptionId) {
+            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Banking);
+
+            var backAccounts = await _api.Subscription(Guid.Parse(subscriptionId))
+                                         .BankAccounts()
+                                         .ListAsync();
+
+            Assert.True(backAccounts != null);
         }
 
         [Theory]
@@ -178,13 +213,13 @@ namespace Incontrl.Net.Tests
             if (File.Exists(createInvoiceJsonPath)) {
                 var createInvoiceJson = File.ReadAllText(createInvoiceJsonPath);
                 var newInvoice = JsonConvert.DeserializeObject<CreateInvoiceRequest>(createInvoiceJson);
-                await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
-                
+                await _api.LoginAsync(ScopeFlags.Core);
+
                 var createdInvoice = await _api.Subscription(subscriptionId)
                                                .Invoices()
                                                .CreateAsync(newInvoice);
 
-                Assert.True(createdInvoice != null);
+                Assert.True(createdInvoice != null, $"An invoice was created with id: {createdInvoice.Id}");
             } else {
                 Assert.True(false);
             }

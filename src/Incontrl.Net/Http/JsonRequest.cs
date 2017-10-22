@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Incontrl.Net.Http
 {
-    public class JsonRequest : StringContent
+    internal class JsonRequest : StringContent
     {
         private JsonRequest(string content) : base(content, Encoding.UTF8, "application/json") { }
 

@@ -18,6 +18,8 @@ namespace Incontrl.Net.Tests
             var invoiceTypeId = Guid.NewGuid();
             var organisationId = Guid.NewGuid();
             var productId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var transactionId = Guid.NewGuid();
             await api.LoginAsync("{my-username}", "{my-password}");
 
             #region Subscriptions
@@ -98,7 +100,8 @@ namespace Incontrl.Net.Tests
                                         Page = 1,
                                         Size = 25,
                                         Filter = new InvoiceListFilter {
-                                            TypeId = Guid.NewGuid()
+                                            TypeId = Guid.NewGuid(),
+                                            PaymentCode = string.Empty
                                         }
                                     });
 
@@ -221,7 +224,57 @@ namespace Incontrl.Net.Tests
 
             product = await api.Subscription(subscriptionId)
                                .Product(productId)
-                               .UpdateAsync(new UpdateProductRequest { }); 
+                               .UpdateAsync(new UpdateProductRequest { });
+            #endregion
+
+            #region Bank Accounts
+            var backAccounts = await api.Subscription(subscriptionId)
+                                        .BankAccounts()
+                                        .ListAsync();
+
+            var newBankAccount = await api.Subscription(subscriptionId)
+                                          .BankAccounts()
+                                          .CreateAsync(new BankAccount { });
+
+            var bankAccount = await api.Subscription(subscriptionId)
+                                       .BankAccount(bankAccountId)
+                                       .GetAsync();
+
+            bankAccount = await api.Subscription(subscriptionId)
+                                   .BankAccount(bankAccountId)
+                                   .UpdateAsync(new BankAccount { });
+
+            var transactions = await api.Subscription(subscriptionId)
+                                        .BankAccount(bankAccountId)
+                                        .Transactions()
+                                        .ListAsync(new ListOptions<TransactionFilter> { });
+
+            var newTransaction = await api.Subscription(subscriptionId)
+                                          .BankAccount(bankAccountId)
+                                          .Transactions()
+                                          .CreateAsync(new BankTransaction { });
+
+            var transaction = await api.Subscription(subscriptionId)
+                                       .BankAccount(bankAccountId)
+                                       .Transaction(transactionId)
+                                       .GetAsync();
+
+            await api.Subscription(subscriptionId)
+                     .BankAccount(bankAccountId)
+                     .Transactions()
+                     .CreateAsync(new BulkLoadTransactionsRequest { });
+
+            var payments = await api.Subscription(subscriptionId)
+                                    .BankAccount(bankAccountId)
+                                    .Transaction(transactionId)
+                                    .Payments()
+                                    .ListAsync();
+
+            var newPayment = await api.Subscription(subscriptionId)
+                                      .BankAccount(bankAccountId)
+                                      .Transaction(transactionId)
+                                      .Payments()
+                                      .CreateAsync(new Payment { });
             #endregion
         }
     }

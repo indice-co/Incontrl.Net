@@ -7,8 +7,8 @@ namespace Incontrl.Net.Models
     /// </summary>
     public class UpdateInvoiceRequest
     {
-        public DateTime? Date { get; set; }
-        public DateTime? DueDate { get; set; }
+        public DateTimeOffset? Date { get; set; }
+        public DateTimeOffset? DueDate { get; set; }
         public string CurrencyCode { get; set; }
         public double? CurrencyRate { get; set; }
         public Recipient Recipient { get; set; }

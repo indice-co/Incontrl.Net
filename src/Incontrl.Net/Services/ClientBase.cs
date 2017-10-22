@@ -51,10 +51,10 @@ namespace Incontrl.Net.Services
             set => _client.BaseAddress = value;
         }
 
-        public async Task RequestResourceOwnerPasswordAsync(string userName, string password) {
+        public async Task RequestResourceOwnerPasswordAsync(string userName, string password, ScopeFlags scopes) {
             var discoveryResponse = await DiscoveryClient.GetAsync(AuthorityAddress.AbsoluteUri);
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
-            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(userName, password, Api.RESOURCE_NAME);
+            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(userName, password, scopes.ToScopesText());
 
             if (tokenResponse.IsError) {
                 HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
@@ -63,10 +63,10 @@ namespace Incontrl.Net.Services
             _client.SetBearerToken(tokenResponse.AccessToken);
         }
 
-        public async Task RequestClientCredentialsAsync() {
+        public async Task RequestClientCredentialsAsync(ScopeFlags scopes) {
             var discoveryResponse = await DiscoveryClient.GetAsync(AuthorityAddress.AbsoluteUri);
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
-            var tokenResponse = await tokenClient.RequestClientCredentialsAsync(Api.RESOURCE_NAME);
+            var tokenResponse = await tokenClient.RequestClientCredentialsAsync(scopes.ToScopesText());
 
             if (tokenResponse.IsError) {
                 HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
@@ -75,10 +75,10 @@ namespace Incontrl.Net.Services
             _client.SetBearerToken(tokenResponse.AccessToken);
         }
 
-        public async Task RequestRefreshTokenAsync(string refreshToken) {
+        public async Task RequestRefreshTokenAsync(string refreshToken, ScopeFlags scopes) {
             var discoveryResponse = await DiscoveryClient.GetAsync(AuthorityAddress.AbsoluteUri);
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
-            var tokenResponse = await tokenClient.RequestRefreshTokenAsync(refreshToken);
+            var tokenResponse = await tokenClient.RequestRefreshTokenAsync(refreshToken, scopes.ToScopesText());
 
             if (tokenResponse.IsError) {
                 HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));

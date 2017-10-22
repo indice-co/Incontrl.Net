@@ -11,10 +11,10 @@
     },
     "currencyCode": "EUR",
     "email": "info@acme.gr",
-    "legalName": "Makis Stavropoulos",
+    "legalName": "Giorgos Manoltzas",
     "lineOfBusiness": "Finance & Administration Services",
     "logoPath": "http://www.spongebobvitamins.com/images/spongBob.png",
-    "name": "Makis Stavropoulos",
+    "name": "Giorgos Manoltzas",
     "paymentMethods": [
       {
         "code": "1",

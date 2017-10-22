@@ -12,6 +12,6 @@ namespace Incontrl.Net.Models
         public string NumberFormat { get; set; }
         public string Tags { get; set; }
         public string Notes { get; set; }
-        public bool GeneratesDocuments { get; set; } = true;
+        public bool GeneratesDocuments { get; set; }
     }
 }

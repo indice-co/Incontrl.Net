@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Net.Abstractions;
-using Incontrl.Net.Http;
 using Incontrl.Net.Models;
 
 namespace Incontrl.Net.Services

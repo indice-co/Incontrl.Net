@@ -7,6 +7,9 @@ namespace Incontrl.Net.Abstractions
 {
     public interface ISubscriptionApi
     {
+        /// <summary>
+        /// 
+        /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
@@ -85,5 +88,17 @@ namespace Incontrl.Net.Abstractions
         /// </summary>
         /// <param name="productId">The unique id of the product.</param>
         IProductApi Product(Guid productId);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IBankAccountsApi BankAccounts();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IBankAccountApi BankAccount(Guid bankAccountId);
     }
 }

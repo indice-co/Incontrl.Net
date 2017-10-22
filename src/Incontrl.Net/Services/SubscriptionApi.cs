@@ -22,6 +22,8 @@ namespace Incontrl.Net.Services
         private readonly Lazy<IOrganisationApi> _organisationApi;
         private readonly Lazy<IProductsApi> _productsApi;
         private readonly Lazy<IProductApi> _productApi;
+        private readonly Lazy<IBankAccountsApi> _bankAccountsApi;
+        private readonly Lazy<IBankAccountApi> _bankAccountApi;
 
         public SubscriptionApi(ClientBase clientBase) {
             _clientBase = clientBase;
@@ -38,9 +40,26 @@ namespace Incontrl.Net.Services
             _organisationApi = new Lazy<IOrganisationApi>(() => new OrganisationApi(_clientBase));
             _productsApi = new Lazy<IProductsApi>(() => new ProductsApi(_clientBase));
             _productApi = new Lazy<IProductApi>(() => new ProductApi(_clientBase));
+            _bankAccountsApi = new Lazy<IBankAccountsApi>(() => new BankAccountsApi(_clientBase));
+            _bankAccountApi = new Lazy<IBankAccountApi>(() => new BankAccountApi(_clientBase));
         }
 
         public string SubscriptionId { get; set; }
+
+        public IBankAccountApi BankAccount(Guid bankAccountId) {
+            var bankAccountApi = _bankAccountApi.Value;
+            bankAccountApi.SubscriptionId = SubscriptionId;
+            bankAccountApi.BankAccountId = bankAccountId.ToString();
+
+            return bankAccountApi;
+        }
+
+        public IBankAccountsApi BankAccounts() {
+            var bankAccountsApi = _bankAccountsApi.Value;
+            bankAccountsApi.SubscriptionId = SubscriptionId;
+
+            return bankAccountsApi;
+        }
 
         public ISubscriptionCompanyApi Company() {
             var subscriptionCompanyApi = _subscriptionCompanyApi.Value;

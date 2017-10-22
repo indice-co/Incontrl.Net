@@ -8,8 +8,8 @@ namespace Incontrl.Net.Models
         public Guid? TypeId { get; set; }
         public int? Number { get; set; }
         public string NumberPrintable { get; set; }
-        public DateTime? Date { get; set; }
-        public DateTime? DueDate { get; set; }
+        public DateTimeOffset? Date { get; set; }
+        public DateTimeOffset? DueDate { get; set; }
         public InvoiceStatus? Status { get; set; }
         public string CurrencyCode { get; set; }
         public decimal? CurrencyRate { get; set; } = 1;

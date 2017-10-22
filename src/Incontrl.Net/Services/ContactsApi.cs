@@ -14,10 +14,10 @@ namespace Incontrl.Net.Services
 
         public string SubscriptionId { get; set; }
 
-        public async Task<Contact> CreateAsync(CreateContactRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.PostAsync<CreateContactRequest, Contact>($"subscriptions/{SubscriptionId}/contacts", request, cancellationToken);
+        public Task<Contact> CreateAsync(CreateContactRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.PostAsync<CreateContactRequest, Contact>($"subscriptions/{SubscriptionId}/contacts", request, cancellationToken);
 
-        public async Task<ResultSet<Contact>> ListAsync(ListOptions<ContactFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            await _clientBase.GetAsync<ResultSet<Contact>>($"subscriptions/{SubscriptionId}/contacts", options, cancellationToken);
+        public Task<ResultSet<Contact>> ListAsync(ListOptions<ContactFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.GetAsync<ResultSet<Contact>>($"subscriptions/{SubscriptionId}/contacts", options, cancellationToken);
     }
 }

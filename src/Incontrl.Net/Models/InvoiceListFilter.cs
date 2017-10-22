@@ -11,5 +11,6 @@ namespace Incontrl.Net.Models
         public string RecipientCode { get; set; }
         public Guid? RecipientId { get; set; }
         public Guid? TypeId { get; set; }
+        public string PaymentCode { get; set; }
     }
 }
