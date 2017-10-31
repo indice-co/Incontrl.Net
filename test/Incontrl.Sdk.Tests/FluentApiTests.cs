@@ -340,6 +340,43 @@ namespace Incontrl.Sdk.Tests
             #endregion
 
             #region Payment Options
+            // GET: /subscriptions/{subscriptionId}/payment-options
+            var paymentOptions = await api.Subscription(subscriptionId)
+                                          .PaymentOptions()
+                                          .ListAsync();
+
+            // POST: /subscriptions/{subscriptionId}/payment-options
+            var createdPaymentOption = await api.Subscription(subscriptionId)
+                                                .PaymentOptions()
+                                                .CreateAsync(new PaymentOption { });
+
+            // GET: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}
+            var paymentOption = await api.Subscription(subscriptionId)
+                                         .PaymentOption(paymentOptionId)
+                                         .GetAsync();
+
+            // PUT: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}
+            paymentOption = await api.Subscription(subscriptionId)
+                                     .PaymentOption(paymentOptionId)
+                                     .UpdateAsync(new PaymentOption { });
+
+            // GET: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions
+            var transactions = await api.Subscription(subscriptionId)
+                                        .PaymentOption(paymentOptionId)
+                                        .Transactions()
+                                        .ListAsync();
+
+            // POST: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions
+            var createdTransaction = await api.Subscription(subscriptionId)
+                                              .PaymentOption(paymentOptionId)
+                                              .Transactions()
+                                              .CreateAsync(new Transaction { });
+
+            // GET: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions/{transactionId}/payments
+            //var payments = await api.Subscription(subscriptionId)
+            //                        .PaymentOption(paymentOptionId)
+            //                        .Transaction(transactionId)
+            //                        .
             #endregion
         }
     }

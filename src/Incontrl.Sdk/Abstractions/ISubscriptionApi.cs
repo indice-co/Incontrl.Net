@@ -115,5 +115,17 @@ namespace Incontrl.Sdk.Abstractions
         /// </summary>
         /// <returns></returns>
         ISubscriptionTimeZoneApi TimeZone();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IPaymentOptionsApi PaymentOptions();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IPaymentOptionApi PaymentOption(Guid paymentOptionId);
     }
 }

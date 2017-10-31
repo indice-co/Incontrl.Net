@@ -12,7 +12,14 @@ namespace Incontrl.Sdk.Models
         /// </summary>
         public byte[] UniqueId { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public TransactionType Type { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public DateTime Completed { get; set; }
         public string Number { get; set; }
         public string Description { get; set; }

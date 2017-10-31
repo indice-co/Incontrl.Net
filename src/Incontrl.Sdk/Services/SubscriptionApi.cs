@@ -26,6 +26,8 @@ namespace Incontrl.Sdk.Services
         private readonly Lazy<ISubscriptionMetricsApi> _subscriptionMetricsApi;
         private readonly Lazy<ISubscriptionPlanApi> _subscriptionPlanApi;
         private readonly Lazy<ISubscriptionTimeZoneApi> _subscriptionTimeZoneApi;
+        private readonly Lazy<IPaymentOptionsApi> _paymentOptionsApi;
+        private readonly Lazy<IPaymentOptionApi> _paymentOptionApi;
 
         public SubscriptionApi(ClientBase clientBase) {
             _clientBase = clientBase;
@@ -46,6 +48,8 @@ namespace Incontrl.Sdk.Services
             _subscriptionMetricsApi = new Lazy<ISubscriptionMetricsApi>(() => new SubscriptionMetricsApi(_clientBase));
             _subscriptionPlanApi = new Lazy<ISubscriptionPlanApi>(() => new SubscriptionPlanApi(_clientBase));
             _subscriptionTimeZoneApi = new Lazy<ISubscriptionTimeZoneApi>(() => new SubscriptionTimeZoneApi(_clientBase));
+            _paymentOptionsApi = new Lazy<IPaymentOptionsApi>(() => new PaymentOptionsApi(_clientBase));
+            _paymentOptionApi = new Lazy<IPaymentOptionApi>(() => new PaymentOptionApi(_clientBase));
         }
 
         public string SubscriptionId { get; set; }
@@ -175,6 +179,21 @@ namespace Incontrl.Sdk.Services
             subscriptionTimeZoneApi.SubscriptionId = SubscriptionId;
 
             return subscriptionTimeZoneApi;
+        }
+
+        public IPaymentOptionsApi PaymentOptions() {
+            var paymentOptionsApi = _paymentOptionsApi.Value;
+            paymentOptionsApi.SubscriptionId = SubscriptionId;
+
+            return paymentOptionsApi;
+        }
+
+        public IPaymentOptionApi PaymentOption(Guid paymentOptionId) {
+            var paymentOptionApi = _paymentOptionApi.Value;
+            paymentOptionApi.SubscriptionId = SubscriptionId;
+            paymentOptionApi.PaymentOptionId = paymentOptionId.ToString();
+
+            return paymentOptionApi;
         }
     }
 }

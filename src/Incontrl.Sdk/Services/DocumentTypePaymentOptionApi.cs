@@ -4,11 +4,11 @@ using Incontrl.Sdk.Models;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class DocumentTypePaymentOption : IDocumentTypePaymentOption
+    internal class DocumentTypePaymentOptionApi : IDocumentTypePaymentOption
     {
         private readonly ClientBase _clientBase;
 
-        public DocumentTypePaymentOption(ClientBase clientBase) => _clientBase = clientBase;
+        public DocumentTypePaymentOptionApi(ClientBase clientBase) => _clientBase = clientBase;
 
         public string SubscriptionId { get; set; }
         public string DocumentTypeId { get; set; }

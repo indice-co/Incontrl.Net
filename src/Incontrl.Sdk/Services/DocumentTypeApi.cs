@@ -16,8 +16,8 @@ namespace Incontrl.Sdk.Services
         public DocumentTypeApi(ClientBase clientBase) {
             _clientBase = clientBase;
             _templateApi = new Lazy<IDocumentTypeTemplateApi>(() => new DocumentTypeTemplateApi(_clientBase));
-            _documentTypePaymentOptions = new Lazy<IDocumentTypePaymentOptions>(() => new DocumentTypePaymentOptions(_clientBase));
-            _documentTypePaymentOption = new Lazy<IDocumentTypePaymentOption>(() => new DocumentTypePaymentOption(_clientBase));
+            _documentTypePaymentOptions = new Lazy<IDocumentTypePaymentOptions>(() => new DocumentTypePaymentOptionsApi(_clientBase));
+            _documentTypePaymentOption = new Lazy<IDocumentTypePaymentOption>(() => new DocumentTypePaymentOptionApi(_clientBase));
         }
 
         public string SubscriptionId { get; set; }

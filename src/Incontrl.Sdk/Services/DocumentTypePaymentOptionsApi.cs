@@ -6,11 +6,11 @@ using Incontrl.Sdk.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class DocumentTypePaymentOptions : IDocumentTypePaymentOptions
+    internal class DocumentTypePaymentOptionsApi : IDocumentTypePaymentOptions
     {
         private readonly ClientBase _clientBase;
 
-        public DocumentTypePaymentOptions(ClientBase clientBase) => _clientBase = clientBase;
+        public DocumentTypePaymentOptionsApi(ClientBase clientBase) => _clientBase = clientBase;
 
         public string SubscriptionId { get; set; }
         public string DocumentTypeId { get; set; }
