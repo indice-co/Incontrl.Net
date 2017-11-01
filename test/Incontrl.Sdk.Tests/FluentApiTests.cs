@@ -372,11 +372,31 @@ namespace Incontrl.Sdk.Tests
                                               .Transactions()
                                               .CreateAsync(new Transaction { });
 
+            // GET: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions/{transactionId}
+            var transaction = await api.Subscription(subscriptionId)
+                                       .PaymentOption(paymentOptionId)
+                                       .Transaction(transactionId)
+                                       .GetAsync();
+
             // GET: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions/{transactionId}/payments
-            //var payments = await api.Subscription(subscriptionId)
-            //                        .PaymentOption(paymentOptionId)
-            //                        .Transaction(transactionId)
-            //                        .
+            var payments = await api.Subscription(subscriptionId)
+                                    .PaymentOption(paymentOptionId)
+                                    .Transaction(transactionId)
+                                    .Payments()
+                                    .ListAsync();
+
+            // POST: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions/{transactionId}/payments
+            var createdPayment = await api.Subscription(subscriptionId)
+                                          .PaymentOption(paymentOptionId)
+                                          .Transaction(transactionId)
+                                          .Payments()
+                                          .CreateAsync(new Payment { });
+
+            // POST: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions/bulk
+            await api.Subscription(subscriptionId)
+                     .PaymentOption(paymentOptionId)
+                     .Transactions()
+                     .BulkCreateAsync(new BulkLoadTransactionsRequest { });
             #endregion
         }
     }

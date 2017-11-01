@@ -31,15 +31,17 @@ namespace Incontrl.Sdk.Abstractions
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<ResultSet<Transaction>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task BulkCreateAsync(BulkLoadTransactionsRequest request, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        IPaymentOptionTransactionPaymentsApi Payments();
+        Task<ResultSet<Transaction>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
