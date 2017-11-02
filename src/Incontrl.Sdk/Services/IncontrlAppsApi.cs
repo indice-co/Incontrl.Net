@@ -2,22 +2,23 @@
 using System.Threading.Tasks;
 using Incontrl.Sdk.Abstractions;
 using Incontrl.Sdk.Models;
+using Incontrl.Sdk.Services;
 
-namespace Incontrl.Sdk.Services
+namespace Incontrl.Sdk
 {
     public class IncontrlAppsApi : IClientsApi
     {
         private readonly ClientBase _clientBase;
+        private readonly Lazy<IAppsApi> _appsApi;
 
         public IncontrlAppsApi(string appId, string apiKey, string apiVersion = null) {
-            _clientBase = new ClientBase(apiVersion == null ? Api.CoreApiAddress : $"{Api.CoreApiAddress}/{apiVersion}", appId, apiKey);
+            _clientBase = new ClientBase(apiVersion == null ? Api.AppsApiAddress : $"{Api.AppsApiAddress}/{apiVersion}", appId, apiKey);
+            _appsApi = new Lazy<IAppsApi>(() => new AppsApi(_clientBase));
         }
 
         public Uri ApiAddress => _clientBase.ApiAddress;
 
-        public IAppsApi Apps() {
-            throw new NotImplementedException();
-        }
+        public IAppsApi Apps() => _appsApi.Value;
 
         public IClientsApi Configure(string apiAddress, string authorityAddress = null) {
             _clientBase.ApiAddress = new Uri(apiAddress);
