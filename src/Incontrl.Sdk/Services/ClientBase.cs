@@ -41,7 +41,7 @@ namespace Incontrl.Sdk.Services
                 BaseAddress = new Uri(address)
             };
 
-            AuthorityAddress = new Uri(IdentityServerConstants.AUTHORITY);
+            AuthorityAddress = new Uri(IdentityServerConstants.Authority);
         }
 
         public Uri AuthorityAddress { get; set; }

@@ -3,18 +3,20 @@
     internal class Api
     {
 #if DEBUG
-        public const string BASE_ADDRESS = "http://localhost:20202";
+        public const string CoreApiAddress = "http://localhost:20202";
+        public const string AppsApiAddress = "http://localhost:20200/api";
 #elif RELEASE
-        public const string BASE_ADDRESS = "https://api.incontrl.io";
+        public const string CoreApiAddress = "https://api.incontrl.io";
+        public const string AppsApiAddress = "https://incontrl.io/api";
 #endif
     }
 
     internal class IdentityServerConstants
     {
 #if DEBUG
-        public const string AUTHORITY = "http://localhost:20200";
+        public const string Authority = "http://localhost:20200";
 #elif RELEASE
-        public const string AUTHORITY = "https://incontrl.io";
+        public const string Authority = "https://incontrl.io";
 #endif
     }
 }

@@ -14,7 +14,7 @@ namespace Incontrl.Sdk
         private readonly Lazy<ILicenseApi> _licenseApi;
 
         public IncontrlApi(string appId, string apiKey, string apiVersion = null) {
-            _clientBase = new ClientBase(apiVersion == null ? Api.BASE_ADDRESS : $"{Api.BASE_ADDRESS}/{apiVersion}", appId, apiKey);
+            _clientBase = new ClientBase(apiVersion == null ? Api.CoreApiAddress : $"{Api.CoreApiAddress}/{apiVersion}", appId, apiKey);
             _subscriptionsApi = new Lazy<ISubscriptionsApi>(() => new SubscriptionsApi(_clientBase));
             _subscriptionApi = new Lazy<ISubscriptionApi>(() => new SubscriptionApi(_clientBase));
             _licenseApi = new Lazy<ILicenseApi>(() => new LicenseApi(_clientBase));
