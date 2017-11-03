@@ -11,7 +11,7 @@ namespace Incontrl.Sdk.Models
         Core = 1,
         Members = 2,
         Banking = 4,
-        Identity = 8,
+        Membership = 8,
         Apps = 16
     }
 
@@ -21,6 +21,7 @@ namespace Incontrl.Sdk.Models
             $"core:{scopes}".ToLowerInvariant()
                             .Replace(", ", $" core:")
                             .Replace("core:core", "core")
-                            .Replace("core:identity", "identity");
+                            .Replace("core:membership", "membership")
+                            .Replace("core:apps", "apps");
     }
 }

@@ -10,13 +10,22 @@ namespace Incontrl.Sdk
     {
         private readonly ClientBase _clientBase;
         private readonly Lazy<IAppsApi> _appsApi;
+        private readonly Lazy<IAppApi> _appApi;
 
         public IncontrlAppsApi(string appId, string apiKey, string apiVersion = null) {
             _clientBase = new ClientBase(apiVersion == null ? Api.AppsApiAddress : $"{Api.AppsApiAddress}/{apiVersion}", appId, apiKey);
             _appsApi = new Lazy<IAppsApi>(() => new AppsApi(_clientBase));
+            _appApi = new Lazy<IAppApi>(() => new AppApi(_clientBase));
         }
 
         public Uri ApiAddress => _clientBase.ApiAddress;
+
+        public IAppApi App(Guid appId) {
+            var appApi = _appApi.Value;
+            appApi.AppId = appApi.ToString();
+
+            return appApi;
+        }
 
         public IAppsApi Apps() => _appsApi.Value;
 

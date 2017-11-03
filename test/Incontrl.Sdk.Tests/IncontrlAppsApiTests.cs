@@ -26,7 +26,9 @@ namespace Incontrl.Sdk.Tests
 
         [Fact]
         public async Task CanRetrieveApps() {
-            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Apps | ScopeFlags.Identity);
+            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Apps | ScopeFlags.Membership);
+            var apps = await _api.Apps().ListAsync();
+            Assert.True(apps.Items != null);
         }
     }
 }

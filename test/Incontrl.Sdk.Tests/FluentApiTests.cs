@@ -11,6 +11,7 @@ namespace Incontrl.Sdk.Tests
         [Fact(Skip = "This is not an actual test")]
         public async Task SyntaxTest() {
             var api = new IncontrlApi("{my-app-id}", "{my-api-key}");
+            var appsApi = new IncontrlAppsApi("{my-app-id}", "{my-api-key}");
             var subscriptionId = Guid.NewGuid();
             var subscriptionAlias = "my-subscription";
             var contactId = Guid.NewGuid();
@@ -21,6 +22,7 @@ namespace Incontrl.Sdk.Tests
             var bankAccountId = Guid.NewGuid();
             var transactionId = Guid.NewGuid();
             var paymentOptionId = Guid.NewGuid();
+            var appId = Guid.NewGuid();
             await api.LoginAsync("{my-username}", "{my-password}");
 
             #region Subscriptions
@@ -397,6 +399,21 @@ namespace Incontrl.Sdk.Tests
                      .PaymentOption(paymentOptionId)
                      .Transactions()
                      .BulkCreateAsync(new BulkLoadTransactionsRequest { });
+            #endregion
+
+            #region Apps
+            // GET: api/apps
+            var myApps = await appsApi.Apps()
+                                      .ListAsync();
+
+            // GET: api/apps/{appId}
+            var app = await appsApi.App(appId)
+                                   .GetAsync();
+
+            //GET: api/apps/all/webhooks
+            var webHooks = await appsApi.Apps()
+                                        .WebHooks()
+                                        .ListAsync();
             #endregion
         }
     }
