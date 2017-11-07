@@ -13,24 +13,17 @@ namespace Incontrl.Sdk
         private readonly Lazy<ISubscriptionApi> _subscriptionApi;
         private readonly Lazy<ILicenseApi> _licenseApi;
 
-        public IncontrlApi(string appId, string apiKey, string apiVersion = null) {
-            _clientBase = new ClientBase(apiVersion == null ? Api.CoreApiAddress : $"{Api.CoreApiAddress}/{apiVersion}", appId, apiKey);
+        public IncontrlApi(string appId, string apiKey, string coreApiAddress = null, string authorityAddress = null, string apiVersion = null) {
+            // Optional parameters coreApiAddress and authorityAddress are used to ovveride the production endpoints, so we can use the SDK for development.
+            var apiAddress = string.IsNullOrEmpty(coreApiAddress) ? Api.CoreApiAddress : coreApiAddress;
+            var authority = string.IsNullOrEmpty(authorityAddress) ? IdentityServerConstants.Authority : authorityAddress;
+            _clientBase = new ClientBase(apiVersion == null ? apiAddress : $"{apiAddress}/{apiVersion}", authority, appId, apiKey);
             _subscriptionsApi = new Lazy<ISubscriptionsApi>(() => new SubscriptionsApi(_clientBase));
             _subscriptionApi = new Lazy<ISubscriptionApi>(() => new SubscriptionApi(_clientBase));
             _licenseApi = new Lazy<ILicenseApi>(() => new LicenseApi(_clientBase));
         }
 
         public Uri ApiAddress => _clientBase.ApiAddress;
-
-        public ICoreApi Configure(string apiAddress, string authorityAddress = null) {
-            _clientBase.ApiAddress = new Uri(apiAddress);
-
-            if (authorityAddress != null) {
-                _clientBase.AuthorityAddress = new Uri(authorityAddress);
-            }
-
-            return this;
-        }
 
         public ILicenseApi License() => _licenseApi.Value;
 

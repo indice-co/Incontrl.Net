@@ -12,8 +12,11 @@ namespace Incontrl.Sdk
         private readonly Lazy<IAppsApi> _appsApi;
         private readonly Lazy<IAppApi> _appApi;
 
-        public IncontrlAppsApi(string appId, string apiKey, string apiVersion = null) {
-            _clientBase = new ClientBase(apiVersion == null ? Api.AppsApiAddress : $"{Api.AppsApiAddress}/{apiVersion}", appId, apiKey);
+        public IncontrlAppsApi(string appId, string apiKey, string coreApiAddress = null, string authorityAddress = null, string apiVersion = null) {
+            // Optional parameters coreApiAddress and authorityAddress are used to ovveride the production endpoints, so we can use the SDK for development.
+            var apiAddress = string.IsNullOrEmpty(coreApiAddress) ? Api.AppsApiAddress : coreApiAddress;
+            var authority = string.IsNullOrEmpty(authorityAddress) ? IdentityServerConstants.Authority : authorityAddress;
+            _clientBase = new ClientBase(apiVersion == null ? apiAddress : $"{apiAddress}/{apiVersion}", authority, appId, apiKey);
             _appsApi = new Lazy<IAppsApi>(() => new AppsApi(_clientBase));
             _appApi = new Lazy<IAppApi>(() => new AppApi(_clientBase));
         }
@@ -28,16 +31,6 @@ namespace Incontrl.Sdk
         }
 
         public IAppsApi Apps() => _appsApi.Value;
-
-        public IClientsApi Configure(string apiAddress, string authorityAddress = null) {
-            _clientBase.ApiAddress = new Uri(apiAddress);
-
-            if (authorityAddress != null) {
-                _clientBase.AuthorityAddress = new Uri(authorityAddress);
-            }
-
-            return this;
-        }
 
         public Task LoginAsync(string userName, string password, ScopeFlags scopes = ScopeFlags.Apps) => _clientBase.RequestResourceOwnerPasswordAsync(userName, password, scopes);
 

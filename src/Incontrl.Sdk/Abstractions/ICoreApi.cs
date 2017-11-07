@@ -30,12 +30,5 @@ namespace Incontrl.Sdk.Abstractions
         /// Creates an instance of class LicenseApi, that provides functionality to retrieve InContrl's license information.
         /// </summary>
         ILicenseApi License();
-
-        /// <summary>
-        /// Configures some settings for calling the API.
-        /// </summary>
-        /// <param name="apiAddress">The address of Incontrl's API.</param>
-        /// <param name="authorityAddress">The address of the authority server.</param>
-        ICoreApi Configure(string apiAddress, string authorityAddress = null);
     }
 }

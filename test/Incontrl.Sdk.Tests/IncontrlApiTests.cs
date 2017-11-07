@@ -27,8 +27,7 @@ namespace Incontrl.Sdk.Tests
                 .AddUserSecrets<IncontrlApiTests>();
 
             _configuration = builder.Build();
-            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"]);
-            _api.Configure("http://api-vnext.incontrl.io", "https://incontrl.io");
+            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"], "http://api-vnext.incontrl.io", "https://incontrl.io");
         }
 
         [Fact]

@@ -16,14 +16,13 @@ namespace Incontrl.Sdk.Services
     internal class ClientBase
     {
         protected static HttpClient _client;
-        private string _address;
         private string _appId;
         private string _apiKey;
         private HttpMessageHandler _innerHttpClientHandler;
 
-        public ClientBase(string address, string appId, string apiKey) : this(address, appId, apiKey, new HttpClientHandler()) { }
+        public ClientBase(string address, string authority, string appId, string apiKey) : this(address, authority, appId, apiKey, new HttpClientHandler()) { }
 
-        public ClientBase(string address, string appId, string apiKey, HttpMessageHandler innerHttpClientHandler) {
+        public ClientBase(string address, string authority, string appId, string apiKey, HttpMessageHandler innerHttpClientHandler) {
             if (string.IsNullOrWhiteSpace(appId)) {
                 throw new ArgumentNullException(nameof(appId), "Please specify an application id.");
             }
@@ -34,22 +33,17 @@ namespace Incontrl.Sdk.Services
 
             _appId = appId;
             _apiKey = apiKey;
-            _address = address ?? throw new ArgumentNullException(nameof(address));
             _innerHttpClientHandler = innerHttpClientHandler ?? throw new ArgumentNullException(nameof(innerHttpClientHandler));
 
             _client = _client ?? new HttpClient(innerHttpClientHandler) {
                 BaseAddress = new Uri(address)
             };
 
-            AuthorityAddress = new Uri(IdentityServerConstants.Authority);
+            AuthorityAddress = new Uri(authority);
         }
 
-        public Uri AuthorityAddress { get; set; }
-
-        public Uri ApiAddress {
-            get => _client.BaseAddress;
-            set => _client.BaseAddress = value;
-        }
+        public Uri AuthorityAddress { get; }
+        public Uri ApiAddress => _client.BaseAddress;
 
         public async Task RequestResourceOwnerPasswordAsync(string userName, string password, ScopeFlags scopes) {
             var discoveryResponse = await DiscoveryClient.GetAsync(AuthorityAddress.AbsoluteUri);
