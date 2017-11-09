@@ -40,7 +40,7 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// 
         /// </summary>
-        public Guid? TypeId { get; set; }
+        public Guid[] TypeId { get; set; }
 
         /// <summary>
         /// 

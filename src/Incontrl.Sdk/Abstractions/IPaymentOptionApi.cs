@@ -47,5 +47,11 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="transactionId"></param>
         /// <returns></returns>
         IPaymentOptionTransactionApi Transactions(Guid transactionId);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IPaymentOptionDocumentTypesApi DocumentTypes();
     }
 }

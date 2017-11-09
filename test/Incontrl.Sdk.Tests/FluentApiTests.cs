@@ -143,7 +143,9 @@ namespace Incontrl.Sdk.Tests
                                          Page = 1,
                                          Size = 25,
                                          Filter = new DocumentListFilter {
-                                             TypeId = Guid.NewGuid(),
+                                             TypeId = new[] {
+                                                 Guid.NewGuid()
+                                             },
                                              PaymentCode = string.Empty
                                          }
                                      });
