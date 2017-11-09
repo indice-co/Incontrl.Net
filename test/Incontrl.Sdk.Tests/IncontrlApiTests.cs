@@ -27,7 +27,11 @@ namespace Incontrl.Sdk.Tests
                 .AddUserSecrets<IncontrlApiTests>();
 
             _configuration = builder.Build();
-            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"], "http://api-vnext.incontrl.io", "https://incontrl.io");
+
+            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"]) {
+                ApiAddress = new Uri("https://api-vnext.incontrl.io/swagger/ui"),
+                AuthorityAddress = new Uri("https://incontrl.io")
+            };
         }
 
         [Fact]
@@ -53,16 +57,16 @@ namespace Incontrl.Sdk.Tests
         public async Task CanChangeDocumentStatus(string subscriptionId, string documentId) {
             await _api.LoginAsync(ScopeFlags.Core);
 
-            var document = await _api.Subscription(Guid.Parse(subscriptionId))
-                                     .Document(Guid.Parse(documentId))
+            var document = await _api.Subscriptions(Guid.Parse(subscriptionId))
+                                     .Documents(Guid.Parse(documentId))
                                      .GetAsync();
 
             if (document == null) {
                 Assert.True(false);
             }
 
-            var result = await _api.Subscription(Guid.Parse(subscriptionId))
-                                   .Document(Guid.Parse(documentId))
+            var result = await _api.Subscriptions(Guid.Parse(subscriptionId))
+                                   .Documents(Guid.Parse(documentId))
                                    .Status()
                                    .UpdateAsync(DocumentStatus.Paid);
             
@@ -82,7 +86,7 @@ namespace Incontrl.Sdk.Tests
         public async Task CanRetrieveSubscription(string subscriptionId) {
             await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
 
-            var subscription = await _api.Subscription(Guid.Parse(subscriptionId))
+            var subscription = await _api.Subscriptions(Guid.Parse(subscriptionId))
                                          .GetAsync();
 
             Assert.True(subscription != null);
@@ -93,7 +97,7 @@ namespace Incontrl.Sdk.Tests
         public async Task CanRetrieveSubscriptionCompany(string subscriptionId) {
             await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
 
-            var company = await _api.Subscription(Guid.Parse(subscriptionId))
+            var company = await _api.Subscriptions(Guid.Parse(subscriptionId))
                                     .Company()
                                     .GetAsync();
 
@@ -105,7 +109,7 @@ namespace Incontrl.Sdk.Tests
         public async Task CanRetrieveContacts(string subscriptionId) {
             await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
 
-            var contacts = await _api.Subscription(Guid.Parse(subscriptionId))
+            var contacts = await _api.Subscriptions(Guid.Parse(subscriptionId))
                                      .Contacts()
                                      .ListAsync(new ListOptions<ContactFilter> {
                                          Page = 1,
@@ -125,7 +129,7 @@ namespace Incontrl.Sdk.Tests
                 var newContact = JsonConvert.DeserializeObject<CreateContactRequest>(createContactJson);
                 await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
 
-                var createdContact = await _api.Subscription(subscriptionId)
+                var createdContact = await _api.Subscriptions(subscriptionId)
                                                .Contacts()
                                                .CreateAsync(newContact);
 
@@ -140,8 +144,8 @@ namespace Incontrl.Sdk.Tests
         public async Task CanDownloadDocumentTypeTemplate(string subscriptionId, string documentTypeId) {
             await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
 
-            var fileResult = await _api.Subscription(Guid.Parse(subscriptionId))
-                                       .DocumentType(Guid.Parse(documentTypeId))
+            var fileResult = await _api.Subscriptions(Guid.Parse(subscriptionId))
+                                       .DocumentTypes(Guid.Parse(documentTypeId))
                                        .Template()
                                        .DownloadAsync();
 
@@ -174,18 +178,18 @@ namespace Incontrl.Sdk.Tests
 
             await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
 
-            var documentType = await _api.Subscription(Guid.Parse(subscriptionId))
-                                         .DocumentType(Guid.Parse(documentTypeId))
+            var documentType = await _api.Subscriptions(Guid.Parse(subscriptionId))
+                                         .DocumentTypes(Guid.Parse(documentTypeId))
                                          .GetAsync();
 
             if (documentType == null) {
                 Assert.True(false, $"The document type with id {documentTypeId} could not be found.");
             }
 
-            var stream = File.ReadAllBytes(templateFilePath);
+            var stream = File.OpenRead(templateFilePath);
 
-            await _api.Subscription(Guid.Parse(subscriptionId))
-                      .DocumentType(documentType.Id)
+            await _api.Subscriptions(Guid.Parse(subscriptionId))
+                      .DocumentTypes(documentType.Id)
                       .Template()
                       .UploadAsync(stream, documentType.Template.Name);
 
@@ -202,7 +206,7 @@ namespace Incontrl.Sdk.Tests
                 var newDocument = JsonConvert.DeserializeObject<CreateDocumentRequest>(createDocumentJson);
                 await _api.LoginAsync(ScopeFlags.Core);
 
-                var createdDocument = await _api.Subscription(subscriptionId)
+                var createdDocument = await _api.Subscriptions(subscriptionId)
                                                .Documents()
                                                .CreateAsync(newDocument);
 
@@ -210,6 +214,13 @@ namespace Incontrl.Sdk.Tests
             } else {
                 Assert.True(false);
             }
+        }
+
+        [Fact]
+        public async Task CanRetrieveApps() {
+            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Apps | ScopeFlags.Membership);
+            var apps = await _api.Apps().ListAsync();
+            Assert.True(apps.Items != null);
         }
     }
 }

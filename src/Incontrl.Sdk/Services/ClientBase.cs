@@ -13,16 +13,15 @@ using Incontrl.Sdk.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class ClientBase
-    {
-        protected static HttpClient _client;
-        private string _appId;
-        private string _apiKey;
-        private HttpMessageHandler _innerHttpClientHandler;
+    internal class ClientBase {
+        protected static HttpClient Client;
+        private readonly string _appId;
+        private readonly string _apiKey;
+        private readonly HttpMessageHandler _innerHttpClientHandler;
 
-        public ClientBase(string address, string authority, string appId, string apiKey) : this(address, authority, appId, apiKey, new HttpClientHandler()) { }
+        public ClientBase(string appId, string apiKey) : this(appId, apiKey, new HttpClientHandler()) { }
 
-        public ClientBase(string address, string authority, string appId, string apiKey, HttpMessageHandler innerHttpClientHandler) {
+        public ClientBase(string appId, string apiKey, HttpMessageHandler innerHttpClientHandler) {
             if (string.IsNullOrWhiteSpace(appId)) {
                 throw new ArgumentNullException(nameof(appId), "Please specify an application id.");
             }
@@ -34,16 +33,18 @@ namespace Incontrl.Sdk.Services
             _appId = appId;
             _apiKey = apiKey;
             _innerHttpClientHandler = innerHttpClientHandler ?? throw new ArgumentNullException(nameof(innerHttpClientHandler));
-
-            _client = _client ?? new HttpClient(innerHttpClientHandler) {
-                BaseAddress = new Uri(address)
-            };
-
-            AuthorityAddress = new Uri(authority);
+            Client = Client ?? new HttpClient(innerHttpClientHandler);
+#if DEBUG
+            AuthorityAddress = new Uri("http://localhost:20200");
+            ApiAddress = new Uri("http://localhost:20202");
+#elif RELEASE
+            AuthorityAddress = new Uri("https://incontrl.io");
+            ApiAddress = new Uri("https://api.incontrl.io");
+#endif
         }
 
-        public Uri AuthorityAddress { get; }
-        public Uri ApiAddress => _client.BaseAddress;
+        public Uri AuthorityAddress { get; set; }
+        public Uri ApiAddress { get; set; }
 
         public async Task RequestResourceOwnerPasswordAsync(string userName, string password, ScopeFlags scopes) {
             var discoveryResponse = await DiscoveryClient.GetAsync(AuthorityAddress.AbsoluteUri);
@@ -54,7 +55,7 @@ namespace Incontrl.Sdk.Services
                 HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
 
-            _client.SetBearerToken(tokenResponse.AccessToken);
+            Client.SetBearerToken(tokenResponse.AccessToken);
         }
 
         public async Task RequestClientCredentialsAsync(ScopeFlags scopes) {
@@ -66,7 +67,7 @@ namespace Incontrl.Sdk.Services
                 HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
 
-            _client.SetBearerToken(tokenResponse.AccessToken);
+            Client.SetBearerToken(tokenResponse.AccessToken);
         }
 
         public async Task RequestRefreshTokenAsync(string refreshToken, ScopeFlags scopes) {
@@ -78,7 +79,7 @@ namespace Incontrl.Sdk.Services
                 HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
 
-            _client.SetBearerToken(tokenResponse.AccessToken);
+            Client.SetBearerToken(tokenResponse.AccessToken);
         }
 
         public async Task<TResponse> GetAsync<TResponse>(string requestUri, object query = null, CancellationToken cancellationToken = default(CancellationToken)) {
@@ -90,7 +91,7 @@ namespace Incontrl.Sdk.Services
 
             var response = default(JsonResponse<TResponse>);
             var uri = string.Format(requestUri + queryString);
-            var httpMessage = await _client.GetAsync(uri, cancellationToken).ConfigureAwait(false);
+            var httpMessage = await Client.GetAsync(uri, cancellationToken).ConfigureAwait(false);
             var content = await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             if (httpMessage.IsSuccessStatusCode) {
@@ -112,7 +113,7 @@ namespace Incontrl.Sdk.Services
 
             FileResult response = null;
             var uri = string.Format(requestUri + queryString);
-            var httpMessage = await _client.GetAsync(uri, cancellationToken).ConfigureAwait(false);
+            var httpMessage = await Client.GetAsync(uri, cancellationToken).ConfigureAwait(false);
 
             if (httpMessage.IsSuccessStatusCode && httpMessage.Content.Headers.ContentDisposition != null) {
                 response = new FileResult {
@@ -126,7 +127,7 @@ namespace Incontrl.Sdk.Services
 
         public async Task<TResponse> PostAsync<TRequest, TResponse>(string requestUri, TRequest model, CancellationToken cancellationToken = default(CancellationToken)) {
             var response = default(JsonResponse<TResponse>);
-            var httpMessage = await _client.PostAsync(requestUri, JsonRequest.For(model), cancellationToken).ConfigureAwait(false);
+            var httpMessage = await Client.PostAsync(requestUri, JsonRequest.For(model), cancellationToken).ConfigureAwait(false);
             var content = await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             if (httpMessage.IsSuccessStatusCode) {
@@ -139,20 +140,20 @@ namespace Incontrl.Sdk.Services
             return response.Data;
         }
 
-        public async Task PostFileAsync(string requestUri, byte[] fileContent, string fileName, CancellationToken cancellationToken = default(CancellationToken)) {
+        public async Task PostFileAsync(string requestUri, Stream fileContent, string fileName, CancellationToken cancellationToken = default(CancellationToken)) {
             using (var formDataContent = new MultipartFormDataContent("upload-" + Guid.NewGuid().ToString().ToLower())) {
-                var streamContent = new StreamContent(new MemoryStream(fileContent));
+                var streamContent = new StreamContent(fileContent);
                 var fileExtension = Path.GetExtension(fileName);
                 streamContent.Headers.ContentType = new MediaTypeHeaderValue(GetMimeTypeFromExtension(fileExtension));
                 formDataContent.Add(streamContent, "file", fileName);
-                await _client.PostAsync(requestUri, formDataContent, cancellationToken).ConfigureAwait(false);
+                await Client.PostAsync(requestUri, formDataContent, cancellationToken).ConfigureAwait(false);
             }
         }
 
         public async Task<TResponse> PostAsync<TResponse>(string requestUri, MultipartContent multiPartContent, CancellationToken cancellationToken = default(CancellationToken)) {
             var response = default(JsonResponse<TResponse>);
             var uri = string.Format(requestUri);
-            var httpMessage = await _client.PostAsync(requestUri, multiPartContent, cancellationToken).ConfigureAwait(false);
+            var httpMessage = await Client.PostAsync(requestUri, multiPartContent, cancellationToken).ConfigureAwait(false);
             var content = await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             if (httpMessage.IsSuccessStatusCode) {
@@ -167,7 +168,7 @@ namespace Incontrl.Sdk.Services
 
         public async Task<TResponse> PutAsync<TRequest, TResponse>(string requestUri, TRequest model, CancellationToken cancellationToken = default(CancellationToken)) {
             var response = default(JsonResponse<TResponse>);
-            var httpMessage = await _client.PutAsync(requestUri, JsonRequest.For(model), cancellationToken).ConfigureAwait(false);
+            var httpMessage = await Client.PutAsync(requestUri, JsonRequest.For(model), cancellationToken).ConfigureAwait(false);
             var content = await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             if (httpMessage.IsSuccessStatusCode) {
@@ -187,7 +188,7 @@ namespace Incontrl.Sdk.Services
                 queryString = "?" + new Dictionary<string, object>().Merge(query).ToFormUrlEncodedString();
             }
 
-            await _client.DeleteAsync(requestUri, cancellationToken).ConfigureAwait(false);
+            await Client.DeleteAsync(requestUri, cancellationToken).ConfigureAwait(false);
         }
 
         #region Private Methods

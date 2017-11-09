@@ -16,6 +16,6 @@ namespace Incontrl.Sdk.Services
         public DocumentFormat Format { get; set; }
 
         public Task<FileResult> DownloadAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetStreamAsync($"subscriptions/{SubscriptionId}/documents/{DocumentId}", new { format = "pdf" }, cancellationToken);
+            _clientBase.GetStreamAsync($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/documents/{DocumentId}", new { format = "pdf" }, cancellationToken);
     }
 }

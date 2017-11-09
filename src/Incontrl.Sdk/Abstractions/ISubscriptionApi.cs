@@ -46,7 +46,7 @@ namespace Incontrl.Sdk.Abstractions
         /// Creates an instance of class ContactApi, that gives access to a contact's allowed operations.
         /// </summary>
         /// <param name="contactId">The unique id of the contact.</param>
-        IContactApi Contact(Guid contactId);
+        IContactApi Contacts(Guid contactId);
 
         /// <summary>
         /// Creates an instance of class DocumentsApi, that provides functionality to list or create the documents of a subscription.
@@ -57,7 +57,7 @@ namespace Incontrl.Sdk.Abstractions
         /// Creates an instance of class DocumentsApi, that gives access to the allowed operations for documents.
         /// </summary>
         /// <param name="documentId">The unique id of the document.</param>
-        IDocumentApi Document(Guid documentId);
+        IDocumentApi Documents(Guid documentId);
 
         /// <summary>
         /// Creates an instance of class DocumentTypesApi, that provides functionality to list or create the document types of the subscription.
@@ -68,7 +68,7 @@ namespace Incontrl.Sdk.Abstractions
         /// Creates an instance of class DocumentTypeApi, that gives access to the allowed operations for document types.
         /// </summary>
         /// <param name="documentTypeId">The unique id of the document type.</param>
-        IDocumentTypeApi DocumentType(Guid documentTypeId);
+        IDocumentTypeApi DocumentTypes(Guid documentTypeId);
 
         /// <summary>
         /// Creates an instance of class OrganisationsApi, that provides functionality to list or create organisations for the subscription.
@@ -79,7 +79,7 @@ namespace Incontrl.Sdk.Abstractions
         /// Creates an instance of class OrganisationApi, that provides functionality to retrieve or update organisations of the subscription.
         /// </summary>
         /// <param name="organisationId">The unique id of the organisation.</param>
-        IOrganisationApi Organisation(Guid organisationId);
+        IOrganisationApi Organisations(Guid organisationId);
 
         /// <summary>
         /// Creates an instance of class ProductsApi, that provides functionality to list or create the products of the subscription.
@@ -90,7 +90,7 @@ namespace Incontrl.Sdk.Abstractions
         /// Creates an instance of class ProductApi, that provides functionality to retrieve or update products of the subscription.
         /// </summary>
         /// <param name="productId">The unique id of the product.</param>
-        IProductApi Product(Guid productId);
+        IProductApi Products(Guid productId);
 
         /// <summary>
         /// 
@@ -126,6 +126,6 @@ namespace Incontrl.Sdk.Abstractions
         /// 
         /// </summary>
         /// <returns></returns>
-        IPaymentOptionApi PaymentOption(Guid paymentOptionId);
+        IPaymentOptionApi PaymentOptions(Guid paymentOptionId);
     }
 }

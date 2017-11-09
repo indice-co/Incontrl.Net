@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
 using Incontrl.Sdk.Types;
@@ -11,7 +12,6 @@ namespace Incontrl.Sdk.Tests
         [Fact(Skip = "This is not an actual test")]
         public async Task SyntaxTest() {
             var api = new IncontrlApi("{my-app-id}", "{my-api-key}");
-            var appsApi = new IncontrlAppsApi("{my-app-id}", "{my-api-key}");
             var subscriptionId = Guid.NewGuid();
             var subscriptionAlias = "my-subscription";
             var contactId = Guid.NewGuid();
@@ -35,65 +35,65 @@ namespace Incontrl.Sdk.Tests
                                            .CreateAsync(new CreateSubscriptionRequest { });
 
             // GET: /subscriptions/{subscriptionId}
-            var subscription = await api.Subscription(subscriptionId)
+            var subscription = await api.Subscriptions(subscriptionId)
                                         .GetAsync();
 
             // GET: /subscriptions/{subscriptionId}
-            subscription = await api.Subscription(subscriptionAlias)
+            subscription = await api.Subscriptions(subscriptionAlias)
                                     .GetAsync();
 
             // GET: /subscriptions/{subscriptionId}/company
-            var company = await api.Subscription(subscriptionId)
+            var company = await api.Subscriptions(subscriptionId)
                                    .Company()
                                    .GetAsync();
 
             // PUT: /subscriptions/{subscriptionId}/company
-            company = await api.Subscription(subscriptionId)
+            company = await api.Subscriptions(subscriptionId)
                                .Company()
                                .UpdateAsync(new UpdateCompanyRequest { });
 
             // GET: /subscriptions/{subscriptionId}/contact
-            var subscriptionContact = await api.Subscription(subscriptionId)
+            var subscriptionContact = await api.Subscriptions(subscriptionId)
                                                .Contact()
                                                .GetAsync();
 
             // PUT: /subscriptions/{subscriptionId}/contact
-            subscriptionContact = await api.Subscription(subscriptionId)
+            subscriptionContact = await api.Subscriptions(subscriptionId)
                                            .Contact()
                                            .UpdateAsync(new UpdateContactRequest { });
 
             // GET: /subscriptions/{subscriptionId}/members
-            var subscriptionMembers = await api.Subscription(subscriptionId)
+            var subscriptionMembers = await api.Subscriptions(subscriptionId)
                                                .Members()
                                                .ListAsync();
 
             // GET: /subscriptions/{subscriptionId}/metrics
-            var subscriptionMetrics = await api.Subscription(subscriptionId)
+            var subscriptionMetrics = await api.Subscriptions(subscriptionId)
                                                .Metrics()
                                                .ListAsync();
 
             // GET: /subscriptions/{subscriptionId}/plan
-            var subscriptionPlan = await api.Subscription(subscriptionId)
+            var subscriptionPlan = await api.Subscriptions(subscriptionId)
                                             .Plan()
                                             .GetAsync();
 
             // PUT: /subscriptions/{subscriptionId}/plan
-            await api.Subscription(subscriptionId)
+            await api.Subscriptions(subscriptionId)
                      .Plan()
                      .UpdateAsync(new Plan { });
 
             // GET: /subscriptions/{subscriptionId}/status
-            var status = await api.Subscription(subscriptionId)
+            var status = await api.Subscriptions(subscriptionId)
                                   .Status()
                                   .GetAsync();
 
             // PUT: /subscriptions/{subscriptionId}/status
-            status = await api.Subscription(subscriptionId)
+            status = await api.Subscriptions(subscriptionId)
                               .Status()
                               .UpdateAsync(new SubscriptionStatus { });
 
             // PUT: /subscriptions/{subscriptionId}/time-zone
-            subscription = await api.Subscription(subscriptionId)
+            subscription = await api.Subscriptions(subscriptionId)
                                     .TimeZone()
                                     .UpdateAsync(new UpdateSubscriptionTimeZoneRequest { });
 
@@ -109,35 +109,35 @@ namespace Incontrl.Sdk.Tests
 
             #region Contacts
             // GET: /subscriptions/{subscriptionId}/contacts
-            var contacts = await api.Subscription(subscriptionId)
+            var contacts = await api.Subscriptions(subscriptionId)
                                     .Contacts()
                                     .ListAsync();
 
             // POST: /subscriptions/{subscriptionId}/contacts
-            var newContact = await api.Subscription(subscriptionId)
+            var newContact = await api.Subscriptions(subscriptionId)
                                       .Contacts()
                                       .CreateAsync(new CreateContactRequest { });
 
             // GET: /subscriptions/{subscriptionId}/contacts/{contactId}
-            var contact = await api.Subscription(subscriptionId)
-                                   .Contact(contactId)
+            var contact = await api.Subscriptions(subscriptionId)
+                                   .Contacts(contactId)
                                    .GetAsync();
 
             // PUT: /subscriptions/{subscriptionId}/contacts/{contactId}
-            contact = await api.Subscription(subscriptionId)
-                               .Contact(contactId)
+            contact = await api.Subscriptions(subscriptionId)
+                               .Contacts(contactId)
                                .UpdateAsync(new UpdateContactRequest { });
 
             // GET: /subscriptions/{subscriptionId}/contacts/{contactId}/companies
-            var contactCompanies = await api.Subscription(subscriptionId)
-                                            .Contact(contactId)
+            var contactCompanies = await api.Subscriptions(subscriptionId)
+                                            .Contacts(contactId)
                                             .Companies()
                                             .GetAsync();
             #endregion
 
             #region Documents
             // GET: /subscriptions/{subscriptionId}/documents
-            var documents = await api.Subscription(subscriptionId)
+            var documents = await api.Subscriptions(subscriptionId)
                                      .Documents()
                                      .ListAsync(new ListOptions<DocumentListFilter> {
                                          Page = 1,
@@ -149,269 +149,269 @@ namespace Incontrl.Sdk.Tests
                                      });
 
             // POST: /subscriptions/{subscriptionId}/documents
-            var createdDocument = await api.Subscription(subscriptionId)
+            var createdDocument = await api.Subscriptions(subscriptionId)
                                            .Documents()
                                            .CreateAsync(new CreateDocumentRequest { });
 
             // DELETE: /subscriptions/{subscriptionId}/documents/{documentId}
-            await api.Subscription(subscriptionId)
-                     .Document(documentId)
+            await api.Subscriptions(subscriptionId)
+                     .Documents(documentId)
                      .DeleteAsync();
 
             // GET: /subscriptions/{subscriptionId}/documents/{documentId}
-            var document = await api.Subscription(subscriptionId)
-                                   .Document(documentId)
+            var document = await api.Subscriptions(subscriptionId)
+                                   .Documents(documentId)
                                    .GetAsync();
 
             // PUT: /subscriptions/{subscriptionId}/documents/{documentId}
-            document = await api.Subscription(subscriptionId)
-                                .Document(documentId)
+            document = await api.Subscriptions(subscriptionId)
+                                .Documents(documentId)
                                 .UpdateAsync(new UpdateDocumentRequest { });
 
             // GET: /subscriptions/{subscriptionId}/documents/{documentId}/payments
-            var documentPayments = await api.Subscription(subscriptionId)
-                                            .Document(documentId)
+            var documentPayments = await api.Subscriptions(subscriptionId)
+                                            .Documents(documentId)
                                             .Payments()
                                             .ListAsync();
 
             // POST: /subscriptions/{subscriptionId}/documents/{documentId}/payments
-            var newDocumentPayment = await api.Subscription(subscriptionId)
-                                              .Document(documentId)
+            var newDocumentPayment = await api.Subscriptions(subscriptionId)
+                                              .Documents(documentId)
                                               .Payments()
                                               .CreateAsync(new Payment { });
 
             // DELETE: /subscriptions/{subscriptionId}/documents/{documentId}/payments/{transactionId}
-            await api.Subscription(subscriptionId)
-                     .Document(documentId)
+            await api.Subscriptions(subscriptionId)
+                     .Documents(documentId)
                      .Payments()
-                     .Transaction(transactionId)
+                     .Transactions(transactionId)
                      .DeleteAsync();
 
             // GET: /subscriptions/{subscriptionId}/documents/{documentId}/payments/{transactionId}/approval
-            await api.Subscription(subscriptionId)
-                     .Document(documentId)
+            await api.Subscriptions(subscriptionId)
+                     .Documents(documentId)
                      .Payments()
-                     .Transaction(transactionId)
+                     .Transactions(transactionId)
                      .Approval()
                      .UpdateAsync(new UpdateApprovalRequest { });
 
             // GET: /subscriptions/{subscriptionId}/documents/{documentId}/status
-            var documentStatus = await api.Subscription(subscriptionId)
-                                          .Document(documentId)
+            var documentStatus = await api.Subscriptions(subscriptionId)
+                                          .Documents(documentId)
                                           .Status()
                                           .GetAsync();
 
             // PUT: /subscriptions/{subscriptionId}/documents/{documentId}/status
-            documentStatus = await api.Subscription(subscriptionId)
-                                      .Document(documentId)
+            documentStatus = await api.Subscriptions(subscriptionId)
+                                      .Documents(documentId)
                                       .Status()
                                       .UpdateAsync(new DocumentStatus { });
 
             // GET: /subscriptions/{subscriptionId}/documents/{documentId}/trackings
-            var documentTrackings = await api.Subscription(subscriptionId)
-                                             .Document(documentId)
+            var documentTrackings = await api.Subscriptions(subscriptionId)
+                                             .Documents(documentId)
                                              .Trackings()
                                              .ListAsync();
 
             // POST: /subscriptions/{subscriptionId}/documents/{documentId}/trackings
-            var createdDocumentTracking = await api.Subscription(subscriptionId)
-                                                   .Document(documentId)
+            var createdDocumentTracking = await api.Subscriptions(subscriptionId)
+                                                   .Documents(documentId)
                                                    .Trackings()
                                                    .CreateAsync(new CreateDocumentTrackingRequest {
                                                        Recipient = string.Empty
                                                    });
 
             // GET: /subscriptions/{subscriptionId}/documents/{documentId}/type
-            var documentType = await api.Subscription(subscriptionId)
-                                        .Document(documentId)
+            var documentType = await api.Subscriptions(subscriptionId)
+                                        .Documents(documentId)
                                         .Type()
                                         .GetAsync();
 
             // PUT: /subscriptions/{subscriptionId}/documents/{documentId}/type
-            documentType = await api.Subscription(subscriptionId)
-                                    .Document(documentId)
+            documentType = await api.Subscriptions(subscriptionId)
+                                    .Documents(documentId)
                                     .Type()
                                     .UpdateAsync(new UpdateDocumentTypeRequest { });
 
             // GET: documents/{documentId}.{format?}
-            var documentDocument = await api.Subscription(subscriptionId)
-                                            .Document(documentId)
+            var documentDocument = await api.Subscriptions(subscriptionId)
+                                            .Documents(documentId)
                                             .As(DocumentFormat.Pdf)
                                             .DownloadAsync();
             #endregion
 
             #region Document Types
             // GET: /subscriptions/{subscriptionId}/document-types
-            var documentTypes = await api.Subscription(subscriptionId)
+            var documentTypes = await api.Subscriptions(subscriptionId)
                                          .DocumentTypes()
                                          .ListAsync();
 
             // POST: /subscriptions/{subscriptionId}/document-types
-            var newDocumentType = await api.Subscription(subscriptionId)
+            var newDocumentType = await api.Subscriptions(subscriptionId)
                                            .DocumentTypes()
                                            .CreateAsync(new CreateDocumentTypeRequest { });
 
             // DELETE: /subscriptions/{subscriptionId}/document-types/{documentTypeId}
-            await api.Subscription(subscriptionId)
-                     .DocumentType(documentTypeId)
+            await api.Subscriptions(subscriptionId)
+                     .DocumentTypes(documentTypeId)
                      .DeleteAsync();
 
             // GET: /subscriptions/{subscriptionId}/document-types/{documentTypeId}
-            var subscriptionDocumentType = await api.Subscription(subscriptionId)
-                                                    .DocumentType(documentTypeId)
+            var subscriptionDocumentType = await api.Subscriptions(subscriptionId)
+                                                    .DocumentTypes(documentTypeId)
                                                     .GetAsync();
 
             // PUT: /subscriptions/{subscriptionId}/document-types/{documentTypeId}
-            subscriptionDocumentType = await api.Subscription(subscriptionId)
-                                                .DocumentType(documentTypeId)
+            subscriptionDocumentType = await api.Subscriptions(subscriptionId)
+                                                .DocumentTypes(documentTypeId)
                                                 .UpdateAsync(new UpdateDocumentTypeRequest { });
 
             // GET: /subscriptions/{subscriptionId}/document-types/{documentTypeId}/payment-options
-            var documentTypePaymentOptions = await api.Subscription(subscriptionId)
-                                                      .DocumentType(documentTypeId)
+            var documentTypePaymentOptions = await api.Subscriptions(subscriptionId)
+                                                      .DocumentTypes(documentTypeId)
                                                       .PaymentOptions()
                                                       .ListAsync();
 
             // POST: /subscriptions/{subscriptionId}/document-types/{documentTypeId}/payment-options
-            var createdDocumentTypePaymentOption = await api.Subscription(subscriptionId)
-                                                            .DocumentType(documentTypeId)
+            var createdDocumentTypePaymentOption = await api.Subscriptions(subscriptionId)
+                                                            .DocumentTypes(documentTypeId)
                                                             .PaymentOptions()
                                                             .CreateAsync(new PaymentOption { });
 
             // DELETE: /subscriptions/{subscriptionId}/document-types/{documentTypeId}/payment-options/{paymentOptionId}
-            await api.Subscription(subscriptionId)
-                     .DocumentType(documentId)
-                     .PaymentOption(paymentOptionId)
+            await api.Subscriptions(subscriptionId)
+                     .DocumentTypes(documentId)
+                     .PaymentOptions(paymentOptionId)
                      .DeleteAsync();
 
             // GET: /subscriptions/{subscriptionId}/document-types/{documentTypeId}/template
-            var documentTypeTemplate = await api.Subscription(subscriptionAlias)
-                                                .DocumentType(documentTypeId)
+            var documentTypeTemplate = await api.Subscriptions(subscriptionAlias)
+                                                .DocumentTypes(documentTypeId)
                                                 .Template()
                                                 .DownloadAsync();
 
             // POST: /subscriptions/{subscriptionId}/document-types/{documentTypeId}/template
-            await api.Subscription(subscriptionId)
-                     .DocumentType(documentTypeId)
+            await api.Subscriptions(subscriptionId)
+                     .DocumentTypes(documentTypeId)
                      .Template()
-                     .UploadAsync(new byte[0], string.Empty);
+                     .UploadAsync(File.OpenRead(""), string.Empty);
             #endregion
 
             #region Organisations
             // GET: /subscriptions/{subscriptionId}/organisations
-            var organisations = await api.Subscription(subscriptionId)
+            var organisations = await api.Subscriptions(subscriptionId)
                                          .Organisations()
                                          .ListAsync();
 
             // POST: /subscriptions/{subscriptionId}/organisations
-            var newOrganisation = await api.Subscription(subscriptionId)
+            var newOrganisation = await api.Subscriptions(subscriptionId)
                                            .Organisations()
                                            .CreateAsync(new CreateOrganisationRequest { });
 
             // GET: /subscriptions/{subscriptionId}/organisations/{organisationId}
-            var organisation = await api.Subscription(subscriptionId)
-                                        .Organisation(organisationId)
+            var organisation = await api.Subscriptions(subscriptionId)
+                                        .Organisations(organisationId)
                                         .GetAsync();
 
             // PUT: /subscriptions/{subscriptionId}/organisations/{organisationId}
-            organisation = await api.Subscription(subscriptionId)
-                                    .Organisation(organisationId)
+            organisation = await api.Subscriptions(subscriptionId)
+                                    .Organisations(organisationId)
                                     .UpdateAsync(new UpdateOrganisationRequest { });
             #endregion
 
             #region Products
             // GET: /subscriptions/{subscriptionId}/products
-            var products = await api.Subscription(subscriptionId)
+            var products = await api.Subscriptions(subscriptionId)
                                     .Products()
                                     .ListAsync();
 
             // POST: /subscriptions/{subscriptionId}/products
-            var newProduct = await api.Subscription(subscriptionId)
+            var newProduct = await api.Subscriptions(subscriptionId)
                                       .Products()
                                       .CreateAsync(new CreateProductRequest { });
 
             // GET: /subscriptions/{subscriptionId}/products/{productId}
-            var product = await api.Subscription(subscriptionId)
-                                   .Product(productId)
+            var product = await api.Subscriptions(subscriptionId)
+                                   .Products(productId)
                                    .GetAsync();
 
             // PUT: /subscriptions/{subscriptionId}/products/{productId}
-            product = await api.Subscription(subscriptionId)
-                               .Product(productId)
+            product = await api.Subscriptions(subscriptionId)
+                               .Products(productId)
                                .UpdateAsync(new UpdateProductRequest { });
             #endregion
 
             #region Payment Options
             // GET: /subscriptions/{subscriptionId}/payment-options
-            var paymentOptions = await api.Subscription(subscriptionId)
+            var paymentOptions = await api.Subscriptions(subscriptionId)
                                           .PaymentOptions()
                                           .ListAsync();
 
             // POST: /subscriptions/{subscriptionId}/payment-options
-            var createdPaymentOption = await api.Subscription(subscriptionId)
+            var createdPaymentOption = await api.Subscriptions(subscriptionId)
                                                 .PaymentOptions()
                                                 .CreateAsync(new PaymentOption { });
 
             // GET: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}
-            var paymentOption = await api.Subscription(subscriptionId)
-                                         .PaymentOption(paymentOptionId)
+            var paymentOption = await api.Subscriptions(subscriptionId)
+                                         .PaymentOptions(paymentOptionId)
                                          .GetAsync();
 
             // PUT: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}
-            paymentOption = await api.Subscription(subscriptionId)
-                                     .PaymentOption(paymentOptionId)
+            paymentOption = await api.Subscriptions(subscriptionId)
+                                     .PaymentOptions(paymentOptionId)
                                      .UpdateAsync(new PaymentOption { });
 
             // GET: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions
-            var transactions = await api.Subscription(subscriptionId)
-                                        .PaymentOption(paymentOptionId)
+            var transactions = await api.Subscriptions(subscriptionId)
+                                        .PaymentOptions(paymentOptionId)
                                         .Transactions()
                                         .ListAsync();
 
             // POST: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions
-            var createdTransaction = await api.Subscription(subscriptionId)
-                                              .PaymentOption(paymentOptionId)
+            var createdTransaction = await api.Subscriptions(subscriptionId)
+                                              .PaymentOptions(paymentOptionId)
                                               .Transactions()
                                               .CreateAsync(new Transaction { });
 
             // GET: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions/{transactionId}
-            var transaction = await api.Subscription(subscriptionId)
-                                       .PaymentOption(paymentOptionId)
-                                       .Transaction(transactionId)
+            var transaction = await api.Subscriptions(subscriptionId)
+                                       .PaymentOptions(paymentOptionId)
+                                       .Transactions(transactionId)
                                        .GetAsync();
 
             // GET: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions/{transactionId}/payments
-            var payments = await api.Subscription(subscriptionId)
-                                    .PaymentOption(paymentOptionId)
-                                    .Transaction(transactionId)
+            var payments = await api.Subscriptions(subscriptionId)
+                                    .PaymentOptions(paymentOptionId)
+                                    .Transactions(transactionId)
                                     .Payments()
                                     .ListAsync();
 
             // POST: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions/{transactionId}/payments
-            var createdPayment = await api.Subscription(subscriptionId)
-                                          .PaymentOption(paymentOptionId)
-                                          .Transaction(transactionId)
+            var createdPayment = await api.Subscriptions(subscriptionId)
+                                          .PaymentOptions(paymentOptionId)
+                                          .Transactions(transactionId)
                                           .Payments()
                                           .CreateAsync(new Payment { });
 
             // POST: /subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions/bulk
-            await api.Subscription(subscriptionId)
-                     .PaymentOption(paymentOptionId)
+            await api.Subscriptions(subscriptionId)
+                     .PaymentOptions(paymentOptionId)
                      .Transactions()
                      .BulkCreateAsync(new BulkLoadTransactionsRequest { });
             #endregion
 
             #region Apps
             // GET: api/apps
-            var myApps = await appsApi.Apps()
+            var myApps = await api.Apps()
                                       .ListAsync();
 
             // GET: api/apps/{appId}
-            var app = await appsApi.App(appId)
+            var app = await api.App(appId)
                                    .GetAsync();
 
             //GET: api/apps/all/webhooks
-            var webHooks = await appsApi.Apps()
+            var webHooks = await api.Apps()
                                         .WebHooks()
                                         .ListAsync();
             #endregion

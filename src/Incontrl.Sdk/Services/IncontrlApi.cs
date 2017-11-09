@@ -12,18 +12,36 @@ namespace Incontrl.Sdk
         private readonly Lazy<ISubscriptionsApi> _subscriptionsApi;
         private readonly Lazy<ISubscriptionApi> _subscriptionApi;
         private readonly Lazy<ILicenseApi> _licenseApi;
+        private readonly Lazy<IAppsApi> _appsApi;
+        private readonly Lazy<IAppApi> _appApi;
 
-        public IncontrlApi(string appId, string apiKey, string coreApiAddress = null, string authorityAddress = null, string apiVersion = null) {
-            // Optional parameters coreApiAddress and authorityAddress are used to ovveride the production endpoints, so we can use the SDK for development.
-            var apiAddress = string.IsNullOrEmpty(coreApiAddress) ? Api.CoreApiAddress : coreApiAddress;
-            var authority = string.IsNullOrEmpty(authorityAddress) ? IdentityServerConstants.Authority : authorityAddress;
-            _clientBase = new ClientBase(apiVersion == null ? apiAddress : $"{apiAddress}/{apiVersion}", authority, appId, apiKey);
+        public IncontrlApi(string appId, string apiKey) {
+            _clientBase = new ClientBase(appId, apiKey);
             _subscriptionsApi = new Lazy<ISubscriptionsApi>(() => new SubscriptionsApi(_clientBase));
             _subscriptionApi = new Lazy<ISubscriptionApi>(() => new SubscriptionApi(_clientBase));
             _licenseApi = new Lazy<ILicenseApi>(() => new LicenseApi(_clientBase));
+            _appsApi = new Lazy<IAppsApi>(() => new AppsApi(_clientBase));
+            _appApi = new Lazy<IAppApi>(() => new AppApi(_clientBase));
         }
 
-        public Uri ApiAddress => _clientBase.ApiAddress;
+        public Uri ApiAddress {
+            get => _clientBase.ApiAddress;
+            set => _clientBase.ApiAddress = value;
+        }
+
+        public Uri AuthorityAddress {
+            get => _clientBase.AuthorityAddress;
+            set => _clientBase.AuthorityAddress = value;
+        }
+
+        public IAppApi App(Guid appId) {
+            var appApi = _appApi.Value;
+            appApi.AppId = appApi.ToString();
+
+            return appApi;
+        }
+
+        public IAppsApi Apps() => _appsApi.Value;
 
         public ILicenseApi License() => _licenseApi.Value;
 
@@ -33,14 +51,14 @@ namespace Incontrl.Sdk
 
         public Task LoginAsync(string refreshToken, ScopeFlags scopes = ScopeFlags.Core) => _clientBase.RequestRefreshTokenAsync(refreshToken, scopes);
 
-        public ISubscriptionApi Subscription(Guid subscriptionId) {
+        public ISubscriptionApi Subscriptions(Guid subscriptionId) {
             var subscriptionApi = _subscriptionApi.Value;
             subscriptionApi.SubscriptionId = subscriptionId.ToString();
 
             return subscriptionApi;
         }
 
-        public ISubscriptionApi Subscription(string subscriptionAlias) {
+        public ISubscriptionApi Subscriptions(string subscriptionAlias) {
             var subscriptionApi = _subscriptionApi.Value;
             subscriptionApi.SubscriptionId = subscriptionAlias;
 

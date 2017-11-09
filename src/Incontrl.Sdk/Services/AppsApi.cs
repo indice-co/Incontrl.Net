@@ -18,7 +18,7 @@ namespace Incontrl.Sdk.Services
         }
 
         public Task<ResultSet<App>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<ResultSet<App>>($"api/apps", cancellationToken);
+            _clientBase.GetAsync<ResultSet<App>>($"{_clientBase.AuthorityAddress}/api/apps", cancellationToken);
 
         public IWebHooksApi WebHooks() => _webHooksApi.Value;
     }

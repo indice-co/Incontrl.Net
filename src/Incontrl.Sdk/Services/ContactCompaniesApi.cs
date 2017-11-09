@@ -16,6 +16,6 @@ namespace Incontrl.Sdk.Services
         public string ContactId { get; set; }
 
         public Task<ResultSet<Organisation>> GetAsync(ListOptions<OrganisationFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<ResultSet<Organisation>>($"subscriptions/{SubscriptionId}/contacts/{ContactId}/companies", options, cancellationToken);
+            _clientBase.GetAsync<ResultSet<Organisation>>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/contacts/{ContactId}/companies", options, cancellationToken);
     }
 }

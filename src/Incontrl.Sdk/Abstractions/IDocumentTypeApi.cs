@@ -57,6 +57,6 @@ namespace Incontrl.Sdk.Abstractions
         /// 
         /// </summary>
         /// <returns></returns>
-        IDocumentTypePaymentOption PaymentOption(Guid paymentOptionId);
+        IDocumentTypePaymentOption PaymentOptions(Guid paymentOptionId);
     }
 }

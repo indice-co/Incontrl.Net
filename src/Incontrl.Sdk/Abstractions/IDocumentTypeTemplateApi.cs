@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
 
@@ -33,6 +34,6 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="fileName">The name of the file.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task UploadAsync(byte[] fileContent, string fileName, CancellationToken cancellationToken = default(CancellationToken));
+        Task UploadAsync(Stream fileContent, string fileName, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

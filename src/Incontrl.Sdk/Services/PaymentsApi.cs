@@ -17,9 +17,9 @@ namespace Incontrl.Sdk.Services
         public string BankTransactionId { get; set; }
 
         public Task<Payment> CreateAsync(Payment request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PostAsync<Payment, Payment>($"subscriptions/{SubscriptionId}/bank-accounts/{BankAccountId}/transactions/{BankTransactionId}/payments", request, cancellationToken);
+            _clientBase.PostAsync<Payment, Payment>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/bank-accounts/{BankAccountId}/transactions/{BankTransactionId}/payments", request, cancellationToken);
 
         public Task<ResultSet<Payment>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<ResultSet<Payment>>($"subscriptions/{SubscriptionId}/bank-accounts/{BankAccountId}/transactions/{BankTransactionId}/payments", options, cancellationToken);
+            _clientBase.GetAsync<ResultSet<Payment>>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/bank-accounts/{BankAccountId}/transactions/{BankTransactionId}/payments", options, cancellationToken);
     }
 }

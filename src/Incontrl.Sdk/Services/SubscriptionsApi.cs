@@ -18,13 +18,13 @@ namespace Incontrl.Sdk.Services
         }
 
         public Task<Subscription> CreateAsync(CreateSubscriptionRequest request, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.PostAsync<CreateSubscriptionRequest, Subscription>("subscriptions", request, cancellationToken);
+            _clientBase.PostAsync<CreateSubscriptionRequest, Subscription>($"{_clientBase.ApiAddress}/subscriptions", request, cancellationToken);
 
         public Task<ResultSet<Subscription>> ListAsync(ListOptions<SubscriptionListFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<ResultSet<Subscription>>("subscriptions", options, cancellationToken);
+            _clientBase.GetAsync<ResultSet<Subscription>>($"{_clientBase.ApiAddress}/subscriptions", options, cancellationToken);
 
         public Task<ResultSet<Subscription>> ListAsync(bool globalAccess, ListOptions<SubscriptionListFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<ResultSet<Subscription>>("subscriptions/all", options, cancellationToken);
+            _clientBase.GetAsync<ResultSet<Subscription>>($"{_clientBase.ApiAddress}/subscriptions/all", options, cancellationToken);
 
         public IMetricsApi Metrics() => _metricsApi.Value;
     }

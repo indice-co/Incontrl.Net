@@ -68,7 +68,7 @@ namespace Incontrl.Sdk.Services
             return subscriptionContactApi;
         }
 
-        public IContactApi Contact(Guid contactId) {
+        public IContactApi Contacts(Guid contactId) {
             var contactApi = _contactApi.Value;
             contactApi.SubscriptionId = SubscriptionId;
             contactApi.ContactId = contactId.ToString();
@@ -84,9 +84,9 @@ namespace Incontrl.Sdk.Services
         }
 
         public Task<Subscription> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<Subscription>($"subscriptions/{SubscriptionId}", cancellationToken);
+            _clientBase.GetAsync<Subscription>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}", cancellationToken);
 
-        public IDocumentApi Document(Guid documentId) {
+        public IDocumentApi Documents(Guid documentId) {
             var documentApi = _documentApi.Value;
             documentApi.SubscriptionId = SubscriptionId;
             documentApi.DocumentId = documentId.ToString();
@@ -101,7 +101,7 @@ namespace Incontrl.Sdk.Services
             return documentsApi;
         }
 
-        public IDocumentTypeApi DocumentType(Guid documentTypeId) {
+        public IDocumentTypeApi DocumentTypes(Guid documentTypeId) {
             var documentTypeApi = _documentTypeApi.Value;
             documentTypeApi.SubscriptionId = SubscriptionId;
             documentTypeApi.DocumentTypeId = documentTypeId.ToString();
@@ -130,7 +130,7 @@ namespace Incontrl.Sdk.Services
             return subscriptionMetricsApi;
         }
 
-        public IOrganisationApi Organisation(Guid organisationId) {
+        public IOrganisationApi Organisations(Guid organisationId) {
             var organisationApi = _organisationApi.Value;
             organisationApi.SubscriptionId = SubscriptionId;
             organisationApi.OrganisationId = organisationId.ToString();
@@ -152,7 +152,7 @@ namespace Incontrl.Sdk.Services
             return subscriptionPlanApi;
         }
 
-        public IProductApi Product(Guid productId) {
+        public IProductApi Products(Guid productId) {
             var productApi = _productApi.Value;
             productApi.SubscriptionId = SubscriptionId;
             productApi.ProductId = productId.ToString();
@@ -188,7 +188,7 @@ namespace Incontrl.Sdk.Services
             return paymentOptionsApi;
         }
 
-        public IPaymentOptionApi PaymentOption(Guid paymentOptionId) {
+        public IPaymentOptionApi PaymentOptions(Guid paymentOptionId) {
             var paymentOptionApi = _paymentOptionApi.Value;
             paymentOptionApi.SubscriptionId = SubscriptionId;
             paymentOptionApi.PaymentOptionId = paymentOptionId.ToString();

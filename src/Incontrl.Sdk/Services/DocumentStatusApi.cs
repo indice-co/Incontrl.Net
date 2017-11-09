@@ -15,9 +15,9 @@ namespace Incontrl.Sdk.Services
         public string DocumentId { get; set; }
 
         public async Task<DocumentStatus> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
-            (await _clientBase.GetAsync<DocumentStatusResponse>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/status", cancellationToken)).Status;
+            (await _clientBase.GetAsync<DocumentStatusResponse>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/documents/{DocumentId}/status", cancellationToken)).Status;
 
         public async Task<DocumentStatus> UpdateAsync(DocumentStatus request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            (await _clientBase.PutAsync<UpdateDocumentStatusRequest, DocumentStatusResponse>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/status", new UpdateDocumentStatusRequest { Status = request }, cancellationToken)).Status;
+            (await _clientBase.PutAsync<UpdateDocumentStatusRequest, DocumentStatusResponse>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/documents/{DocumentId}/status", new UpdateDocumentStatusRequest { Status = request }, cancellationToken)).Status;
     }
 }

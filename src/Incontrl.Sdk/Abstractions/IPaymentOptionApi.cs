@@ -46,6 +46,6 @@ namespace Incontrl.Sdk.Abstractions
         /// </summary>
         /// <param name="transactionId"></param>
         /// <returns></returns>
-        IPaymentOptionTransactionApi Transaction(Guid transactionId);
+        IPaymentOptionTransactionApi Transactions(Guid transactionId);
     }
 }

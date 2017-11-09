@@ -9,6 +9,6 @@ namespace Incontrl.Sdk.Services
 
         public LicenseApi(ClientBase clientBase) => _clientBase = clientBase;
 
-        public async Task<string> GetAsync() => (await _clientBase.GetAsync<string>("license"));
+        public async Task<string> GetAsync() => (await _clientBase.GetAsync<string>($"{_clientBase.ApiAddress}/license"));
     }
 }

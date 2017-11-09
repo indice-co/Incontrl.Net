@@ -13,6 +13,6 @@ namespace Incontrl.Sdk.Services
         public WebHooksApi(ClientBase clientBase) => _clientBase = clientBase;
 
         public Task<ResultSet<Webhook>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<ResultSet<Webhook>>($"api/apps/all/webhooks", cancellationToken);
+            _clientBase.GetAsync<ResultSet<Webhook>>($"{_clientBase.AuthorityAddress}/api/apps/all/webhooks", cancellationToken);
     }
 }

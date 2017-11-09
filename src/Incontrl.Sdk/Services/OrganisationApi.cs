@@ -15,9 +15,9 @@ namespace Incontrl.Sdk.Services
         public string OrganisationId { get; set; }
 
         public Task<Organisation> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<Organisation>($"subscriptions/{SubscriptionId}/organisations/{OrganisationId}", cancellationToken);
+            _clientBase.GetAsync<Organisation>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/organisations/{OrganisationId}", cancellationToken);
 
         public Task<Organisation> UpdateAsync(UpdateOrganisationRequest request, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.PutAsync<UpdateOrganisationRequest, Organisation>($"subscriptions/{SubscriptionId}/organisations/{OrganisationId}", request, cancellationToken);
+            _clientBase.PutAsync<UpdateOrganisationRequest, Organisation>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/organisations/{OrganisationId}", request, cancellationToken);
     }
 }

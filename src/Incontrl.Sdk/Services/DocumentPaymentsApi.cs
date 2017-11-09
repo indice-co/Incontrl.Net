@@ -21,12 +21,12 @@ namespace Incontrl.Sdk.Services
         public string DocumentId { get; set; }
 
         public Task<Payment> CreateAsync(Payment request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PostAsync<Payment, Payment>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/payments", request, cancellationToken);
+            _clientBase.PostAsync<Payment, Payment>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/documents/{DocumentId}/payments", request, cancellationToken);
 
         public Task<ResultSet<Payment>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<ResultSet<Payment>>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/payments", options, cancellationToken);
+            _clientBase.GetAsync<ResultSet<Payment>>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/documents/{DocumentId}/payments", options, cancellationToken);
 
-        public IDocumentPaymentTransactionApi Transaction(Guid transactionId) {
+        public IDocumentPaymentTransactionApi Transactions(Guid transactionId) {
             var documentPaymentTransactionApi = _documentPaymentTransactionApi.Value;
             documentPaymentTransactionApi.SubscriptionId = SubscriptionId;
             documentPaymentTransactionApi.DocumentId = DocumentId;

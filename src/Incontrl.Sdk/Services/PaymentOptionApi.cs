@@ -20,9 +20,9 @@ namespace Incontrl.Sdk.Services
         public string PaymentOptionId { get; set; }
 
         public Task<PaymentOption> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<PaymentOption>($"subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}", cancellationToken);
+            _clientBase.GetAsync<PaymentOption>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}", cancellationToken);
 
-        public IPaymentOptionTransactionApi Transaction(Guid transactionId) {
+        public IPaymentOptionTransactionApi Transactions(Guid transactionId) {
             throw new NotImplementedException();
         }
 
@@ -35,6 +35,6 @@ namespace Incontrl.Sdk.Services
         }
 
         public Task<PaymentOption> UpdateAsync(PaymentOption request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PutAsync<PaymentOption, PaymentOption>($"subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}", request, cancellationToken);
+            _clientBase.PutAsync<PaymentOption, PaymentOption>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}", request, cancellationToken);
     }
 }

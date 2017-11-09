@@ -24,10 +24,10 @@ namespace Incontrl.Sdk.Services
             _clientBase.PostAsync<BulkLoadTransactionsRequest, BulkLoadTransactionsRequest>($"/subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}/transactions/bulk", request, cancellationToken);
 
         public Task<Transaction> CreateAsync(Transaction request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PostAsync<Transaction, Transaction>($"subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}/transactions", request, cancellationToken);
+            _clientBase.PostAsync<Transaction, Transaction>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}/transactions", request, cancellationToken);
 
         public Task<ResultSet<Transaction>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<ResultSet<Transaction>>($"subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}/transactions", cancellationToken);
+            _clientBase.GetAsync<ResultSet<Transaction>>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}/transactions", cancellationToken);
 
         public IPaymentOptionTransactionPaymentsApi Payments() {
             var paymentOptionTransactionPaymentsApi = _paymentOptionTransactionPaymentsApi.Value;

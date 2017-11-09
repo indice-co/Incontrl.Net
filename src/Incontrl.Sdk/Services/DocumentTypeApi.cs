@@ -24,13 +24,13 @@ namespace Incontrl.Sdk.Services
         public string DocumentTypeId { get; set; }
 
         public Task<DocumentType> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<DocumentType>($"subscriptions/{SubscriptionId}/document-types/{DocumentTypeId}", cancellationToken);
+            _clientBase.GetAsync<DocumentType>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/document-types/{DocumentTypeId}", cancellationToken);
 
         public Task<DocumentType> UpdateAsync(UpdateDocumentTypeRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PutAsync<UpdateDocumentTypeRequest, DocumentType>($"subscriptions/{SubscriptionId}/document-types/{DocumentTypeId}", request, cancellationToken);
+            _clientBase.PutAsync<UpdateDocumentTypeRequest, DocumentType>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/document-types/{DocumentTypeId}", request, cancellationToken);
 
         public Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.DeleteAsync($"subscriptions/{SubscriptionId}/document-types/{DocumentTypeId}", cancellationToken);
+            _clientBase.DeleteAsync($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/document-types/{DocumentTypeId}", cancellationToken);
 
         public IDocumentTypeTemplateApi Template() {
             var templateApi = _templateApi.Value;
@@ -48,7 +48,7 @@ namespace Incontrl.Sdk.Services
             return documentTypePaymentOptions;
         }
 
-        public IDocumentTypePaymentOption PaymentOption(Guid paymentOptionId) {
+        public IDocumentTypePaymentOption PaymentOptions(Guid paymentOptionId) {
             var documentTypePaymentOption = _documentTypePaymentOption.Value;
             documentTypePaymentOption.SubscriptionId = SubscriptionId;
             documentTypePaymentOption.DocumentTypeId = DocumentTypeId;
