@@ -13,9 +13,11 @@ namespace Incontrl.Sdk.Tests
     {
         private static IncontrlApi _api;
         private IConfigurationRoot _configuration;
-        private const string subscriptionId = "bf56fc6d-6936-4c4e-8461-716e9ebaa1f9";
-        private const string documentTypeId = "3F9EE6D7-C0D4-4E0A-0EBC-08D50F1E7DBA";
-        private const string documentId = "646eef13-072d-42f1-6c57-08d518b9565b";
+        private const string subscriptionId = "76101680-0F5E-4AB5-BC41-626BDE020BE8";
+        private const string documentTypeId = "8C1A6FD6-37C1-414B-AC57-1BC5D6011C51";
+        private const string documentId = "80AC3B52-56FC-4F00-45E6-08D5283B3333";
+        private const string paymentOptionId = "5B6C0CAE-C4BB-4084-AB9C-66D8491839F0";
+        private const string transactionId = "103A5FCC-C65D-4B0E-0BBE-08D5285DF995";
 
         public IncontrlApiTests() {
             var builder = new ConfigurationBuilder()
@@ -29,9 +31,48 @@ namespace Incontrl.Sdk.Tests
             _configuration = builder.Build();
 
             _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"]) {
-                ApiAddress = new Uri("https://api-vnext.incontrl.io/swagger/ui"),
-                AuthorityAddress = new Uri("https://incontrl.io")
+                ApiAddress = new Uri("http://localhost:20202"),
+                AuthorityAddress = new Uri("http://localhost:20200")
             };
+        }
+
+        [Theory]
+        [InlineData(subscriptionId, paymentOptionId, transactionId, documentId)]
+        public async Task CanCreatePayment(string subscriptionId, string paymentOptionId, string transactionId, string documentId) {
+            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Members | ScopeFlags.Apps | ScopeFlags.Membership | ScopeFlags.Banking);
+
+            var newPayment = await _api.Subscriptions(subscriptionId)
+                                       .PaymentOptions(Guid.Parse(paymentOptionId))
+                                       .Transactions(Guid.Parse(transactionId))
+                                       .Payments()
+                                       .CreateAsync(new Payment {
+                                           Approval = ApprovalStatus.Approved,
+                                           Comments = "A description",
+                                           Value = new Money {
+                                               Amount = 123m,
+                                               Currency = "EUR"
+                                           },
+                                           Document = new Document {
+                                               Id = Guid.Parse(documentId)
+                                           }
+                                       });
+
+            Assert.True(newPayment != null);
+        }
+
+        [Theory]
+        [InlineData(subscriptionId, paymentOptionId)]
+        public async Task CanRetrieveDocumentTypesForPaymentOption(string subscriptionId, string paymentOptionId) {
+            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Members | ScopeFlags.Apps | ScopeFlags.Membership | ScopeFlags.Banking);
+
+            var documentTypes = await _api.Subscriptions(subscriptionId)
+                                          .PaymentOptions(Guid.Parse(paymentOptionId))
+                                          .DocumentTypes()
+                                          .ListAsync(new ListOptions {
+                                              Search = "AccountsReceivable"
+                                          });
+
+            Assert.True(documentTypes.Items.Length > 0);
         }
 
         [Fact]
@@ -69,7 +110,7 @@ namespace Incontrl.Sdk.Tests
                                    .Documents(Guid.Parse(documentId))
                                    .Status()
                                    .UpdateAsync(DocumentStatus.Paid);
-            
+
             Assert.True(document.Status.Value != result);
         }
 

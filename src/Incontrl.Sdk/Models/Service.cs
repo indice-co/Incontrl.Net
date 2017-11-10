@@ -1,6 +1,6 @@
 ﻿namespace Incontrl.Sdk.Models
 {
-    public class ServiceConfig
+    public class Service
     {
         public string Name { get; set; }
         public string Description { get; set; }

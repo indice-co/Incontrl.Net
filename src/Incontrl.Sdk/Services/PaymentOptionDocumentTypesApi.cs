@@ -16,6 +16,6 @@ namespace Incontrl.Sdk.Services
         public string PaymentOptionId { get; set; }
 
         public Task<ResultSet<DocumentType>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<ResultSet<DocumentType>>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}/document-types ", options, cancellationToken);
+            _clientBase.GetAsync<ResultSet<DocumentType>>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}/document-types", options, cancellationToken);
     }
 }

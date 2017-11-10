@@ -38,6 +38,7 @@ namespace Incontrl.Sdk.Services
             var paymentOptionTransactionApi = _paymentOptionTransactionApi.Value;
             paymentOptionTransactionApi.SubscriptionId = SubscriptionId;
             paymentOptionTransactionApi.PaymentOptionId = PaymentOptionId;
+            paymentOptionTransactionApi.TransactionId = transactionId.ToString();
 
             return paymentOptionTransactionApi;
         }
