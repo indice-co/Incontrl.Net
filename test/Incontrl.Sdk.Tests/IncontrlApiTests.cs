@@ -15,9 +15,9 @@ namespace Incontrl.Sdk.Tests
         private IConfigurationRoot _configuration;
         private const string subscriptionId = "76101680-0F5E-4AB5-BC41-626BDE020BE8";
         private const string documentTypeId = "8C1A6FD6-37C1-414B-AC57-1BC5D6011C51";
-        private const string documentId = "80AC3B52-56FC-4F00-45E6-08D5283B3333";
+        private const string documentId = "D5BE6763-D4D0-404B-46DE-08D529A58B8E";
         private const string paymentOptionId = "5B6C0CAE-C4BB-4084-AB9C-66D8491839F0";
-        private const string transactionId = "103A5FCC-C65D-4B0E-0BBE-08D5285DF995";
+        private const string transactionId = "9300C9FF-5AFA-45AC-6B8D-08D529A5F249";
 
         public IncontrlApiTests() {
             var builder = new ConfigurationBuilder()
