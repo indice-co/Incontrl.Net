@@ -67,6 +67,11 @@ namespace Incontrl.Sdk
 
         public ISubscriptionsApi Subscriptions() => _subscriptionsApi.Value;
 
-        public ISubscriptionsApi Subscriptions(bool globalAccess) => _subscriptionsApi.Value;
+        public ISubscriptionsApi Subscriptions(bool globalAccess) {
+            var subscriptionsApi = _subscriptionsApi.Value;
+            subscriptionsApi.GlobalAccess = globalAccess;
+
+            return subscriptionsApi;
+        }
     }
 }

@@ -17,14 +17,18 @@ namespace Incontrl.Sdk.Services
             _metricsApi = new Lazy<IMetricsApi>(() => new MetricsApi(_clientBase));
         }
 
-        public Task<Subscription> CreateAsync(CreateSubscriptionRequest request, CancellationToken cancellationToken = default(CancellationToken)) => 
+        public bool GlobalAccess { get; set; }
+
+        public Task<Subscription> CreateAsync(CreateSubscriptionRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
             _clientBase.PostAsync<CreateSubscriptionRequest, Subscription>($"{_clientBase.ApiAddress}/subscriptions", request, cancellationToken);
 
-        public Task<ResultSet<Subscription>> ListAsync(ListOptions<SubscriptionListFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<ResultSet<Subscription>>($"{_clientBase.ApiAddress}/subscriptions", options, cancellationToken);
+        public Task<ResultSet<Subscription>> ListAsync(ListOptions<SubscriptionListFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) {
+            if (GlobalAccess) {
+                return _clientBase.GetAsync<ResultSet<Subscription>>($"{_clientBase.ApiAddress}/subscriptions/all", options, cancellationToken);
+            }
 
-        public Task<ResultSet<Subscription>> ListAsync(bool globalAccess, ListOptions<SubscriptionListFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<ResultSet<Subscription>>($"{_clientBase.ApiAddress}/subscriptions/all", options, cancellationToken);
+            return _clientBase.GetAsync<ResultSet<Subscription>>($"{_clientBase.ApiAddress}/subscriptions", options, cancellationToken);
+        }
 
         public IMetricsApi Metrics() => _metricsApi.Value;
     }

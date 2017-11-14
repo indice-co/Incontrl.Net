@@ -15,9 +15,10 @@ namespace Incontrl.Sdk.Tests
         private IConfigurationRoot _configuration;
         private const string subscriptionId = "76101680-0F5E-4AB5-BC41-626BDE020BE8";
         private const string documentTypeId = "8C1A6FD6-37C1-414B-AC57-1BC5D6011C51";
-        private const string documentId = "D5BE6763-D4D0-404B-46DE-08D529A58B8E";
         private const string paymentOptionId = "5B6C0CAE-C4BB-4084-AB9C-66D8491839F0";
+        private const string userId = "ab9769f1-d532-4b7d-9922-3da003157ebd";
         private const string transactionId = "9300C9FF-5AFA-45AC-6B8D-08D529A5F249";
+        private const string documentId = "D5BE6763-D4D0-404B-46DE-08D529A58B8E";
 
         public IncontrlApiTests() {
             var builder = new ConfigurationBuilder()
@@ -131,6 +132,23 @@ namespace Incontrl.Sdk.Tests
                                          .GetAsync();
 
             Assert.True(subscription != null);
+        }
+
+        [Theory]
+        [InlineData(userId)]
+        public async Task CanRetrieveGlobalSubscriptions(string userId) {
+            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Members);
+
+            var subscriptions = await _api.Subscriptions(globalAccess: true)
+                                          .ListAsync(new ListOptions<SubscriptionListFilter> {
+                                              Filter = new SubscriptionListFilter {
+                                                  MemberId = userId
+                                              },
+                                              Page = 1,
+                                              Size = 3
+                                          });
+
+            Assert.True(subscriptions.Items.Length > 0);
         }
 
         [Theory]
