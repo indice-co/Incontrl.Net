@@ -13,7 +13,8 @@ using Incontrl.Sdk.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class ClientBase {
+    internal class ClientBase
+    {
         protected static HttpClient Client;
         private readonly string _appId;
         private readonly string _apiKey;
@@ -86,7 +87,7 @@ namespace Incontrl.Sdk.Services
             var queryString = string.Empty;
 
             if (query != null) {
-                queryString = "?" + new Dictionary<string, object>().Merge(query).ToFormUrlEncodedString();
+                queryString = "?" + new QueryStringParams(query).ToString();
             }
 
             var response = default(JsonResponse<TResponse>);
@@ -108,7 +109,7 @@ namespace Incontrl.Sdk.Services
             var queryString = string.Empty;
 
             if (query != null) {
-                queryString = "?" + new Dictionary<string, object>().Merge(query).ToFormUrlEncodedString();
+                queryString = "?" + new QueryStringParams(query).ToString();
             }
 
             FileResult response = null;
@@ -185,7 +186,7 @@ namespace Incontrl.Sdk.Services
             var queryString = string.Empty;
 
             if (query != null) {
-                queryString = "?" + new Dictionary<string, object>().Merge(query).ToFormUrlEncodedString();
+                queryString = "?" + new QueryStringParams(query).ToString();
             }
 
             await Client.DeleteAsync(requestUri, cancellationToken).ConfigureAwait(false);

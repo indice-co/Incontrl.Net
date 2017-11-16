@@ -86,9 +86,7 @@ namespace Incontrl.Sdk.Types
 
     public class ListOptions<TFilter> : ListOptions where TFilter : class, new()
     {
-        public ListOptions() : base() {
-            Filter = new TFilter();
-        }
+        public ListOptions() : base() => Filter = new TFilter();
 
         public TFilter Filter { get; set; }
 
@@ -119,13 +117,11 @@ namespace Incontrl.Sdk.Types
                 }
             }
 
-            // Now replace accordingly.
             return options.ToDictionary().Merge(overrides, null);
         }
-        public static IDictionary<string, object> Merge(this IDictionary<string, object> dictionary, object instance, Type type = null, string prefix = null) {
-            if (instance is IDictionary<string, object>) {
-                var other = instance as IDictionary<string, object>;
 
+        public static IDictionary<string, object> Merge(this IDictionary<string, object> dictionary, object instance, Type type = null, string prefix = null) {
+            if (instance is IDictionary<string, object> other) {
                 foreach (var keyValue in other) {
                     if (dictionary.ContainsKey(keyValue.Key)) {
                         dictionary[keyValue.Key] = keyValue.Value;
@@ -135,29 +131,35 @@ namespace Incontrl.Sdk.Types
                 }
 
                 return dictionary;
+            } else if (instance is ListOptions options) {
+                return dictionary.Merge(options.ToDictionary());
             }
 
             type = type ?? instance?.GetType();
 
-            foreach (var prop in type.GetRuntimeProperties()) {
-                var value = prop.GetValue(instance);
+            foreach (var property in type.GetRuntimeProperties()) {
+                var value = property.GetValue(instance);
 
-                if (value != null) {
-                    var textValue = GetStructValue(prop.PropertyType, value);
-                    var key = $"{prefix}{prop.Name}";
+                if (value is ListOptions options) {
+                    dictionary.Merge(options.ToDictionary());
+                } else if (value != null) {
+                    var textValue = GetStructValue(property.PropertyType, value);
+                    var key = $"{prefix}{property.Name}";
 
                     if (!string.IsNullOrEmpty(textValue)) {
-                        if (dictionary.ContainsKey(key))
+                        if (dictionary.ContainsKey(key)) {
                             dictionary[key] = textValue;
-                        else
+                        } else {
                             dictionary.Add(key, textValue);
+                        }
+
                         continue;
                     }
 
                     var itemType = default(Type);
 
-                    if (prop.PropertyType.IsArray || (itemType = prop.PropertyType.GetElementType()) != null) {
-                        var array = ((IEnumerable)value).Cast<object>().Select(i => GetStructValue(itemType ?? i.GetType(), i)).ToArray();
+                    if (property.PropertyType.IsArray || (itemType = property.PropertyType.GetElementType()) != null) {
+                        var array = ((IEnumerable)value).Cast<object>().Select(x => GetStructValue(itemType ?? x.GetType(), x)).ToArray();
 
                         if (dictionary.ContainsKey(key)) {
                             dictionary[key] = array;
@@ -180,20 +182,21 @@ namespace Incontrl.Sdk.Types
                 textValue = ((DateTime?)value).Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
             } else if (type == typeof(DateTime) && ((DateTime)value) != default(DateTime)) {
                 textValue = ((DateTime)value).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
-            } else if (type == typeof(string) ||
-                       type == typeof(int) ||
-                       type == typeof(int?) ||
-                       type == typeof(decimal) ||
-                       type == typeof(decimal?) ||
-                       type == typeof(double) ||
-                       type == typeof(double?) ||
-                       type == typeof(Guid) ||
-                       type == typeof(Guid?) ||
-                       type.GetTypeInfo().IsEnum ||
+            } else if (
+                type == typeof(string) 
+             || type == typeof(int) 
+             || type == typeof(int?) 
+             || type == typeof(decimal) 
+             || type == typeof(decimal?) 
+             || type == typeof(double) 
+             || type == typeof(double?) 
+             || type == typeof(Guid) 
+             || type == typeof(Guid?) 
+             ||
 #if NETSTANDARD14
-                Nullable.GetUnderlyingType(type)?.GetTypeInfo().IsEnum == true) {
+                type.GetTypeInfo().IsEnum || Nullable.GetUnderlyingType(type)?.GetTypeInfo().IsEnum == true) {
 #else
-                Nullable.GetUnderlyingType(type)?.IsEnum == true) {
+                type.IsEnum || Nullable.GetUnderlyingType(type)?.IsEnum == true) {
 #endif
                 textValue = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}", value);
             }
@@ -209,13 +212,17 @@ namespace Incontrl.Sdk.Types
 
                 if (kv.Value.GetType().IsArray) {
                     if (kv.Key.ToLowerInvariant() == nameof(ListOptions.Sort).ToLowerInvariant()) {
-                        return new[] { new KeyValuePair<string, string>(kv.Key, string.Join(",", (IList)kv.Value)) };
+                        return new[] {
+                            new KeyValuePair<string, string>(kv.Key, string.Join(",", (IList)kv.Value))
+                        };
                     }
 
                     return ((IList)kv.Value).Cast<object>().Select(x => new KeyValuePair<string, string>(kv.Key, x?.ToString()));
                 }
 
-                return new[] { new KeyValuePair<string, string>(kv.Key, kv.Value.ToString()) };
+                return new[] {
+                    new KeyValuePair<string, string>(kv.Key, kv.Value.ToString())
+                };
             });
         }
 
@@ -223,5 +230,14 @@ namespace Incontrl.Sdk.Types
             var parameters = values.AsRouteValues();
             return string.Join("&", parameters.Select(kv => $"{kv.Key}={kv.Value}"));
         }
+    }
+
+    public class QueryStringParams : Dictionary<string, object>
+    {
+        public QueryStringParams() { }
+
+        public QueryStringParams(object parameters) => this.Merge(parameters);
+
+        public override string ToString() => this.ToFormUrlEncodedString();
     }
 }
