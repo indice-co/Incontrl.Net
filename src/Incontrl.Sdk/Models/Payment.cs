@@ -5,6 +5,7 @@ namespace Incontrl.Sdk.Models
     public class Payment
     {
         public Guid? Id { get; set; }
+        public Guid DocumentId { get; set; }
         public Document Document { get; set; }
         public Transaction Transaction { get; set; }
         public ApprovalStatus Approval { get; set; }
