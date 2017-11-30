@@ -1,8 +1,5 @@
 ﻿namespace Incontrl.Sdk.Models
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public enum DocumentStatus : short
     {
         Draft = 0,

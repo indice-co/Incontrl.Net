@@ -11,20 +11,12 @@ namespace Incontrl.Sdk.Models
         /// The unique identifier for the document type.
         /// </summary>
         public Guid Id { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public string Code { get; set; }
-
         /// <summary>
         /// Discrimination between.
         /// </summary>
         public RecordType RecordType { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public string Name { get; set; }
 
         /// <summary>

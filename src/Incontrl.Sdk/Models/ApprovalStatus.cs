@@ -1,8 +1,5 @@
 ﻿namespace Incontrl.Sdk.Models
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public enum ApprovalStatus
     {
         Pending = 0,
