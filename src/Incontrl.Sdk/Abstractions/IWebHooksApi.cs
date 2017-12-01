@@ -7,6 +7,6 @@ namespace Incontrl.Sdk.Abstractions
 {
     public interface IWebHooksApi
     {
-        Task<ResultSet<Webhook>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ResultSet<Webhook>> ListAsync(ListOptions<WebhookFilter> options = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -5,13 +5,10 @@ using Incontrl.Sdk.Types;
 
 namespace Incontrl.Sdk.Abstractions
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public interface ISubscriptionsApi
     {
         /// <summary>
-        /// A property that indicates if we want to retrieve subscriptions globally.
+        /// A property that indicates if we want to retrieve information on cross subscription level.
         /// </summary>
         bool GlobalAccess { get; set; }
 
@@ -36,5 +33,11 @@ namespace Incontrl.Sdk.Abstractions
         /// </summary>
         /// <returns></returns>
         IMetricsApi Metrics();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IGlobalPaymentOptionsApi PaymentOptions();
     }
 }

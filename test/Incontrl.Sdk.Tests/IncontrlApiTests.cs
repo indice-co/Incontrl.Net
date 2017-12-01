@@ -281,5 +281,16 @@ namespace Incontrl.Sdk.Tests
             var apps = await _api.Apps().ListAsync();
             Assert.True(apps.Items != null);
         }
+
+        [Fact]
+        public async Task CanRetrieveGlobalPaymentOptions() {
+            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Members);
+
+            var paymentOptions = await _api.Subscriptions(globalAccess: true)
+                                           .PaymentOptions()
+                                           .ListAsync();
+
+            Assert.True(paymentOptions.Count > 0);
+        }
     }
 }

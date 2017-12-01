@@ -2,8 +2,17 @@
 {
     public enum PaymentOptionType
     {
-        BankTransfer,
-        Online,
-        UponDelivery
+        /// <summary>
+        /// Informational display only on 
+        /// </summary>
+        Info = 0,
+        /// <summary>
+        /// Account Information Service Provider
+        /// </summary>
+        AISP,
+        /// <summary>
+        /// Payment Initiation Service Provider
+        /// </summary>
+        PISP
     }
 }

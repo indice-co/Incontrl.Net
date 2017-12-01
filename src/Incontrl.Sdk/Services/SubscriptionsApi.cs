@@ -11,10 +11,12 @@ namespace Incontrl.Sdk.Services
     {
         private readonly ClientBase _clientBase;
         private readonly Lazy<IMetricsApi> _metricsApi;
+        private readonly Lazy<IGlobalPaymentOptionsApi> _globalPaymentOptionsApi;
 
         public SubscriptionsApi(ClientBase clientBase) {
             _clientBase = clientBase;
             _metricsApi = new Lazy<IMetricsApi>(() => new MetricsApi(_clientBase));
+            _globalPaymentOptionsApi = new Lazy<IGlobalPaymentOptionsApi>(() => new GlobalPaymentOptionsApi(_clientBase));
         }
 
         public bool GlobalAccess { get; set; }
@@ -31,5 +33,7 @@ namespace Incontrl.Sdk.Services
         }
 
         public IMetricsApi Metrics() => _metricsApi.Value;
+
+        public IGlobalPaymentOptionsApi PaymentOptions() => _globalPaymentOptionsApi.Value;
     }
 }
