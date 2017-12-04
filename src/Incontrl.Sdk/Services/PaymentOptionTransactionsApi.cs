@@ -21,7 +21,7 @@ namespace Incontrl.Sdk.Services
         public string PaymentOptionId { get; set; }
 
         public Task BulkCreateAsync(BulkLoadTransactionsRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PostAsync<BulkLoadTransactionsRequest, BulkLoadTransactionsRequest>($"/subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}/transactions/bulk", request, cancellationToken);
+            _clientBase.PostAsync<BulkLoadTransactionsRequest, BulkLoadTransactionsRequest>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}/transactions/bulk", request, cancellationToken);
 
         public Task<Transaction> CreateAsync(Transaction request, CancellationToken cancellationToken = default(CancellationToken)) =>
             _clientBase.PostAsync<Transaction, Transaction>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}/transactions", request, cancellationToken);
