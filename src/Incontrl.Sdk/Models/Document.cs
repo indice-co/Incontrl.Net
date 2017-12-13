@@ -50,7 +50,7 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// 
         /// </summary>
-        public decimal? CurrencyRate { get; set; } = 1;
+        public double? CurrencyRate { get; set; } = 1;
 
         /// <summary>
         /// 

@@ -38,5 +38,7 @@ namespace Incontrl.Sdk.Models
         /// Notes for the contact (max length 500).
         /// </summary>
         public string Notes { get; set; }
+
+        public object CustomData { get; set; }
     }
 }

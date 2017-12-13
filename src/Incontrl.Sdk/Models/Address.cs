@@ -1,7 +1,11 @@
-﻿namespace Incontrl.Sdk.Models
+﻿using System;
+
+namespace Incontrl.Sdk.Models
 {
     public class Address
     {
+        public Guid? Id { get; set; }
+
         /// <summary>
         /// A Name for the address.
         /// </summary>
