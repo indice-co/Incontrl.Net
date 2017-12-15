@@ -28,9 +28,9 @@ namespace Incontrl.Sdk.Services
         }
 
         public Task<Contact> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<Contact>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/contacts/{ContactId}", cancellationToken);
+            _clientBase.GetAsync<Contact>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/contacts/{ContactId}", cancellationToken);
 
         public Task<Contact> UpdateAsync(UpdateContactRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PutAsync<UpdateContactRequest, Contact>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/contacts/{ContactId}", request, cancellationToken);
+            _clientBase.PutAsync<UpdateContactRequest, Contact>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/contacts/{ContactId}", request, cancellationToken);
     }
 }

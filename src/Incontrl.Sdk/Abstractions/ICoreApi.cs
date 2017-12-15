@@ -71,5 +71,10 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="appId">The application's unique id.</param>
         /// <returns></returns>
         IAppApi App(Guid appId);
+
+        /// <summary>
+        /// Creates an instance of class LookupsApi, that gives access to some of Incontrl lookups.
+        /// </summary>
+        ILookupsApi Lookups();
     }
 }

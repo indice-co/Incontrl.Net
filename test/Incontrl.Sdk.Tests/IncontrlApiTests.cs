@@ -32,7 +32,7 @@ namespace Incontrl.Sdk.Tests
             _configuration = builder.Build();
 
             _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"]) {
-                ApiAddress = new Uri("http://localhost:20202"),
+                ApiAddress = new Uri("http://localhost:20202/"),
                 AuthorityAddress = new Uri("http://localhost:20200")
             };
         }
@@ -291,6 +291,20 @@ namespace Incontrl.Sdk.Tests
                                            .ListAsync();
 
             Assert.True(paymentOptions.Count > 0);
+        }
+
+        [Fact]
+        public async Task CanRetrieveTimeZonesLookup() {
+            await _api.LoginAsync();
+
+            var timeZones = await _api.Lookups()
+                                      .TimeZones()
+                                      .ListAsync(new ListOptions {
+                                          Page = 1,
+                                          Size = 100
+                                      });
+
+            Assert.True(timeZones.Count > 0);
         }
     }
 }

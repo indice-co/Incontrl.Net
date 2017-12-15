@@ -132,7 +132,7 @@ namespace Incontrl.Sdk.Tests
             var contactCompanies = await api.Subscriptions(subscriptionId)
                                             .Contacts(contactId)
                                             .Companies()
-                                            .GetAsync();
+                                            .ListAsync();
             #endregion
 
             #region Documents
@@ -416,6 +416,15 @@ namespace Incontrl.Sdk.Tests
             var webHooks = await api.Apps()
                                         .WebHooks()
                                         .ListAsync();
+            #endregion
+
+            #region Lookups
+            var timezones = await api.Lookups()
+                                     .TimeZones()
+                                     .ListAsync(new ListOptions {
+                                         Page = 1,
+                                         Size = 100
+                                     });
             #endregion
         }
     }

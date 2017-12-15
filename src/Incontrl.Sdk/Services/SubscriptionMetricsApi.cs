@@ -15,6 +15,6 @@ namespace Incontrl.Sdk.Services
         public string SubscriptionId { get; set; }
 
         public Task<ResultSet<MetricsRecord, Metrics>> ListAsync(ListOptions<RangeFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<ResultSet<MetricsRecord, Metrics>>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}/metrics", cancellationToken);
+            _clientBase.GetAsync<ResultSet<MetricsRecord, Metrics>>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/metrics", cancellationToken);
     }
 }

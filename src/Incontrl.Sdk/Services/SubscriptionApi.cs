@@ -84,7 +84,7 @@ namespace Incontrl.Sdk.Services
         }
 
         public Task<Subscription> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<Subscription>($"{_clientBase.ApiAddress}/subscriptions/{SubscriptionId}", cancellationToken);
+            _clientBase.GetAsync<Subscription>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}", cancellationToken);
 
         public IDocumentApi Documents(Guid documentId) {
             var documentApi = _documentApi.Value;

@@ -14,6 +14,7 @@ namespace Incontrl.Sdk
         private readonly Lazy<ILicenseApi> _licenseApi;
         private readonly Lazy<IAppsApi> _appsApi;
         private readonly Lazy<IAppApi> _appApi;
+        private readonly Lazy<ILookupsApi> _lookupsApi;
 
         public IncontrlApi(string appId, string apiKey) {
             _clientBase = new ClientBase(appId, apiKey);
@@ -22,6 +23,7 @@ namespace Incontrl.Sdk
             _licenseApi = new Lazy<ILicenseApi>(() => new LicenseApi(_clientBase));
             _appsApi = new Lazy<IAppsApi>(() => new AppsApi(_clientBase));
             _appApi = new Lazy<IAppApi>(() => new AppApi(_clientBase));
+            _lookupsApi = new Lazy<ILookupsApi>(() => new LookupsApi(_clientBase));
         }
 
         public Uri ApiAddress {
@@ -50,6 +52,8 @@ namespace Incontrl.Sdk
         public Task LoginAsync(ScopeFlags scopes = ScopeFlags.Core) => _clientBase.RequestClientCredentialsAsync(scopes);
 
         public Task LoginAsync(string refreshToken, ScopeFlags scopes = ScopeFlags.Core) => _clientBase.RequestRefreshTokenAsync(refreshToken, scopes);
+
+        public ILookupsApi Lookups() => _lookupsApi.Value;
 
         public ISubscriptionApi Subscriptions(Guid subscriptionId) {
             var subscriptionApi = _subscriptionApi.Value;

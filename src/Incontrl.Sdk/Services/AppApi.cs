@@ -14,6 +14,6 @@ namespace Incontrl.Sdk.Services
         public string AppId { get; set; }
 
         public Task<App> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<App>($"{_clientBase.AuthorityAddress}/api/apps/{AppId}", cancellationToken);
+            _clientBase.GetAsync<App>($"{_clientBase.AuthorityAddress}api/apps/{AppId}", cancellationToken);
     }
 }

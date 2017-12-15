@@ -28,7 +28,7 @@ namespace Incontrl.Sdk.Services
             }
 
             if (string.IsNullOrWhiteSpace(apiKey)) {
-                throw new ArgumentNullException(nameof(apiKey), "Please specify and API key.");
+                throw new ArgumentNullException(nameof(apiKey), "Please specify the API key.");
             }
 
             _appId = appId;
