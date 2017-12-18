@@ -17,7 +17,7 @@ namespace Incontrl.Sdk.Services
         public Task<DocumentType> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
             _clientBase.GetAsync<DocumentType>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/documents/{DocumentId}/type", cancellationToken);
 
-        public Task<DocumentType> UpdateAsync(UpdateDocumentTypeRequest request, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.PutAsync<UpdateDocumentTypeRequest, DocumentType>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/documents/{DocumentId}/type", request, cancellationToken);
+        public Task<DocumentType> UpdateAsync(UpdateDocumentDocumentType request, CancellationToken cancellationToken = default(CancellationToken)) => 
+            _clientBase.PutAsync<UpdateDocumentDocumentType, DocumentType>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/documents/{DocumentId}/type", request, cancellationToken);
     }
 }

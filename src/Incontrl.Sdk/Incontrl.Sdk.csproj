@@ -3,7 +3,7 @@
     <Description>Incontrl.io .Net SDK</Description>
     <Title>Incontrl.Net Class Library</Title>
     <Copyright>Copyright (c) 2017 Indice</Copyright>
-    <VersionPrefix>2.2.9</VersionPrefix>
+    <VersionPrefix>2.2.10</VersionPrefix>
     <!--<VersionSuffix>beta7</VersionSuffix>-->
     <Authors>Constantinos Leftheris, Giorgos Manoltzas</Authors>
     <TargetFrameworks>net452;netstandard1.4;netstandard2.0</TargetFrameworks>
@@ -15,7 +15,7 @@
   <PropertyGroup Label="Package">
     <PackageId>Incontrl.Net</PackageId>
     <PackageTags>incontrl;incontrl.io;http client</PackageTags>
-    <PackageReleaseNotes>Update models and add lookups endpoint</PackageReleaseNotes>
+    <PackageReleaseNotes>Fix error when updating status of document's document type</PackageReleaseNotes>
     <PackageIconUrl>https://github.com/indice-co/Incontrl.Net/blob/master/icon/icon-128.png?raw=true</PackageIconUrl>
     <PackageProjectUrl>https://github.com/indice-co/Incontrl.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/indice-co/Incontrl.Net/blob/master/LICENSE</PackageLicenseUrl>

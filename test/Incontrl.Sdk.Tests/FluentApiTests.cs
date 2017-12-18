@@ -233,7 +233,9 @@ namespace Incontrl.Sdk.Tests
             documentType = await api.Subscriptions(subscriptionId)
                                     .Documents(documentId)
                                     .Type()
-                                    .UpdateAsync(new UpdateDocumentTypeRequest { });
+                                    .UpdateAsync(new UpdateDocumentDocumentType {
+                                        TypeId = Guid.NewGuid()
+                                    });
 
             // GET: documents/{documentId}.{format?}
             var documentDocument = await api.Subscriptions(subscriptionId)
