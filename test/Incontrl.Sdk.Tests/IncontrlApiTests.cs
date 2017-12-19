@@ -13,7 +13,7 @@ namespace Incontrl.Sdk.Tests
     {
         private static IncontrlApi _api;
         private IConfigurationRoot _configuration;
-        private const string subscriptionId = "76101680-0F5E-4AB5-BC41-626BDE020BE8";
+        private const string subscriptionId = "wayne-corp";
         private const string documentTypeId = "8C1A6FD6-37C1-414B-AC57-1BC5D6011C51";
         private const string paymentOptionId = "5B6C0CAE-C4BB-4084-AB9C-66D8491839F0";
         private const string userId = "ab9769f1-d532-4b7d-9922-3da003157ebd";
@@ -305,6 +305,20 @@ namespace Incontrl.Sdk.Tests
                                       });
 
             Assert.True(timeZones.Count > 0);
+        }
+
+        [Fact]
+        public async Task CanRetrieveDocuments() {
+            await _api.LoginAsync(ScopeFlags.Core);
+
+            var documents = await _api.Subscriptions(subscriptionId)
+                                      .Documents()
+                                      .ListAsync(new ListOptions<DocumentListFilter> {
+                                          Page = 1,
+                                          Size = 50
+                                      }, summary: true);
+
+            Assert.True(documents.Count > 0 && documents.Summary != null);
         }
     }
 }

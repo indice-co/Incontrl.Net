@@ -11,41 +11,19 @@ namespace Incontrl.Sdk.Models
         public DateTimeOffset? DueDate { get; set; }
         public DocumentStatus? Status { get; set; }
         public string CurrencyCode { get; set; }
-        public double? CurrencyRate { get; set; }
+        public double? CurrencyRate { get; set; } = 1;
         public Recipient Recipient { get; set; }
         public string PaymentCode { get; set; }
-        public ICollection<DocumentLine> Lines { get; set; } = new DocumentLine[0];
-        public bool ServerCalculations { get; set; } = true;
+        public List<DocumentLine> Lines { get; set; } = new List<DocumentLine>();
+        public bool? ServerCalculations { get; set; }
         public string Notes { get; set; }
         public string PublicNotes { get; set; }
         public string Tags { get; set; }
-
-        //******************************************************************************
-        // Totals (amounts)
-        //******************************************************************************
-        /// <summary>
-        /// Total net amount excluding taxes.
-        /// </summary>
         public decimal? SubTotal { get; set; }
-
-        /// <summary>
-        /// Total sales tax amount.
-        /// </summary>
+        public decimal? TotalDiscount { get; set; }
         public decimal? TotalSalesTax { get; set; }
-
-        /// <summary>
-        /// Total tax amount.
-        /// </summary>
         public decimal? TotalTax { get; set; }
-
-        /// <summary>
-        /// Total amount for document (SubTotal + TotalTax).
-        /// </summary>
         public decimal? Total { get; set; }
-
-        /// <summary>
-        /// Total amount for document (SubTotal + TotalTax).
-        /// </summary>
         public decimal? TotalPayable { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="options">An object of type <see cref="ListOptions{DocumentListFilter}"/> that is used to paginate or filter the request.</param>
         /// <param name="cancellationToken">Returns the task object representing the asynchronous operation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<ResultSet<Document>> ListAsync(ListOptions<DocumentListFilter> options = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ResultSet<Document, DocumentSummary>> ListAsync(ListOptions<DocumentListFilter> options = null, bool summary = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Creates a new document.
