@@ -23,6 +23,6 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="request">An object of type <see cref="CreateProductRequest"/> that contains information about the new product.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<Product> CreateAsync(CreateProductRequest request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Product> CreateAsync(Product request, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

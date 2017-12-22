@@ -28,6 +28,8 @@ namespace Incontrl.Sdk.Services
         private readonly Lazy<ISubscriptionTimeZoneApi> _subscriptionTimeZoneApi;
         private readonly Lazy<IPaymentOptionsApi> _paymentOptionsApi;
         private readonly Lazy<IPaymentOptionApi> _paymentOptionApi;
+        private readonly Lazy<ITaxesApi> _taxesApi;
+        private readonly Lazy<ITaxApi> _taxApi;
 
         public SubscriptionApi(ClientBase clientBase) {
             _clientBase = clientBase;
@@ -50,6 +52,8 @@ namespace Incontrl.Sdk.Services
             _subscriptionTimeZoneApi = new Lazy<ISubscriptionTimeZoneApi>(() => new SubscriptionTimeZoneApi(_clientBase));
             _paymentOptionsApi = new Lazy<IPaymentOptionsApi>(() => new PaymentOptionsApi(_clientBase));
             _paymentOptionApi = new Lazy<IPaymentOptionApi>(() => new PaymentOptionApi(_clientBase));
+            _taxesApi = new Lazy<ITaxesApi>(() => new TaxesApi(_clientBase));
+            _taxApi = new Lazy<ITaxApi>(() => new TaxApi(_clientBase));
         }
 
         public string SubscriptionId { get; set; }
@@ -194,6 +198,21 @@ namespace Incontrl.Sdk.Services
             paymentOptionApi.PaymentOptionId = paymentOptionId.ToString();
 
             return paymentOptionApi;
+        }
+
+        public ITaxesApi Taxes() {
+            var taxesApi = _taxesApi.Value;
+            taxesApi.SubscriptionId = SubscriptionId;
+
+            return taxesApi;
+        }
+
+        public ITaxApi Taxes(Guid taxId) {
+            var taxApi = _taxApi.Value;
+            taxApi.SubscriptionId = SubscriptionId;
+            taxApi.TaxId = taxId.ToString();
+
+            return taxApi;
         }
     }
 }

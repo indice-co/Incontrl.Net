@@ -2,14 +2,8 @@
 
 namespace Incontrl.Sdk.Models
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class Subscription
     {
-        /// <summary>
-        /// 
-        /// </summary>
         public Guid? Id { get; set; }
 
         /// <summary>

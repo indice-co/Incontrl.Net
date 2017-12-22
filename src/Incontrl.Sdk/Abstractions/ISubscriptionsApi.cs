@@ -28,16 +28,7 @@ namespace Incontrl.Sdk.Abstractions
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
         Task<Subscription> CreateAsync(CreateSubscriptionRequest request, CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         IMetricsApi Metrics();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         IGlobalPaymentOptionsApi PaymentOptions();
     }
 }

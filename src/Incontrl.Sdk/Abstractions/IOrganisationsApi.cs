@@ -23,6 +23,6 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="organisation">An object of type <see cref="CreateOrganisationRequest"/> that contains information about the organisation to update.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<Organisation> CreateAsync(CreateOrganisationRequest request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Organisation> CreateAsync(Organisation request, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

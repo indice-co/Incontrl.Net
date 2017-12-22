@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Abstractions;
 using Incontrl.Sdk.Models;
@@ -7,7 +6,7 @@ using Incontrl.Sdk.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class LookupTimeZonesApi : ILookupTimeZonesApi
+    internal class LookupTimeZonesApi : ILookupEntryApi
     {
         private readonly ClientBase _clientBase;
 

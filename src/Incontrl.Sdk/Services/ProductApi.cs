@@ -17,7 +17,7 @@ namespace Incontrl.Sdk.Services
         public Task<Product> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             _clientBase.GetAsync<Product>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/products/{ProductId}", cancellationToken);
 
-        public Task<Product> UpdateAsync(UpdateProductRequest request, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.PutAsync<UpdateProductRequest, Product>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/products/{ProductId}", request, cancellationToken);
+        public Task<Product> UpdateAsync(Product request, CancellationToken cancellationToken = default(CancellationToken)) => 
+            _clientBase.PutAsync<Product, Product>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/products/{ProductId}", request, cancellationToken);
     }
 }

@@ -185,7 +185,7 @@ namespace Incontrl.Sdk.Tests
 
             if (File.Exists(createContactJsonPath)) {
                 var createContactJson = File.ReadAllText(createContactJsonPath);
-                var newContact = JsonConvert.DeserializeObject<CreateContactRequest>(createContactJson);
+                var newContact = JsonConvert.DeserializeObject<Contact>(createContactJson);
                 await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
 
                 var createdContact = await _api.Subscriptions(subscriptionId)

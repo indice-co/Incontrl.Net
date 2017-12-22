@@ -5,14 +5,8 @@ using Incontrl.Sdk.Models;
 
 namespace Incontrl.Sdk.Abstractions
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public interface ISubscriptionApi
     {
-        /// <summary>
-        /// 
-        /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
@@ -92,40 +86,13 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="productId">The unique id of the product.</param>
         IProductApi Products(Guid productId);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         ISubscriptionMembersApi Members();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         ISubscriptionMetricsApi Metrics();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         ISubscriptionPlanApi Plan();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         ISubscriptionTimeZoneApi TimeZone();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         IPaymentOptionsApi PaymentOptions();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         IPaymentOptionApi PaymentOptions(Guid paymentOptionId);
+        ITaxesApi Taxes();
+        ITaxApi Taxes(Guid taxId);
     }
 }

@@ -23,6 +23,7 @@ namespace Incontrl.Sdk.Tests
             var transactionId = Guid.NewGuid();
             var paymentOptionId = Guid.NewGuid();
             var appId = Guid.NewGuid();
+            var taxId = Guid.NewGuid();
             await api.LoginAsync("{my-username}", "{my-password}");
 
             #region Subscriptions
@@ -116,7 +117,7 @@ namespace Incontrl.Sdk.Tests
             // POST: /subscriptions/{subscriptionId}/contacts
             var newContact = await api.Subscriptions(subscriptionId)
                                       .Contacts()
-                                      .CreateAsync(new CreateContactRequest { });
+                                      .CreateAsync(new Contact { });
 
             // GET: /subscriptions/{subscriptionId}/contacts/{contactId}
             var contact = await api.Subscriptions(subscriptionId)
@@ -310,7 +311,7 @@ namespace Incontrl.Sdk.Tests
             // POST: /subscriptions/{subscriptionId}/organisations
             var newOrganisation = await api.Subscriptions(subscriptionId)
                                            .Organisations()
-                                           .CreateAsync(new CreateOrganisationRequest { });
+                                           .CreateAsync(new Organisation { });
 
             // GET: /subscriptions/{subscriptionId}/organisations/{organisationId}
             var organisation = await api.Subscriptions(subscriptionId)
@@ -332,7 +333,7 @@ namespace Incontrl.Sdk.Tests
             // POST: /subscriptions/{subscriptionId}/products
             var newProduct = await api.Subscriptions(subscriptionId)
                                       .Products()
-                                      .CreateAsync(new CreateProductRequest { });
+                                      .CreateAsync(new Product { });
 
             // GET: /subscriptions/{subscriptionId}/products/{productId}
             var product = await api.Subscriptions(subscriptionId)
@@ -342,7 +343,7 @@ namespace Incontrl.Sdk.Tests
             // PUT: /subscriptions/{subscriptionId}/products/{productId}
             product = await api.Subscriptions(subscriptionId)
                                .Products(productId)
-                               .UpdateAsync(new UpdateProductRequest { });
+                               .UpdateAsync(new Product { });
             #endregion
 
             #region Payment Options
@@ -427,6 +428,28 @@ namespace Incontrl.Sdk.Tests
                                          Page = 1,
                                          Size = 100
                                      });
+            #endregion
+
+            #region Taxes
+            var taxes = await api.Subscriptions(subscriptionId)
+                                 .Taxes()
+                                 .ListAsync();
+
+            var newTax = await api.Subscriptions(subscriptionId)
+                                  .Taxes()
+                                  .CreateAsync(new TaxDefinition());
+
+            var tax = await api.Subscriptions(subscriptionId)
+                               .Taxes(taxId)
+                               .GetAsync();
+
+            var updatedTax = api.Subscriptions(subscriptionId)
+                                .Taxes(taxId)
+                                .UpdateAsync(new TaxDefinition());
+
+            await api.Subscriptions(subscriptionId)
+                     .Taxes(taxId)
+                     .DeleteAsync();
             #endregion
         }
     }

@@ -5,14 +5,8 @@ using Incontrl.Sdk.Types;
 
 namespace Incontrl.Sdk.Abstractions
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public interface IDocumentTypesApi
     {
-        /// <summary>
-        /// 
-        /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>

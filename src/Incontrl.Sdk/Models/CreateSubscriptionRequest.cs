@@ -5,7 +5,6 @@
     /// </summary>
     public class CreateSubscriptionRequest
     {
-        public SubscriptionType Type { get; set; } = SubscriptionType.Basic;
         /// <summary>
         /// Custom lookup key for this subscription.
         /// </summary>
