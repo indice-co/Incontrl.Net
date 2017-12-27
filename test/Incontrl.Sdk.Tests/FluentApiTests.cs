@@ -61,7 +61,7 @@ namespace Incontrl.Sdk.Tests
             // PUT: /subscriptions/{subscriptionId}/contact
             subscriptionContact = await api.Subscriptions(subscriptionId)
                                            .Contact()
-                                           .UpdateAsync(new UpdateContactRequest { });
+                                           .UpdateAsync(new Contact());
 
             // GET: /subscriptions/{subscriptionId}/members
             var subscriptionMembers = await api.Subscriptions(subscriptionId)
@@ -127,7 +127,7 @@ namespace Incontrl.Sdk.Tests
             // PUT: /subscriptions/{subscriptionId}/contacts/{contactId}
             contact = await api.Subscriptions(subscriptionId)
                                .Contacts(contactId)
-                               .UpdateAsync(new UpdateContactRequest { });
+                               .UpdateAsync(new Contact());
 
             // GET: /subscriptions/{subscriptionId}/contacts/{contactId}/companies
             var contactCompanies = await api.Subscriptions(subscriptionId)
