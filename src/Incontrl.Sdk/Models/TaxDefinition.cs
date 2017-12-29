@@ -10,6 +10,7 @@ namespace Incontrl.Sdk.Models
         public string Name { get; set; }
         public decimal Rate { get; set; }
         public bool IsSalesTax { get; set; }
+        public string DisplayName { get; set; }
     }
 
     public enum TaxType : short

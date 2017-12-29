@@ -14,10 +14,16 @@ namespace Incontrl.Sdk.Services
 
         public string SubscriptionId { get; set; }
 
-        public Task<Document> CreateAsync(CreateDocumentRequest request, CancellationToken cancellationToken = default(CancellationToken)) => 
+        public Task<DocumentCalculationResult> CalculateAsync(DocumentCalculationRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.PutAsync<DocumentCalculationRequest, DocumentCalculationResult>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/documents/calculate", request, cancellationToken);
+
+        public Task<DocumentCalculationResult> CalculateAsync(Document request, CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.PutAsync<Document, DocumentCalculationResult>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/documents/calculate", request, cancellationToken);
+
+        public Task<Document> CreateAsync(CreateDocumentRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
             _clientBase.PostAsync<CreateDocumentRequest, Document>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/documents", request, cancellationToken);
 
-        public Task<ResultSet<Document>> ListAsync(ListOptions<DocumentListFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
+        public Task<ResultSet<Document>> ListAsync(ListOptions<DocumentListFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
             _clientBase.GetAsync<ResultSet<Document>>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/documents", options, cancellationToken);
 
         public Task<ResultSet<Document, DocumentSummary>> ListAsync(ListOptions<DocumentListFilter> options = null, bool summary = false, CancellationToken cancellationToken = default(CancellationToken)) {

@@ -16,5 +16,18 @@ namespace Incontrl.Sdk.Models
         public string Skype { get; set; }
         public string Notes { get; set; }
         public object CustomData { get; set; }
+
+        public string ResolveDisplayName() {
+            var fullName = $"{FirstName} {LastName}".Trim();
+
+            if (string.IsNullOrWhiteSpace(fullName)) {
+                fullName = null;
+            }
+
+            var displayName = DisplayName ?? fullName ?? Email;
+            return displayName;
+        }
+
+        public override string ToString() => ResolveDisplayName() ?? base.ToString();
     }
 }

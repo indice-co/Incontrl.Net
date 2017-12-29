@@ -4,14 +4,8 @@ using Incontrl.Sdk.Models;
 
 namespace Incontrl.Sdk.Abstractions
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public interface IDocumentApi
     {
-        /// <summary>
-        /// 
-        /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>

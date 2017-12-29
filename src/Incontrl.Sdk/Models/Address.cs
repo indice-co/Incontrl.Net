@@ -55,5 +55,16 @@ namespace Incontrl.Sdk.Models
         /// Notes for the address (max length 500).
         /// </summary>
         public string Notes { get; set; }
+
+        public override string ToString() => Name ?? $"{Line1}, {ZipCode}, {City} {Country}".TrimEnd(' ', ',');
+
+        public string ResolveLine1() {
+            var line = $"{Line1} {City}".TrimEnd(' ', ',');
+            return string.IsNullOrWhiteSpace(line) ? null : line;
+        }
+        public string ResolveLine2() {
+            var line = $"{Line2} {ZipCode}, {Country}".Trim(' ', ',');
+            return string.IsNullOrWhiteSpace(line) ? null : line;
+        }
     }
 }

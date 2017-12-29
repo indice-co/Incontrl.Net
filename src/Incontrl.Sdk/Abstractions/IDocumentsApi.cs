@@ -24,5 +24,8 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="cancellationToken">Returns the task object representing the asynchronous operation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
         Task<Document> CreateAsync(CreateDocumentRequest request, CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<DocumentCalculationResult> CalculateAsync(DocumentCalculationRequest request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<DocumentCalculationResult> CalculateAsync(Document request, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
