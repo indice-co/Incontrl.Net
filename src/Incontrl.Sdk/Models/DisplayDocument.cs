@@ -18,7 +18,6 @@ namespace Incontrl.Sdk.Models
         public bool HasInclusiveSalesTax { get; set; }
         public bool HasDeductables { get; set; }
         public Attachment Printout { get; set; }
-        public string TypeName { get; set; }
         public DocumentType Type { get; set; }
         public Dictionary<string, string> Translations { get; set; }
         public string Translate(string name) => Translate(name, null);
