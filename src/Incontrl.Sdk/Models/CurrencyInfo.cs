@@ -11,32 +11,26 @@ namespace Incontrl.Sdk.Models
     public class CurrencyInfo : IFormatProvider, ICustomFormatter
     {
         public class FractionInfo
-        {
-            public FractionInfo(string name, string symbol, int denominator) {
-                Name = name;
-                Symbol = symbol;
-                Denominator = denominator;
-            }
-
-            public string Name { get; protected set; }
-            public string Symbol { get; protected set; }
-            public int Denominator { get; protected set; }
+        {   
+            public string Name { get; set; }
+            public string Symbol { get; set; }
+            public int Denominator { get; set; }
             public int DecimalPlaces => (int)Math.Log10(Denominator);
             public override string ToString() {
                 return string.Format("{0} ({1})", Name, Symbol, Denominator);
             }
         }
 
-        public string Name { get; protected set; }
-        public string NativeName { get; protected set; }
-        public string Symbol { get; protected set; }
-        public bool AlignRight { get; protected set; }
+        public string Name { get; set; }
+        public string NativeName { get; set; }
+        public string Symbol { get; set; }
+        public bool AlignRight { get; set; }
 
         /// <summary>
         /// Three letter iso symbol.
         /// </summary>
-        public string ISOSymbol { get; protected set; }
-        public FractionInfo Fraction { get; protected set; }
+        public string ISOSymbol { get; set; }
+        public FractionInfo Fraction { get; set; }
         public override string ToString() {
             return $"{ISOSymbol} - {Name} ({Symbol}), {Fraction}";
         }
