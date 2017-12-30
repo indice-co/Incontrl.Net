@@ -6,6 +6,8 @@ namespace Incontrl.Sdk.Models
     public class DisplayDocument : Document
     {
         public string Culture { get; set; }
+        public CurrencyInfo Currency { get; set; }
+        
         public Issuer Issuer { get; set; }
         public bool HasLogo { get; set; }
         public string IssuerLogoUrl { get; set; }
