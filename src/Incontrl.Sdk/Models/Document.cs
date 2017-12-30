@@ -7,6 +7,7 @@ namespace Incontrl.Sdk.Models
         public Guid Id { get; set; }
         public string Code { get; set; }
         public Guid TypeId { get; set; }
+        public string TypeName { get; set; }
         public int? Number { get; set; }
         public string NumberPrintable { get; set; }
         public DateTimeOffset? Date { get; set; }
