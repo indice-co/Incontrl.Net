@@ -5,6 +5,7 @@ namespace Incontrl.Sdk.Models
 {
     public class CreateDocumentRequest
     {
+        public string Code { get; set; }
         public Guid? TypeId { get; set; }
         public int? Number { get; set; }
         public DateTimeOffset? Date { get; set; }

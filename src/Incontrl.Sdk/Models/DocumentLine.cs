@@ -14,6 +14,7 @@ namespace Incontrl.Sdk.Models
         public double DiscountRate { get; set; }
         public decimal Discount { get; set; }
         public decimal SubTotal { get; set; }
+        public decimal TotalNet { get; set; }
         public decimal TotalTax { get; set; }
         public decimal TotalSalesTax { get; set; }
         public decimal Total { get; set; }

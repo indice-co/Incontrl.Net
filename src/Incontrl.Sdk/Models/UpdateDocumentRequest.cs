@@ -4,6 +4,7 @@ namespace Incontrl.Sdk.Models
 {
     public class UpdateDocumentRequest
     {
+        public string Code { get; set; }
         public int? Number { get; set; }
         public DateTimeOffset? Date { get; set; }
         public DateTimeOffset? DueDate { get; set; }

@@ -5,6 +5,7 @@ namespace Incontrl.Sdk.Models
     public class Document
     {
         public Guid Id { get; set; }
+        public string Code { get; set; }
         public Guid TypeId { get; set; }
         public int? Number { get; set; }
         public string NumberPrintable { get; set; }
@@ -21,6 +22,7 @@ namespace Incontrl.Sdk.Models
         public string Tags { get; set; }
         public string PermaLink { get; }
         public decimal? SubTotal { get; set; }
+        public decimal? TotalNet { get; set; }
         public decimal? TotalDiscount { get; set; }
         public decimal? TotalSalesTax { get; set; }
         public decimal? TotalTax { get; set; }

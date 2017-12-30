@@ -4,6 +4,7 @@ namespace Incontrl.Sdk.Models
 {
     public class DocumentListFilter
     {
+        public string Code { get; set; }
         public string Number { get; set; }
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
