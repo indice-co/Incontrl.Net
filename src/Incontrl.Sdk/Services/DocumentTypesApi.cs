@@ -17,7 +17,7 @@ namespace Incontrl.Sdk.Services
         public Task<DocumentType> CreateAsync(CreateDocumentTypeRequest request, CancellationToken cancellationToken = default(CancellationToken)) => 
             _clientBase.PostAsync<CreateDocumentTypeRequest, DocumentType>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/document-types", request, cancellationToken);
 
-        public Task<ResultSet<DocumentType>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
+        public Task<ResultSet<DocumentType>> ListAsync(ListOptions<DocumentTypeFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
             _clientBase.GetAsync<ResultSet<DocumentType>>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/document-types", options, cancellationToken);
     }
 }
