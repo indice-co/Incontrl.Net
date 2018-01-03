@@ -11,9 +11,11 @@ namespace Incontrl.Sdk.Models
         public Issuer Issuer { get; set; }
         public bool HasLogo { get; set; }
         public string IssuerLogoUrl { get; set; }
+        public decimal SubTotalWithoutDiscount { get; set; }
         public List<TaxAmount> Taxes { get; set; }
         public List<TaxAmount> TaxesInclusive { get; set; }
         public List<TaxAmount> TaxesExclusive { get; set; }
+        public List<TaxAmount> TaxesDeductable { get; set; }
         public bool HasDiscount { get; set; }
         public bool HasInclusiveSalesTax { get; set; }
         public bool HasDeductables { get; set; }

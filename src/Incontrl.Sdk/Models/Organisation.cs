@@ -76,5 +76,14 @@ namespace Incontrl.Sdk.Models
         /// This is for keeping track of the available methods for the company to recieve payment.
         /// </summary>
         public ICollection<PaymentOption> PaymentMethods { get; set; }
+
+
+        public string ResolveDisplayName() {
+            return LegalName ?? Name;
+        }
+
+        public override string ToString() {
+            return ResolveDisplayName() ?? base.ToString();
+        }
     }
 }
