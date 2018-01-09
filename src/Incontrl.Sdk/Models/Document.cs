@@ -12,6 +12,7 @@ namespace Incontrl.Sdk.Models
         public string NumberPrintable { get; set; }
         public DateTimeOffset? Date { get; set; }
         public DateTimeOffset? DueDate { get; set; }
+        public Period Period { get; set; }
         public DocumentStatus? Status { get; set; }
         public string CurrencyCode { get; set; }
         public double? CurrencyRate { get; set; } = 1;
