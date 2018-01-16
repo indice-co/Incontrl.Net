@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
@@ -406,19 +407,27 @@ namespace Incontrl.Sdk.Tests
                      .BulkCreateAsync(new BulkLoadTransactionsRequest { });
             #endregion
 
-            #region Apps
+            #region Apps / Users
             // GET: api/apps
             var myApps = await api.Apps()
-                                      .ListAsync();
+                                  .ListAsync();
 
             // GET: api/apps/{appId}
             var app = await api.App(appId)
-                                   .GetAsync();
+                               .GetAsync();
 
             //GET: api/apps/all/webhooks
             var webHooks = await api.Apps()
-                                        .WebHooks()
-                                        .ListAsync();
+                                    .WebHooks()
+                                    .ListAsync();
+
+            //GET: api/apps/members
+            var members = await api.Apps()
+                                   .Members()
+                                   .ListAsync(new List<string>());
+
+            var users = await api.Users()
+                                 .ListAsync(new List<string>());
             #endregion
 
             #region Lookups

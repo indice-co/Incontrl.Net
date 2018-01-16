@@ -189,7 +189,11 @@ namespace Incontrl.Sdk.Services
                 queryString = "?" + new QueryStringParams(query).ToString();
             }
 
-            await Client.DeleteAsync(requestUri, cancellationToken).ConfigureAwait(false);
+            var httpMessage = await Client.DeleteAsync(requestUri, cancellationToken).ConfigureAwait(false);
+
+            if (!httpMessage.IsSuccessStatusCode) {
+                HandleHttpError(new JsonResponse(string.Empty, httpMessage.StatusCode, string.Empty));
+            }
         }
 
         #region Private Methods

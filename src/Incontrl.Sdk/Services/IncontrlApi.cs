@@ -13,6 +13,7 @@ namespace Incontrl.Sdk
         private readonly Lazy<ISubscriptionApi> _subscriptionApi;
         private readonly Lazy<ILicenseApi> _licenseApi;
         private readonly Lazy<IAppsApi> _appsApi;
+        private readonly Lazy<IMembersApi> _usersApi;
         private readonly Lazy<IAppApi> _appApi;
         private readonly Lazy<ILookupsApi> _lookupsApi;
 
@@ -24,6 +25,7 @@ namespace Incontrl.Sdk
             _appsApi = new Lazy<IAppsApi>(() => new AppsApi(_clientBase));
             _appApi = new Lazy<IAppApi>(() => new AppApi(_clientBase));
             _lookupsApi = new Lazy<ILookupsApi>(() => new LookupsApi(_clientBase));
+            _usersApi = new Lazy<IMembersApi>(() => new UsersApi(_clientBase));
         }
 
         public Uri ApiAddress {
@@ -44,6 +46,8 @@ namespace Incontrl.Sdk
         }
 
         public IAppsApi Apps() => _appsApi.Value;
+
+        public IMembersApi Users() => _usersApi.Value;
 
         public ILicenseApi License() => _licenseApi.Value;
 

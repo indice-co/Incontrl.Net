@@ -19,6 +19,7 @@ namespace Incontrl.Sdk.Tests
         private const string userId = "ab9769f1-d532-4b7d-9922-3da003157ebd";
         private const string transactionId = "9300C9FF-5AFA-45AC-6B8D-08D529A5F249";
         private const string documentId = "D5BE6763-D4D0-404B-46DE-08D529A58B8E";
+        private const string productId = "3193F130-1539-4E4D-AF41-EA2667CD3467";
 
         public IncontrlApiTests() {
             var builder = new ConfigurationBuilder()
@@ -319,6 +320,15 @@ namespace Incontrl.Sdk.Tests
                                       }, summary: true);
 
             Assert.True(documents.Count > 0 && documents.Summary != null);
+        }
+
+        [Fact]
+        public async Task CanDeleteProduct() {
+            await _api.LoginAsync(ScopeFlags.Core);
+
+            await _api.Subscriptions(subscriptionId)
+                      .Products(Guid.Parse(productId))
+                      .DeleteAsync();
         }
     }
 }

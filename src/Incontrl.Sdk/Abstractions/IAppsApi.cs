@@ -9,5 +9,6 @@ namespace Incontrl.Sdk.Abstractions
     {
         Task<ResultSet<App>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
         IWebHooksApi WebHooks();
+        IMembersApi Members();
     }
 }
