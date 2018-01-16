@@ -15,6 +15,7 @@ namespace Incontrl.Sdk.Models
         public double? CurrencyRate { get; set; } = 1;
         public Recipient Recipient { get; set; }
         public string PaymentCode { get; set; }
+        public Period Period { get; set; }
         public List<DocumentLine> Lines { get; set; } = new List<DocumentLine>();
         public bool? ServerCalculations { get; set; }
         public string Notes { get; set; }
