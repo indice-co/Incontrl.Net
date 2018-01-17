@@ -13,7 +13,7 @@ namespace Incontrl.Sdk.Services
 
         public MembersApi(ClientBase clientBase) => _clientBase = clientBase;
 
-        public Task<ResultSet<MemberInfo>> ListAsync(List<string> ids, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<ResultSet<MemberInfo>>($"{_clientBase.AuthorityAddress}api/apps/members", cancellationToken);
+        public Task<ResultSet<MemberInfo>> ListAsync(MemberRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.GetAsync<ResultSet<MemberInfo>>($"{_clientBase.AuthorityAddress}api/apps/members", request, cancellationToken);
     }
 }

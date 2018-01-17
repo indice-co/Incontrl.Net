@@ -424,10 +424,10 @@ namespace Incontrl.Sdk.Tests
             //GET: api/apps/members
             var members = await api.Apps()
                                    .Members()
-                                   .ListAsync(new List<string>());
+                                   .ListAsync(new MemberRequest());
 
             var users = await api.Users()
-                                 .ListAsync(new List<string>());
+                                 .ListAsync(new MemberRequest());
             #endregion
 
             #region Lookups

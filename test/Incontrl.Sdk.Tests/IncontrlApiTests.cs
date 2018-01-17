@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
@@ -280,7 +281,19 @@ namespace Incontrl.Sdk.Tests
         public async Task CanRetrieveApps() {
             await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Apps | ScopeFlags.Membership);
             var apps = await _api.Apps().ListAsync();
+
             Assert.True(apps.Items != null);
+        }
+
+        [Fact]
+        public async Task CanRetrieveAppMembers() {
+            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Apps | ScopeFlags.Membership);
+
+            var members = await _api.Apps().Members().ListAsync(new MemberRequest {
+                Ids = new string[] { "id1", "id2" }
+            });
+
+            Assert.True(members.Items != null);
         }
 
         [Fact]
