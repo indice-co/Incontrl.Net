@@ -10,6 +10,7 @@ namespace Incontrl.Sdk.Models
         public decimal UnitAmount { get; set; }
         public decimal UnitAmountNet { get; set; }
         public double DiscountRate { get; set; }
+        public DiscountType DiscountType { get; set; }
         public List<Tax> Taxes { get; set; }
         public string TaxesDescription { get; set; }
     }

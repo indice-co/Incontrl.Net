@@ -13,6 +13,7 @@ namespace Incontrl.Sdk.Models
         public decimal UnitAmount { get; set; }
         public double DiscountRate { get; set; }
         public decimal Discount { get; set; }
+        public DiscountType DiscountType { get; set; }
         public decimal SubTotal { get; set; }
         public decimal TotalNet { get; set; }
         public decimal TotalTax { get; set; }
@@ -22,5 +23,11 @@ namespace Incontrl.Sdk.Models
         public string TaxesDescription { get; set; }
         public string Notes { get; set; }
         public string Tags { get; set; }
+    }
+
+    public enum DiscountType
+    {
+        Rate,
+        Fixed
     }
 }

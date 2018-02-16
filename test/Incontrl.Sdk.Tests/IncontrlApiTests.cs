@@ -343,5 +343,18 @@ namespace Incontrl.Sdk.Tests
                       .Products(Guid.Parse(productId))
                       .DeleteAsync();
         }
+
+        [Fact]
+        public async Task QuerySerialization() {
+            var options = new ListOptions {
+                Page = 1,
+                Size = 10,
+                Sort = "DisplayName-"
+            };
+
+            var query = new QueryStringParams(options);
+            Assert.Equal("page=1&size=10&sort=DisplayName-", query.ToFormUrlEncodedString());
+
+        }
     }
 }
