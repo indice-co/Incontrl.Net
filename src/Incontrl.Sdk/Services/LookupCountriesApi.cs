@@ -13,6 +13,6 @@ namespace Incontrl.Sdk.Services
         public LookupCountriesApi(ClientBase clientBase) => _clientBase = clientBase;
 
         public Task<ResultSet<LookupEntry>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<ResultSet<LookupEntry>>($"{_clientBase.ApiAddress}countries/lookup");
+            _clientBase.GetAsync<ResultSet<LookupEntry>>("countries/lookup");
     }
 }

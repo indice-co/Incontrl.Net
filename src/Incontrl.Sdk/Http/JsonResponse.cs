@@ -8,14 +8,14 @@ using Newtonsoft.Json.Linq;
 
 namespace Incontrl.Sdk.Http
 {
-    public class JsonResponse : JsonResponse<string>
+    internal class JsonResponse : JsonResponse<string>
     {
         public JsonResponse(string raw) : base(raw) { }
 
         public JsonResponse(string raw, HttpStatusCode statusCode, string reason) : base(raw, statusCode, reason) { }
     }
 
-    public class JsonResponse<T>
+    internal class JsonResponse<T>
     {
         // Private variables.
         private readonly T _data;
@@ -23,6 +23,7 @@ namespace Incontrl.Sdk.Http
         private HttpStatusCode _httpErrorstatusCode;
         private string _httpErrorReason;
         private JObject _errors;
+        
         // Class properties.
         public bool IsHttpError => _isHttpError;
         public HttpStatusCode HttpErrorStatusCode => _httpErrorstatusCode;
@@ -102,6 +103,6 @@ namespace Incontrl.Sdk.Http
             }
         }
 
-        public string HttpErrorReason => Errors.Aggregate(new StringBuilder(), (sb, msg) => sb.AppendLine($"• {msg}"), sb => sb.ToString());
+        public string HttpErrorReason => Errors.Aggregate(new StringBuilder(), (stringBuilder, message) => stringBuilder.AppendLine($"• {message}"), stringBuilder => stringBuilder.ToString());
     }
 }

@@ -29,6 +29,6 @@ namespace Incontrl.Sdk.Services
         }
 
         public Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.DeleteAsync($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/documents/{DocumentId}/payments/{TransactionId}", cancellationToken);
+            _clientBase.DeleteAsync($"subscriptions/{SubscriptionId}/documents/{DocumentId}/payments/{TransactionId}", cancellationToken);
     }
 }

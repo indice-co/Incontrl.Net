@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Abstractions;
@@ -11,9 +11,9 @@ namespace Incontrl.Sdk.Services
     {
         private readonly ClientBase _clientBase;
 
-        public UsersApi(ClientBase clientBase) => _clientBase = clientBase;
+        public UsersApi(Func<ClientBase> clientBase) => _clientBase = clientBase();
 
         public Task<ResultSet<MemberInfo>> ListAsync(MemberRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<ResultSet<MemberInfo>>($"{_clientBase.AuthorityAddress}api/users/members", request, cancellationToken);
+            _clientBase.GetAsync<ResultSet<MemberInfo>>($"api/users/members", request, cancellationToken);
     }
 }

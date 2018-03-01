@@ -21,7 +21,7 @@ namespace Incontrl.Sdk.Services
         public string TransactionId { get; set; }
 
         public Task<Transaction> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<Transaction>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}/transactions/{TransactionId}/payments", cancellationToken);
+            _clientBase.GetAsync<Transaction>($"subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}/transactions/{TransactionId}/payments", cancellationToken);
 
         public IPaymentOptionTransactionPaymentsApi Payments() {
             var paymentOptionTransactionPaymentsApi = _paymentOptionTransactionPaymentsApi.Value;

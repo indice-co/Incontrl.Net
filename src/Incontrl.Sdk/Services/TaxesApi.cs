@@ -15,9 +15,9 @@ namespace Incontrl.Sdk.Services
         public string SubscriptionId { get; set; }
 
         public Task<TaxDefinition> CreateAsync(TaxDefinition request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PostAsync<TaxDefinition, TaxDefinition>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/taxes", request, cancellationToken);
+            _clientBase.PostAsync<TaxDefinition, TaxDefinition>($"subscriptions/{SubscriptionId}/taxes", request, cancellationToken);
 
         public Task<ResultSet<TaxDefinition>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<ResultSet<TaxDefinition>>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/taxes", options, cancellationToken);
+            _clientBase.GetAsync<ResultSet<TaxDefinition>>($"subscriptions/{SubscriptionId}/taxes", options, cancellationToken);
     }
 }

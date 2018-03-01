@@ -11,7 +11,7 @@ namespace Incontrl.Sdk.Abstractions
     public interface IPaymentOptionApi
     {
         /// <summary>
-        /// 
+        /// The id of the subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 

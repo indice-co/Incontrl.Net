@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
+using Incontrl.Sdk.Services;
 
 namespace Incontrl.Sdk.Abstractions
 {
     /// <summary>
-    /// Incontrl's API interface.
+    /// Incontrl's APIs interface.
     /// </summary>
     public interface ICoreApi
     {
-        /// <summary>
-        /// The Uri of the API.
-        /// </summary>
-        Uri ApiAddress { get; set; }
-
         /// <summary>
         /// Login by using your credentials as a user.
         /// </summary>
@@ -39,42 +35,52 @@ namespace Incontrl.Sdk.Abstractions
         Task LoginAsync(string refreshToken, ScopeFlags scopes = ScopeFlags.Core);
 
         /// <summary>
-        /// Creates an instance of class SubscriptionsApi, that provides functionality to list or create subscriptions.
+        /// Creates an instance of class <see cref="SubscriptionsApi"/>, that provides functionality to list or create subscriptions.
         /// </summary>
         ISubscriptionsApi Subscriptions();
 
         /// <summary>
-        /// Creates an instance of class SubscriptionApi, that gives access to a subscription's allowed operations.
+        /// Creates an instance of class <see cref="SubscriptionApi"/>, that gives access to a subscription's allowed operations.
         /// </summary>
         /// <param name="subscriptionId">The subscription's unique id.</param>
         ISubscriptionApi Subscriptions(Guid subscriptionId);
 
         /// <summary>
-        /// Creates an instance of class SubscriptionApi, that gives access to a subscription's allowed operations.
+        /// Creates an instance of class <see cref="SubscriptionApi"/>, that gives access to a subscription's allowed operations.
         /// </summary>
         /// <param name="subscriptionAlias">The subscription's unique alias.</param>
         ISubscriptionApi Subscriptions(string subscriptionAlias);
 
         /// <summary>
-        /// Creates an instance of class LicenseApi, that provides functionality to retrieve InContrl's license information.
+        /// Creates an instance of class <see cref="LicenseApi"/>, that provides functionality to retrieve InContrl's license information.
         /// </summary>
         ILicenseApi License();
 
         /// <summary>
-        /// Creates an instance of class AppsApi, that provides functionality to manage applications.
+        /// Creates an instance of class <see cref="AppsApi"/>, that provides functionality to manage applications.
         /// </summary>
         IAppsApi Apps();
 
         /// <summary>
-        /// Creates an instance of class AppApi, that gives access to a applications's allowed operations.
+        /// Creates an instance of class <see cref="UsersApi"/>, that provides functionality to manage users.
+        /// </summary>
+        IMembersApi Users();
+
+        /// <summary>
+        /// Creates an instance of class <see cref="AppApi"/>, that gives access to a applications's allowed operations.
         /// </summary>
         /// <param name="appId">The application's unique id.</param>
-        /// <returns></returns>
         IAppApi App(Guid appId);
 
         /// <summary>
-        /// Creates an instance of class LookupsApi, that gives access to some of Incontrl lookups.
+        /// Creates an instance of class <see cref="LookupsApi"/>, that gives access to some of Incontrl lookups.
         /// </summary>
         ILookupsApi Lookups();
+
+        /// <summary>
+        /// Creates an instance of class <see cref="SubscriptionsApi"/>, that provides functionality to list or create subscriptions.
+        /// </summary>
+        /// <param name="globalAccess">Request global access for the request.</param>
+        ISubscriptionsApi Subscriptions(bool globalAccess);
     }
 }

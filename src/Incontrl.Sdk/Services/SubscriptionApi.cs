@@ -31,8 +31,8 @@ namespace Incontrl.Sdk.Services
         private readonly Lazy<ITaxesApi> _taxesApi;
         private readonly Lazy<ITaxApi> _taxApi;
 
-        public SubscriptionApi(ClientBase clientBase) {
-            _clientBase = clientBase;
+        public SubscriptionApi(Func<ClientBase> clientBaseFactory) {
+            _clientBase = clientBaseFactory();
             _subscriptionContactApi = new Lazy<ISubscriptionContactApi>(() => new SubscriptionContactApi(_clientBase));
             _subscriptionContactsApi = new Lazy<IContactsApi>(() => new ContactsApi(_clientBase));
             _contactApi = new Lazy<IContactApi>(() => new ContactApi(_clientBase));
@@ -88,7 +88,7 @@ namespace Incontrl.Sdk.Services
         }
 
         public Task<Subscription> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<Subscription>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}", cancellationToken);
+            _clientBase.GetAsync<Subscription>($"subscriptions/{SubscriptionId}", cancellationToken);
 
         public IDocumentApi Documents(Guid documentId) {
             var documentApi = _documentApi.Value;
@@ -213,6 +213,10 @@ namespace Incontrl.Sdk.Services
             taxApi.TaxId = taxId.ToString();
 
             return taxApi;
+        }
+
+        public ISubscriptionActivity Activity() {
+            throw new NotImplementedException();
         }
     }
 }

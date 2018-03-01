@@ -6,6 +6,9 @@ namespace Incontrl.Sdk.Abstractions
 {
     public interface ISubscriptionStatusApi
     {
+        /// <summary>
+        /// The id of the subscription.
+        /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>

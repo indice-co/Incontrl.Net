@@ -13,14 +13,14 @@ namespace Incontrl.Sdk.Services
         private readonly Lazy<IWebHooksApi> _webHooksApi;
         private readonly Lazy<IMembersApi> _membersApi;
 
-        public AppsApi(ClientBase clientBase) {
-            _clientBase = clientBase;
+        public AppsApi(Func<ClientBase> clientBaseFactory) {
+            _clientBase = clientBaseFactory();
             _webHooksApi = new Lazy<IWebHooksApi>(() => new WebHooksApi(_clientBase));
             _membersApi = new Lazy<IMembersApi>(() => new MembersApi(_clientBase));
         }
 
         public Task<ResultSet<App>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<ResultSet<App>>($"{_clientBase.AuthorityAddress}api/apps", cancellationToken);
+            _clientBase.GetAsync<ResultSet<App>>($"api/apps", cancellationToken);
 
         public IMembersApi Members() => _membersApi.Value;
 

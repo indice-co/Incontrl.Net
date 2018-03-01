@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
@@ -32,17 +31,13 @@ namespace Incontrl.Sdk.Tests
                 .AddUserSecrets<IncontrlApiTests>();
 
             _configuration = builder.Build();
-
-            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"]) {
-                ApiAddress = new Uri("http://localhost:20202/"),
-                AuthorityAddress = new Uri("http://localhost:20200")
-            };
+            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"], new Uri("http://localhost:20202/"), new Uri("http://localhost:20200"));
         }
 
         [Theory]
         [InlineData(subscriptionId, paymentOptionId, transactionId, documentId)]
         public async Task CanCreatePayment(string subscriptionId, string paymentOptionId, string transactionId, string documentId) {
-            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Members | ScopeFlags.Apps | ScopeFlags.Membership | ScopeFlags.Banking);
+            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.CoreMembers | ScopeFlags.IdentityApps | ScopeFlags.Identity | ScopeFlags.CoreBanking);
 
             var newPayment = await _api.Subscriptions(subscriptionId)
                                        .PaymentOptions(Guid.Parse(paymentOptionId))
@@ -66,7 +61,7 @@ namespace Incontrl.Sdk.Tests
         [Theory]
         [InlineData(subscriptionId, paymentOptionId)]
         public async Task CanRetrieveDocumentTypesForPaymentOption(string subscriptionId, string paymentOptionId) {
-            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Members | ScopeFlags.Apps | ScopeFlags.Membership | ScopeFlags.Banking);
+            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.CoreMembers | ScopeFlags.IdentityApps | ScopeFlags.Identity | ScopeFlags.CoreBanking);
 
             var documentTypes = await _api.Subscriptions(subscriptionId)
                                           .PaymentOptions(Guid.Parse(paymentOptionId))
@@ -112,9 +107,9 @@ namespace Incontrl.Sdk.Tests
             var result = await _api.Subscriptions(Guid.Parse(subscriptionId))
                                    .Documents(Guid.Parse(documentId))
                                    .Status()
-                                   .UpdateAsync(DocumentStatus.Paid);
+                                   .UpdateAsync(new UpdateDocumentStatusRequest { Status = DocumentStatus.Paid });
 
-            Assert.True(document.Status.Value != result);
+            Assert.True(document.Status.Value != result.Status);
         }
 
         [Fact]
@@ -128,9 +123,9 @@ namespace Incontrl.Sdk.Tests
         [Theory]
         [InlineData(subscriptionId)]
         public async Task CanRetrieveSubscription(string subscriptionId) {
-            await _api.LoginAsync(_configuration["UserName"], _configuration["Password"]);
+            await _api.LoginAsync();
 
-            var subscription = await _api.Subscriptions(Guid.Parse(subscriptionId))
+            var subscription = await _api.Subscriptions(subscriptionId)
                                          .GetAsync();
 
             Assert.True(subscription != null);
@@ -139,7 +134,7 @@ namespace Incontrl.Sdk.Tests
         [Theory]
         [InlineData(userId)]
         public async Task CanRetrieveGlobalSubscriptions(string userId) {
-            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Members);
+            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.CoreMembers);
 
             var subscriptions = await _api.Subscriptions(globalAccess: true)
                                           .ListAsync(new ListOptions<SubscriptionListFilter> {
@@ -278,16 +273,24 @@ namespace Incontrl.Sdk.Tests
         }
 
         [Fact]
-        public async Task CanRetrieveApps() {
-            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Apps | ScopeFlags.Membership);
-            var apps = await _api.Apps().ListAsync();
+        public async Task CanRetrieveWebHooks() {
+            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.IdentityApps);
+            var subscription = await _api.Subscriptions(subscriptionId).GetAsync();
+            var contact = await _api.Subscriptions(subscriptionId).Contact().GetAsync();
 
-            Assert.True(apps.Items != null);
+            var hooks = await _api.Apps().WebHooks().ListAsync(new ListOptions<WebhookFilter> {
+                Filter = new WebhookFilter {
+                    AppIds = new[] { "nlg-wordpress-client" },
+                    Event = EventType.DocumentVoid
+                }
+            });
+
+            Assert.True(hooks.Items != null);
         }
 
         [Fact]
         public async Task CanRetrieveAppMembers() {
-            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Apps | ScopeFlags.Membership);
+            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.IdentityApps | ScopeFlags.Identity);
 
             var members = await _api.Apps().Members().ListAsync(new MemberRequest {
                 Ids = new string[] { "id1", "id2" }
@@ -298,7 +301,7 @@ namespace Incontrl.Sdk.Tests
 
         [Fact]
         public async Task CanRetrieveGlobalPaymentOptions() {
-            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.Members);
+            await _api.LoginAsync(ScopeFlags.Core | ScopeFlags.CoreMembers);
 
             var paymentOptions = await _api.Subscriptions(globalAccess: true)
                                            .PaymentOptions()
@@ -345,7 +348,7 @@ namespace Incontrl.Sdk.Tests
         }
 
         [Fact]
-        public async Task QuerySerialization() {
+        public void QuerySerialization() {
             var options = new ListOptions {
                 Page = 1,
                 Size = 10,
@@ -354,7 +357,6 @@ namespace Incontrl.Sdk.Tests
 
             var query = new QueryStringParams(options);
             Assert.Equal("page=1&size=10&sort=DisplayName-", query.ToFormUrlEncodedString());
-
         }
     }
 }

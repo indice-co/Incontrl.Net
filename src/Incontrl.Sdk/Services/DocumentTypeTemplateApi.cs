@@ -16,9 +16,9 @@ namespace Incontrl.Sdk.Services
         public string DocumentTypeId { get; set; }
 
         public Task<FileResult> DownloadAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetStreamAsync($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/document-types/{DocumentTypeId}/template", cancellationToken);
+            _clientBase.GetStreamAsync($"subscriptions/{SubscriptionId}/document-types/{DocumentTypeId}/template", cancellationToken);
 
         public Task UploadAsync(Stream fileContent, string fileName, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.PostFileAsync($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/document-types/{DocumentTypeId}/template", fileContent, fileName, cancellationToken);
+            _clientBase.PostFileAsync($"subscriptions/{SubscriptionId}/document-types/{DocumentTypeId}/template", fileContent, fileName, cancellationToken);
     }
 }

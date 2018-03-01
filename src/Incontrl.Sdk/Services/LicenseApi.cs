@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Incontrl.Sdk.Abstractions;
 
 namespace Incontrl.Sdk.Services
@@ -7,8 +8,8 @@ namespace Incontrl.Sdk.Services
     {
         private readonly ClientBase _clientBase;
 
-        public LicenseApi(ClientBase clientBase) => _clientBase = clientBase;
+        public LicenseApi(Func<ClientBase> clientBaseFactory) => _clientBase = clientBaseFactory();
 
-        public async Task<string> GetAsync() => (await _clientBase.GetAsync<string>($"{_clientBase.ApiAddress}license"));
+        public async Task<string> GetAsync() => (await _clientBase.GetAsync<string>($"license"));
     }
 }

@@ -15,12 +15,12 @@ namespace Incontrl.Sdk.Services
         public string TaxId { get; set; }
 
         public Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.DeleteAsync($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/taxes/{TaxId}", cancellationToken);
+            _clientBase.DeleteAsync($"subscriptions/{SubscriptionId}/taxes/{TaxId}", cancellationToken);
 
         public Task<TaxDefinition> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<TaxDefinition>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/taxes/{TaxId}", cancellationToken);
+            _clientBase.GetAsync<TaxDefinition>($"subscriptions/{SubscriptionId}/taxes/{TaxId}", cancellationToken);
 
         public Task<TaxDefinition> UpdateAsync(TaxDefinition request, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.PutAsync<TaxDefinition, TaxDefinition>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/taxes/{TaxId}", request, cancellationToken);
+            _clientBase.PutAsync<TaxDefinition, TaxDefinition>($"subscriptions/{SubscriptionId}/taxes/{TaxId}", request, cancellationToken);
     }
 }

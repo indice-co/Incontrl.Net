@@ -9,7 +9,8 @@ namespace Incontrl.Sdk.Services
         private readonly Lazy<ILookupEntryApi> _lookupCountriesApi;
         private readonly Lazy<ILookupEntryApi> _lookupCurrenciesApi;
 
-        public LookupsApi(ClientBase clientBase) {
+        public LookupsApi(Func<ClientBase> clientBaseFactory) {
+            var clientBase = clientBaseFactory();
             _lookupTimeZonesApi = new Lazy<ILookupEntryApi>(() => new LookupTimeZonesApi(clientBase));
             _lookupCountriesApi = new Lazy<ILookupEntryApi>(() => new LookupCountriesApi(clientBase));
             _lookupCurrenciesApi = new Lazy<ILookupEntryApi>(() => new LookupCurrenciesApi(clientBase));

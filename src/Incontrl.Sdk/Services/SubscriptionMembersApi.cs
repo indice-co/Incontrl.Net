@@ -15,6 +15,6 @@ namespace Incontrl.Sdk.Services
         public string SubscriptionId { get; set; }
 
         public Task<ResultSet<MemberInfo>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<ResultSet<MemberInfo>>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/members", cancellationToken);
+            _clientBase.GetAsync<ResultSet<MemberInfo>>($"subscriptions/{SubscriptionId}/members", cancellationToken);
     }
 }

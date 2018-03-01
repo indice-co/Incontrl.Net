@@ -16,6 +16,6 @@ namespace Incontrl.Sdk.Services
         public string TransactionId { get; set; }
 
         public Task UpdateAsync(UpdateApprovalRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PutAsync<UpdateApprovalRequest, Document>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/documents/{DocumentId}/payments/{TransactionId}/approval", request, cancellationToken);
+            _clientBase.PutAsync<UpdateApprovalRequest, Document>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/payments/{TransactionId}/approval", request, cancellationToken);
     }
 }

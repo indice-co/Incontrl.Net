@@ -107,6 +107,11 @@ namespace Incontrl.Sdk.Tests
             var metrics = await api.Subscriptions()
                                    .Metrics()
                                    .ListAsync();
+
+            // GET: /subscriptions/{subscriptionId}/activity
+            var activity = await api.Subscriptions(subscriptionId)
+                                    .Activity()
+                                    .GetAsync();
             #endregion
 
             #region Contacts
@@ -209,7 +214,7 @@ namespace Incontrl.Sdk.Tests
             documentStatus = await api.Subscriptions(subscriptionId)
                                       .Documents(documentId)
                                       .Status()
-                                      .UpdateAsync(new DocumentStatus { });
+                                      .UpdateAsync(new UpdateDocumentStatusRequest { });
 
             // GET: /subscriptions/{subscriptionId}/documents/{documentId}/trackings
             var documentTrackings = await api.Subscriptions(subscriptionId)

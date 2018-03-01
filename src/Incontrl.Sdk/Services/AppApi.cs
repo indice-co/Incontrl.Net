@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Abstractions;
 using Incontrl.Sdk.Models;
@@ -9,11 +10,11 @@ namespace Incontrl.Sdk.Services
     {
         private readonly ClientBase _clientBase;
 
-        public AppApi(ClientBase clientBase) => _clientBase = clientBase;
+        public AppApi(Func<ClientBase> clientBaseFactory) => _clientBase = clientBaseFactory();
 
         public string AppId { get; set; }
 
         public Task<App> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<App>($"{_clientBase.AuthorityAddress}api/apps/{AppId}", cancellationToken);
+            _clientBase.GetAsync<App>($"api/apps/{AppId}", cancellationToken);
     }
 }

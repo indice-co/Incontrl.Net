@@ -14,6 +14,6 @@ namespace Incontrl.Sdk.Services
         public string SubscriptionId { get; set; }
 
         public Task<Subscription> UpdateAsync(UpdateSubscriptionTimeZoneRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PutAsync<UpdateSubscriptionTimeZoneRequest, Subscription>($"{_clientBase.ApiAddress}subscriptions/{SubscriptionId}/time-zone", request, cancellationToken);
+            _clientBase.PutAsync<UpdateSubscriptionTimeZoneRequest, Subscription>($"subscriptions/{SubscriptionId}/time-zone", request, cancellationToken);
     }
 }

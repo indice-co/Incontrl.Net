@@ -20,7 +20,7 @@ namespace Incontrl.Sdk.Abstractions
         /// </summary>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <returns>Returns the task object representing the asynchronous operation.</returns>
         Task<ResultSet<MemberInfo>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
