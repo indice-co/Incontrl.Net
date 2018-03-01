@@ -4,7 +4,7 @@
     <Title>Incontrl.Net Class Library</Title>
     <Copyright>Copyright (c) 2017 Indice</Copyright>
     <VersionPrefix>2.6.0</VersionPrefix>
-    <VersionSuffix>beta2</VersionSuffix>
+    <VersionSuffix>beta3</VersionSuffix>
     <Authors>Constantinos Leftheris, Giorgos Manoltzas</Authors>
     <TargetFrameworks>net452;netstandard1.4;netstandard2.0</TargetFrameworks>
     <AssemblyTitle>Incontrl.Sdk</AssemblyTitle>
@@ -15,7 +15,7 @@
   <PropertyGroup Label="Package">
     <PackageId>Incontrl.Net</PackageId>
     <PackageTags>incontrl;incontrl.io;http client</PackageTags>
-    <PackageReleaseNotes>Change internal implementation of HttpClient, adjust scopes for Identity API, add new endpoints.</PackageReleaseNotes>
+    <PackageReleaseNotes>Update packages, pass HttpMessageHandler to underlying HttpClient.</PackageReleaseNotes>
     <PackageIconUrl>https://github.com/indice-co/Incontrl.Net/blob/master/icon/icon-128.png?raw=true</PackageIconUrl>
     <PackageProjectUrl>https://github.com/indice-co/Incontrl.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/indice-co/Incontrl.Net/blob/master/LICENSE</PackageLicenseUrl>
@@ -39,11 +39,11 @@
   <PropertyGroup>
     <RootNamespace>Incontrl.Sdk</RootNamespace>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="3.1.1" />
-  </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
     <Reference Include="System" />
     <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="IdentityModel" Version="3.3.1" />
   </ItemGroup>
 </Project>
