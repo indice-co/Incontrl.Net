@@ -3,6 +3,9 @@ using System.Globalization;
 
 namespace Incontrl.Sdk.Models
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DisplayDocument : Document
     {
         public string Culture { get; set; }

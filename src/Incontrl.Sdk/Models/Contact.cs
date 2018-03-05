@@ -76,5 +76,19 @@ namespace Incontrl.Sdk.Models
         /// Tax office for the contact.
         /// </summary>
         public string TaxOffice { get; set; }
+
+        /// <summary>
+        /// Resolves a name to be displayed for the user.
+        /// </summary>
+        /// <returns></returns>
+        public string ResolveDisplayName() {
+            var fullName = $"{FirstName} {LastName}".Trim();
+
+            if (string.IsNullOrWhiteSpace(fullName)) {
+                fullName = null;
+            }
+
+            return DisplayName ?? fullName ?? Email;
+        }
     }
 }
