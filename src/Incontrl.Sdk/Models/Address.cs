@@ -2,8 +2,14 @@
 
 namespace Incontrl.Sdk.Models
 {
+    /// <summary>
+    /// A class that describes an address.
+    /// </summary>
     public class Address
     {
+        /// <summary>
+        /// A unique id for the address.
+        /// </summary>
         public Guid? Id { get; set; }
 
         /// <summary>
@@ -12,27 +18,27 @@ namespace Incontrl.Sdk.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// AddressLine 1 (max length = 500).
+        /// Address line 1.
         /// </summary>
         public string Line1 { get; set; }
 
         /// <summary>
-        /// AddressLine 2 (max length = 500).
+        /// Address line 2.
         /// </summary>
         public string Line2 { get; set; }
 
         /// <summary>
-        /// City
+        /// City.
         /// </summary>
         public string City { get; set; }
 
         /// <summary>
-        /// Zip code
+        /// Zip code.
         /// </summary>
         public string ZipCode { get; set; }
 
         /// <summary>
-        /// Country ISO code
+        /// Country ISO code.
         /// </summary>
         public string CountryCode { get; set; }
 
@@ -42,17 +48,17 @@ namespace Incontrl.Sdk.Models
         public string Country { get; set; }
 
         /// <summary>
-        /// Phone1
+        /// Phone1.
         /// </summary>
         public string Phone1 { get; set; }
 
         /// <summary>
-        /// Phone2
+        /// Phone2.
         /// </summary>
         public string Phone2 { get; set; }
 
         /// <summary>
-        /// Notes for the address (max length 500).
+        /// Notes for the address..
         /// </summary>
         public string Notes { get; set; }
 
@@ -62,6 +68,7 @@ namespace Incontrl.Sdk.Models
             var line = $"{Line1} {City}".TrimEnd(' ', ',');
             return string.IsNullOrWhiteSpace(line) ? null : line;
         }
+
         public string ResolveLine2() {
             var line = $"{Line2} {ZipCode}, {Country}".Trim(' ', ',');
             return string.IsNullOrWhiteSpace(line) ? null : line;
