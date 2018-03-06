@@ -109,9 +109,10 @@ namespace Incontrl.Sdk.Tests
                                    .ListAsync();
 
             // GET: /subscriptions/{subscriptionId}/activity
-            var activity = await api.Subscriptions(subscriptionId)
-                                    .Activity()
-                                    .GetAsync();
+            var activity = await api.Subscriptions(subscriptionId).Activity().GetAsync();
+
+            // GET: /subscriptions/activity
+            var overallActivity = await api.Subscriptions().ListAsync();
             #endregion
 
             #region Contacts
