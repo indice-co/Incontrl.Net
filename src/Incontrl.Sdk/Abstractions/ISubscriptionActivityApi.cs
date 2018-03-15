@@ -4,7 +4,7 @@ using Incontrl.Sdk.Models;
 
 namespace Incontrl.Sdk.Abstractions
 {
-    public interface ISubscriptionActivity
+    public interface ISubscriptionActivityApi
     {
         /// <summary>
         /// The id of the subscription.

@@ -30,6 +30,8 @@ namespace Incontrl.Sdk.Services
         private readonly Lazy<IPaymentOptionApi> _paymentOptionApi;
         private readonly Lazy<ITaxesApi> _taxesApi;
         private readonly Lazy<ITaxApi> _taxApi;
+        private readonly Lazy<IInvitationApi> _invitationApi;
+        private readonly Lazy<ISubscriptionActivityApi> _subscriptionActivityApi;
 
         public SubscriptionApi(Func<ClientBase> clientBaseFactory) {
             _clientBase = clientBaseFactory();
@@ -54,6 +56,8 @@ namespace Incontrl.Sdk.Services
             _paymentOptionApi = new Lazy<IPaymentOptionApi>(() => new PaymentOptionApi(_clientBase));
             _taxesApi = new Lazy<ITaxesApi>(() => new TaxesApi(_clientBase));
             _taxApi = new Lazy<ITaxApi>(() => new TaxApi(_clientBase));
+            _invitationApi = new Lazy<IInvitationApi>(() => new InvitationApi(_clientBase));
+            _subscriptionActivityApi = new Lazy<ISubscriptionActivityApi>(() => new SubscriptionActivityApi(_clientBase));
         }
 
         public string SubscriptionId { get; set; }
@@ -215,8 +219,18 @@ namespace Incontrl.Sdk.Services
             return taxApi;
         }
 
-        public ISubscriptionActivity Activity() {
-            throw new NotImplementedException();
+        public ISubscriptionActivityApi Activity() {
+            var subscriptionActivityApi = _subscriptionActivityApi.Value;
+            subscriptionActivityApi.SubscriptionId = SubscriptionId;
+
+            return subscriptionActivityApi;
+        }
+
+        public IInvitationApi Invitation() {
+            var invitationApi = _invitationApi.Value;
+            invitationApi.SubscriptionId = SubscriptionId;
+
+            return invitationApi;
         }
     }
 }

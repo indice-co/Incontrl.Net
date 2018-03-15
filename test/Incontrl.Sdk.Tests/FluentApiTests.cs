@@ -109,10 +109,22 @@ namespace Incontrl.Sdk.Tests
                                    .ListAsync();
 
             // GET: /subscriptions/{subscriptionId}/activity
-            var activity = await api.Subscriptions(subscriptionId).Activity().GetAsync();
+            var activity = await api.Subscriptions(subscriptionId)
+                                    .Activity()
+                                    .GetAsync();
 
             // GET: /subscriptions/activity
             var overallActivity = await api.Subscriptions().ListAsync();
+
+            // POST: /subscriptions/{subscriptionId}/invite
+            var invitation = await api.Subscriptions(subscriptionId)
+                                      .Invitation()
+                                      .SendAsync("g.manoltzas@indice.gr");
+
+            // POST: /subscriptions/{subscriptionId}/accept-invitation
+            await api.Subscriptions()
+                     .Invitation("invitationId")
+                     .AcceptAsync("memberId");
             #endregion
 
             #region Contacts
@@ -465,6 +477,14 @@ namespace Incontrl.Sdk.Tests
             await api.Subscriptions(subscriptionId)
                      .Taxes(taxId)
                      .DeleteAsync();
+            #endregion
+
+            #region Email
+            await api.Email().SendAsync(new EmailRequest {
+                Recipients = new string[] { "g.manoltzas@indice.gr" },
+                Subject = "Welcome",
+                 Body = "<h1>Hello World!</h1>"
+            });
             #endregion
         }
     }

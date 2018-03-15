@@ -30,5 +30,12 @@ namespace Incontrl.Sdk.Abstractions
 
         IMetricsApi Metrics();
         IGlobalPaymentOptionsApi PaymentOptions();
+
+        /// <summary>
+        /// Creates an instance of class <see cref="InvitationApi"/>, that provides functionality to send and accept invitations.
+        /// </summary>
+        /// <param name="invitationId"></param>
+        /// <returns></returns>
+        IInvitationApi Invitation(string invitationId);
     }
 }

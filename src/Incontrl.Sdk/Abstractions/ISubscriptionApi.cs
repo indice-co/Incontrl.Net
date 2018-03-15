@@ -146,6 +146,12 @@ namespace Incontrl.Sdk.Abstractions
         /// <summary>
         /// Creates an instance of class <see cref="SubscriptionActivity"/>, that provides functionality to retrieve the activity of the subscription.
         /// </summary>
-        ISubscriptionActivity Activity();
+        ISubscriptionActivityApi Activity();
+
+        /// <summary>
+        /// Creates an instance of class <see cref="InvitationApi"/>, that provides functionality to send and accept invitations.
+        /// </summary>
+        /// <returns></returns>
+        IInvitationApi Invitation();
     }
 }
