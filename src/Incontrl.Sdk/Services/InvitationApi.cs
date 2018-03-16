@@ -18,6 +18,6 @@ namespace Incontrl.Sdk.Services
             _clientBase.PostAsync<InvitationRequest, InvitationResult>($"subscriptions/{SubscriptionId}/invite", new InvitationRequest { RecipientEmail = email }, cancellationToken);
 
         public Task AcceptAsync(string memberId, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PostAsync<AcceptInvitationRequest, object>($"subscriptions/{SubscriptionId}/accept-invitation", new AcceptInvitationRequest { InvitationId = InvitationId, MemberId = memberId }, cancellationToken);
+            _clientBase.PostAsync<AcceptInvitationRequest, object>($"subscriptions/accept-invitation", new AcceptInvitationRequest { InvitationId = InvitationId, MemberId = memberId }, cancellationToken);
     }
 }
