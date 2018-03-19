@@ -311,17 +311,38 @@ namespace Incontrl.Sdk.Tests
         }
 
         [Fact]
-        public async Task CanRetrieveTimeZonesLookup() {
+        public async Task CanRetrieveLookups() {
             await _api.LoginAsync();
+
+            var currencies = await _api.Lookups()
+                                       .Currencies()
+                                       .ListAsync(new ListOptions {
+                                           Page = 1,
+                                           Size = 500
+                                       });
+
+            var countries = await _api.Lookups()
+                                      .Countries()
+                                      .ListAsync(new ListOptions {
+                                          Page = 1,
+                                          Size = 500
+                                      });
 
             var timeZones = await _api.Lookups()
                                       .TimeZones()
                                       .ListAsync(new ListOptions {
                                           Page = 1,
-                                          Size = 100
+                                          Size = 500
                                       });
 
-            Assert.True(timeZones.Count > 0);
+            var plans = await _api.Lookups()
+                                  .Plans()
+                                  .ListAsync(new ListOptions {
+                                      Page = 1,
+                                      Size = 500
+                                  });
+
+            Assert.True(currencies.Count > 0 && countries.Count > 0 && timeZones.Count > 0 && plans.Count > 0);
         }
 
         [Fact]

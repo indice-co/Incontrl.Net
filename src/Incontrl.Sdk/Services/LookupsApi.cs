@@ -5,25 +5,25 @@ namespace Incontrl.Sdk.Services
 {
     internal class LookupsApi : ILookupsApi
     {
-        private readonly Lazy<ILookupEntryApi> _lookupTimeZonesApi;
-        private readonly Lazy<ILookupEntryApi> _lookupCountriesApi;
-        private readonly Lazy<ILookupEntryApi> _lookupCurrenciesApi;
+        private readonly Lazy<ILookupTimeZonesApi> _lookupTimeZonesApi;
+        private readonly Lazy<ILookupCountriesApi> _lookupCountriesApi;
+        private readonly Lazy<ILookupCurrenciesApi> _lookupCurrenciesApi;
+        private readonly Lazy<ILookupPlansApi> _lookupPlansApi;
 
         public LookupsApi(Func<ClientBase> clientBaseFactory) {
             var clientBase = clientBaseFactory();
-            _lookupTimeZonesApi = new Lazy<ILookupEntryApi>(() => new LookupTimeZonesApi(clientBase));
-            _lookupCountriesApi = new Lazy<ILookupEntryApi>(() => new LookupCountriesApi(clientBase));
-            _lookupCurrenciesApi = new Lazy<ILookupEntryApi>(() => new LookupCurrenciesApi(clientBase));
+            _lookupTimeZonesApi = new Lazy<ILookupTimeZonesApi>(() => new LookupTimeZonesApi(clientBase));
+            _lookupCountriesApi = new Lazy<ILookupCountriesApi>(() => new LookupCountriesApi(clientBase));
+            _lookupCurrenciesApi = new Lazy<ILookupCurrenciesApi>(() => new LookupCurrenciesApi(clientBase));
+            _lookupPlansApi = new Lazy<ILookupPlansApi>(() => new LookupPlansApi(clientBase));
         }
 
-        public ILookupEntryApi Countries() => _lookupCountriesApi.Value;
+        public ILookupCountriesApi Countries() => _lookupCountriesApi.Value;
 
-        public ILookupEntryApi Currencies() => _lookupCurrenciesApi.Value;
+        public ILookupCurrenciesApi Currencies() => _lookupCurrenciesApi.Value;
 
-        public ILookupEntryApi Plans() {
-            throw new NotImplementedException();
-        }
+        public ILookupPlansApi Plans() => _lookupPlansApi.Value;
 
-        public ILookupEntryApi TimeZones() => _lookupTimeZonesApi.Value;
+        public ILookupTimeZonesApi TimeZones() => _lookupTimeZonesApi.Value;
     }
 }

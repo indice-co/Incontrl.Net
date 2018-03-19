@@ -6,13 +6,13 @@ using Incontrl.Sdk.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class LookupCountriesApi : ILookupEntryApi
+    internal class LookupCountriesApi : ILookupCountriesApi
     {
         private readonly ClientBase _clientBase;
 
         public LookupCountriesApi(ClientBase clientBase) => _clientBase = clientBase;
 
-        public Task<ResultSet<LookupEntry>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<ResultSet<LookupEntry>>("countries/lookup");
+        public Task<ResultSet<CountryInfo>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.GetAsync<ResultSet<CountryInfo>>("countries");
     }
 }

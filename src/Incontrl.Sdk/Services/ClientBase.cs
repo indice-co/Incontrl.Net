@@ -15,9 +15,7 @@ namespace Incontrl.Sdk.Services
     {
         private HttpClient _httpClient;
 
-        public ClientBase(HttpClient httpClient) {
-            _httpClient = httpClient;
-        }
+        public ClientBase(HttpClient httpClient) => _httpClient = httpClient;
 
         public async Task<TResponse> GetAsync<TResponse>(string requestUri, object query = null, CancellationToken cancellationToken = default(CancellationToken)) {
             var queryString = string.Empty;

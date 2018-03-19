@@ -2,9 +2,9 @@
 {
     public interface ILookupsApi
     {
-        ILookupEntryApi TimeZones();
-        ILookupEntryApi Countries();
-        ILookupEntryApi Currencies();
-        ILookupEntryApi Plans();
+        ILookupTimeZonesApi TimeZones();
+        ILookupCountriesApi Countries();
+        ILookupCurrenciesApi Currencies();
+        ILookupPlansApi Plans();
     }
 }
