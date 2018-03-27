@@ -342,6 +342,10 @@ namespace Incontrl.Sdk.Tests
                                       Size = 500
                                   });
 
+            var countryDefaults = await _api.Lookups()
+                                            .Countries("JP")
+                                            .GetAsync();
+
             Assert.True(currencies.Count > 0 && countries.Count > 0 && timeZones.Count > 0 && plans.Count > 0);
         }
 

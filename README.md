@@ -1,5 +1,5 @@
 # Incontrl.Sdk ![alt text](icon/icon-64.png "Incontrl logo")
-Http client to use the https://incontrl.io REST API from the dotnet ecosystem.
+Http client to use the https://api.incontrl.io REST API from the dotnet ecosystem.
 
 
 ## Installation

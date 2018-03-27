@@ -4,6 +4,7 @@
     {
         ILookupTimeZonesApi TimeZones();
         ILookupCountriesApi Countries();
+        ILookupCountriesDefaultsApi Countries(string countryIso);
         ILookupCurrenciesApi Currencies();
         ILookupPlansApi Plans();
     }

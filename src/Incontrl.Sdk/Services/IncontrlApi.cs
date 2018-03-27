@@ -51,7 +51,7 @@ namespace Incontrl.Sdk
             _apiKey = apiKey;
             // If the developer specifies an alternative base or authority address, then we make use of them. In any other case we use our production endpoints.
             _baseAddress = baseAddress ?? new Uri("https://api.incontrl.io");
-            _authorityAddress = authorityAddress ?? new Uri("https://incontrl.io");
+            _authorityAddress = authorityAddress ?? new Uri("https://identity.incontrl.io");
             httpMessageHandler = httpMessageHandler ?? new HttpClientHandler();
             // Create one ClientBase (that practically means one HttpClient) per API.
             // This is equivalent to: Func<ClientBase> CreateIncontrlClientBase = () => { };
