@@ -24,6 +24,13 @@ namespace Incontrl.Sdk.Abstractions
         Task<Subscription> GetAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Permanently deletes a subscription and all related data.
+        /// </summary>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Returns the task object representing the asynchronous operation.</returns>
+        Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Creates an instance of class <see cref="SubscriptionCompanyApi"/>, that provides functionality to retrieve or update a subscription's company information.
         /// </summary>
         ISubscriptionCompanyApi Company();

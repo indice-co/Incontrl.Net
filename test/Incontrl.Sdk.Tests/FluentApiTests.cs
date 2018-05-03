@@ -124,6 +124,9 @@ namespace Incontrl.Sdk.Tests
             await api.Subscriptions()
                      .Invitation("invitationId")
                      .AcceptAsync("memberId");
+
+            // DELETE: /subscriptions/{subscriptionId}
+            await api.Subscriptions(subscriptionAlias).DeleteAsync();
             #endregion
 
             #region Contacts

@@ -1,10 +1,14 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
+using Incontrl.Sdk.Services;
 using Incontrl.Sdk.Types;
 
 namespace Incontrl.Sdk.Abstractions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ISubscriptionsApi
     {
         /// <summary>
@@ -28,14 +32,20 @@ namespace Incontrl.Sdk.Abstractions
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
         Task<Subscription> CreateAsync(CreateSubscriptionRequest request, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Creates an instance of class <see cref="MetricsApi"/>, that provides functionality to access subscription metrics.
+        /// </summary>
         IMetricsApi Metrics();
+
+        /// <summary>
+        /// 
+        /// </summary>
         IGlobalPaymentOptionsApi PaymentOptions();
 
         /// <summary>
         /// Creates an instance of class <see cref="InvitationApi"/>, that provides functionality to send and accept invitations.
         /// </summary>
         /// <param name="invitationId"></param>
-        /// <returns></returns>
         IInvitationApi Invitation(string invitationId);
     }
 }

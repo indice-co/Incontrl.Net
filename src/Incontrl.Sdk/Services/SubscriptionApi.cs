@@ -232,5 +232,7 @@ namespace Incontrl.Sdk.Services
 
             return invitationApi;
         }
+
+        public Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken)) => _clientBase.DeleteAsync($"subscriptions/{SubscriptionId}", cancellationToken);
     }
 }
