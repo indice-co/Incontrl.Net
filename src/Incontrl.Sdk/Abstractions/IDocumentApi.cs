@@ -1,15 +1,23 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
+using Incontrl.Sdk.Services;
 
 namespace Incontrl.Sdk.Abstractions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IDocumentApi
     {
+        /// <summary>
+        /// The id of the subscription.
+        /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// 
+        /// The id of the document.
         /// </summary>
         string DocumentId { get; set; }
 
@@ -43,17 +51,24 @@ namespace Incontrl.Sdk.Abstractions
         IDocumentDocumentApi As(DocumentFormat format);
 
         /// <summary>
-        /// Creates an instance of class DocumentStatusApi, that provides functionality to retrieve or update an document's status information.
+        /// Creates an instance of type <see cref="DocumentStatusApi"/>, that provides functionality to retrieve or update an document's status information.
         /// </summary>
         IDocumentStatusApi Status();
 
         /// <summary>
-        /// Creates an instance of class DocumentTrackingApi, that provides functionality to list or create document trackers.
+        /// Creates an instance of type <see cref="DocumentTrackingsApi"/>, that provides functionality to list or create document trackers.
         /// </summary>
-        IDocumentTrackingApi Trackings();
+        IDocumentTrackingsApi Trackings();
 
         /// <summary>
-        /// Creates an instance of class DocumentDocumentTypeApi, that provides functionality to retrieve or update the document type of a specific document.
+        /// Creates an instance of type <see cref="DocumentTrackingsApi"/>, that provides functionality to update document trackers.
+        /// </summary>
+        /// <param name="trackingId"></param>
+        /// <returns></returns>
+        IDocumentTrackingApi Trackings(string trackingId);
+
+        /// <summary>
+        /// Creates an instance of type <see cref="DocumentDocumentTypeApi"/>, that provides functionality to retrieve or update the document type of a specific document.
         /// </summary>
         IDocumentDocumentTypeApi Type();
 

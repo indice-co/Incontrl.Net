@@ -11,6 +11,7 @@ namespace Incontrl.Sdk.Services
         private readonly ClientBase _clientBase;
         private readonly Lazy<IDocumentDocumentApi> _documentDocumentApi;
         private readonly Lazy<IDocumentStatusApi> _documentStatusApi;
+        private readonly Lazy<IDocumentTrackingsApi> _documentTrackingsApi;
         private readonly Lazy<IDocumentTrackingApi> _documentTrackingApi;
         private readonly Lazy<IDocumentDocumentTypeApi> _documentDocumentTypeApi;
         private readonly Lazy<IDocumentPaymentsApi> _documentPaymentsApi;
@@ -19,7 +20,7 @@ namespace Incontrl.Sdk.Services
             _clientBase = clientBase;
             _documentDocumentApi = new Lazy<IDocumentDocumentApi>(() => new DocumentDocumentApi(_clientBase));
             _documentStatusApi = new Lazy<IDocumentStatusApi>(() => new DocumentStatusApi(_clientBase));
-            _documentTrackingApi = new Lazy<IDocumentTrackingApi>(() => new DocumentTrackingApi(_clientBase));
+            _documentTrackingsApi = new Lazy<IDocumentTrackingsApi>(() => new DocumentTrackingsApi(_clientBase));
             _documentDocumentTypeApi = new Lazy<IDocumentDocumentTypeApi>(() => new DocumentDocumentTypeApi(_clientBase));
             _documentPaymentsApi = new Lazy<IDocumentPaymentsApi>(() => new DocumentPaymentsApi(_clientBase));
         }
@@ -53,12 +54,12 @@ namespace Incontrl.Sdk.Services
             return documentStatusApi;
         }
 
-        public IDocumentTrackingApi Trackings() {
-            var documentTrackingApi = _documentTrackingApi.Value;
-            documentTrackingApi.SubscriptionId = SubscriptionId;
-            documentTrackingApi.DocumentId = DocumentId;
+        public IDocumentTrackingsApi Trackings() {
+            var documentTrackingsApi = _documentTrackingsApi.Value;
+            documentTrackingsApi.SubscriptionId = SubscriptionId;
+            documentTrackingsApi.DocumentId = DocumentId;
 
-            return documentTrackingApi;
+            return documentTrackingsApi;
         }
 
         public IDocumentDocumentTypeApi Type() {
@@ -75,6 +76,15 @@ namespace Incontrl.Sdk.Services
             documentPaymentsApi.DocumentId = DocumentId;
 
             return documentPaymentsApi;
+        }
+
+        public IDocumentTrackingApi Trackings(string trackingId) {
+            var documentTrackingApi = _documentTrackingApi.Value;
+            documentTrackingApi.SubscriptionId = SubscriptionId;
+            documentTrackingApi.DocumentId = DocumentId;
+            documentTrackingApi.TrackingId = trackingId;
+
+            return documentTrackingApi;
         }
     }
 }

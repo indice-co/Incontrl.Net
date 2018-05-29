@@ -8,6 +8,7 @@ namespace Incontrl.Sdk.Abstractions
     {
         string SubscriptionId { get; set; }
         string InvitationId { get; set; }
+
         Task<InvitationResult> SendAsync(string email, CancellationToken cancellationToken = default(CancellationToken));
         Task AcceptAsync(string memberId, CancellationToken cancellationToken = default(CancellationToken));
     }
