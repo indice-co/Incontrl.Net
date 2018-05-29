@@ -244,6 +244,7 @@ namespace Incontrl.Sdk.Tests
                                                    .CreateAsync(new CreateDocumentTrackingRequest {
                                                        Recipient = string.Empty
                                                    });
+
             // PUT: /subscriptions/{subscriptionId}/documents/{documentId}/trackings
             await api.Subscriptions(subscriptionId)
                      .Documents(documentId)
