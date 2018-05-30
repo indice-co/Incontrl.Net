@@ -31,7 +31,7 @@ namespace Incontrl.Sdk.Tests
                 .AddUserSecrets<IncontrlApiTests>();
 
             _configuration = builder.Build();
-            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"], new Uri("http://localhost:20202/"), new Uri("http://localhost:20200"));
+            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"], new Uri("http://localhost:20202"), new Uri("http://localhost:20200"));
         }
 
         [Theory]
@@ -382,6 +382,19 @@ namespace Incontrl.Sdk.Tests
 
             var query = new QueryStringParams(options);
             Assert.Equal("page=1&size=10&sort=DisplayName-", query.ToFormUrlEncodedString());
+        }
+
+        [Fact]
+        public async Task CanUpdateTracker() {
+            await _api.LoginAsync(ScopeFlags.Core);
+
+            await _api.Subscriptions("f58e804b-00a8-42d8-b7d5-5d859bedc669")
+                      .Documents(Guid.Parse("b38ea8a4-55e2-427d-72ea-08d5c61de889"))
+                      .Trackings("f58e804b-00a8-42d8-b7d5-5d859bedc669")
+                      .UpdateAsync(new UpdateDocumentTrackingRequest {
+                          LastRead = DateTime.Now,
+                          Reads = 1
+                      });
         }
     }
 }

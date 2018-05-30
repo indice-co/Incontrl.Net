@@ -21,6 +21,7 @@ namespace Incontrl.Sdk.Services
             _documentDocumentApi = new Lazy<IDocumentDocumentApi>(() => new DocumentDocumentApi(_clientBase));
             _documentStatusApi = new Lazy<IDocumentStatusApi>(() => new DocumentStatusApi(_clientBase));
             _documentTrackingsApi = new Lazy<IDocumentTrackingsApi>(() => new DocumentTrackingsApi(_clientBase));
+            _documentTrackingApi = new Lazy<IDocumentTrackingApi>(() => new DocumentTrackingApi(_clientBase));
             _documentDocumentTypeApi = new Lazy<IDocumentDocumentTypeApi>(() => new DocumentDocumentTypeApi(_clientBase));
             _documentPaymentsApi = new Lazy<IDocumentPaymentsApi>(() => new DocumentPaymentsApi(_clientBase));
         }

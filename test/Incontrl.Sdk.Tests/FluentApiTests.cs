@@ -170,7 +170,7 @@ namespace Incontrl.Sdk.Tests
                                              },
                                              PaymentCode = string.Empty
                                          }
-                                     });
+                                     }, summary: true);
 
             // POST: /subscriptions/{subscriptionId}/documents
             var createdDocument = await api.Subscriptions(subscriptionId)
