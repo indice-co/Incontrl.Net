@@ -31,7 +31,7 @@ namespace Incontrl.Sdk.Tests
                 .AddUserSecrets<IncontrlApiTests>();
 
             _configuration = builder.Build();
-            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"], new Uri("http://localhost:20202"), new Uri("http://localhost:20200"));
+            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"], new Uri("https://sandbox.incontrl.io"), new Uri("https://identity.incontrl.io"));
         }
 
         [Theory]
@@ -395,6 +395,18 @@ namespace Incontrl.Sdk.Tests
                           LastRead = DateTime.Now,
                           Reads = 1
                       });
+        }
+
+        [Fact]
+        public async Task CanRetrieveSummary() {
+            await _api.LoginAsync(ScopeFlags.Core);
+
+            var result = await _api.Subscriptions("bf845529-f5d7-43b5-af69-16296568deb5")
+                                   .Documents()
+                                   .ListAsync(new ListOptions<DocumentListFilter> {
+                                       Page = 1,
+                                       Size = 150
+                                   }, summary: true);
         }
     }
 }

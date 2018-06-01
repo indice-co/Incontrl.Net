@@ -13,6 +13,7 @@ namespace Incontrl.Sdk.Abstractions
         /// Retrieves a list of all the documents that have been created for a specific subscription.
         /// </summary>
         /// <param name="options">An object of type <see cref="ListOptions{DocumentListFilter}"/> that is used to paginate or filter the request.</param>
+        /// <param name="summary">Specify whether to include a summary for the chosen documnets.</param>
         /// <param name="cancellationToken">Returns the task object representing the asynchronous operation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
         Task<ResultSet<Document, DocumentSummary>> ListAsync(ListOptions<DocumentListFilter> options = null, bool summary = false, CancellationToken cancellationToken = default(CancellationToken));

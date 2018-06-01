@@ -28,7 +28,10 @@ namespace Incontrl.Sdk.Services
 
         public Task<ResultSet<Document, DocumentSummary>> ListAsync(ListOptions<DocumentListFilter> options = null, bool summary = false, CancellationToken cancellationToken = default(CancellationToken)) {
             if (summary) {
-                return _clientBase.GetAsync<ResultSet<Document, DocumentSummary>>($"subscriptions/{SubscriptionId}/documents", new { options, summary }, cancellationToken);
+                var parameters = options.ToDictionary();
+                parameters.Add(nameof(summary), bool.TrueString.ToLower());
+
+                return _clientBase.GetAsync<ResultSet<Document, DocumentSummary>>($"subscriptions/{SubscriptionId}/documents", parameters, cancellationToken);
             }
 
             return _clientBase.GetAsync<ResultSet<Document, DocumentSummary>>($"subscriptions/{SubscriptionId}/documents", options, cancellationToken);

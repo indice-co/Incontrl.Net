@@ -18,15 +18,13 @@ namespace Incontrl.Sdk.Models
         public string Code { get; set; }
 
         /// <summary>
-        /// The type of the document.
-        /// </summary>
-        public DocumentType Type { get; set; }
-
-        /// <summary>
         /// The number of the document.
         /// </summary>
         public int? Number { get; set; }
 
+        /// <summary>
+        /// The number of the document in a printable format.
+        /// </summary>
         public string NumberPrintable { get; set; }
 
         /// <summary>
@@ -39,6 +37,9 @@ namespace Incontrl.Sdk.Models
         /// </summary>
         public DateTimeOffset? DueDate { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Period Period { get; set; }
 
         /// <summary>
@@ -91,16 +92,54 @@ namespace Incontrl.Sdk.Models
         /// </summary>
         public string PermaLink { get; }
 
+        /// <summary>
+        /// The sub total of the document (UnitAmounts * Quantities).
+        /// </summary>
         public decimal? SubTotal { get; set; }
-        public decimal? TotalNet { get; set; }
+
+        /// <summary>
+        /// The total discount applied to the document.
+        /// </summary>
         public decimal? TotalDiscount { get; set; }
+
+        /// <summary>
+        /// The total net (without taxes) of the document.
+        /// </summary>
+        public decimal? TotalNet { get; set; }
+
+        /// <summary>
+        /// The total amount of sales taxes (e.x VAT).
+        /// </summary>
         public decimal? TotalSalesTax { get; set; }
+
+        /// <summary>
+        /// The total amount of taxes (other than sales taxes).
+        /// </summary>
         public decimal? TotalTax { get; set; }
+
+        /// <summary>
+        /// The total of the document.
+        /// </summary>
         public decimal? Total { get; set; }
 
         /// <summary>
         /// The total payable of the document.
         /// </summary>
         public decimal? TotalPayable { get; set; }
+
+        /// <summary>
+        /// The type of the document.
+        /// </summary>
+        public DocumentType Type { get; set; }
+
+        /// <summary>
+        /// Total amount performed by children.
+        /// </summary>
+        public decimal? Fulfilled { get; set; }
+
+        /// <summary>
+        /// Progress as a rate of parent document total net and chlidren's total net.
+        /// </summary>
+        public decimal? Progress { get; set; }
     }
 }
