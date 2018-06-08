@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
-using Incontrl.Sdk.Types;
+using Indice.Types;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Xunit;

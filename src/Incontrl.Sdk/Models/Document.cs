@@ -115,6 +115,11 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// The total amount of taxes (other than sales taxes).
         /// </summary>
+        public decimal? TotalOtherTax { get; set; }
+
+        /// <summary>
+        /// The total amount of taxes.
+        /// </summary>
         public decimal? TotalTax { get; set; }
 
         /// <summary>

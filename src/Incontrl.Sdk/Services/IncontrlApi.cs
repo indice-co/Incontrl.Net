@@ -21,7 +21,6 @@ namespace Incontrl.Sdk
         private readonly Lazy<IMembersApi> _usersApi;
         private readonly Lazy<IAppApi> _appApi;
         private readonly Lazy<ILookupsApi> _lookupsApi;
-        private readonly Lazy<IEmailApi> _emailApi;
         private readonly Uri _baseAddress;
         private readonly Uri _authorityAddress;
         private readonly string _appId;
@@ -86,7 +85,6 @@ namespace Incontrl.Sdk
             _subscriptionApi = new Lazy<ISubscriptionApi>(() => new SubscriptionApi(CreateIncontrlClientBase));
             _licenseApi = new Lazy<ILicenseApi>(() => new LicenseApi(CreateIncontrlClientBase));
             _lookupsApi = new Lazy<ILookupsApi>(() => new LookupsApi(CreateIncontrlClientBase));
-            _emailApi = new Lazy<IEmailApi>(() => new EmailApi(CreateIncontrlClientBase));
             // Interfaces that target Identity API.
             _usersApi = new Lazy<IMembersApi>(() => new UsersApi(CreateIdentityClientBase));
             _appsApi = new Lazy<IAppsApi>(() => new AppsApi(CreateIdentityClientBase));
@@ -215,10 +213,5 @@ namespace Incontrl.Sdk
 
             return subscriptionsApi;
         }
-
-        /// <summary>
-        /// Creates an instance of class <see cref="EmailApi"/>, that provides functionality to send email messages.
-        /// </summary>
-        public IEmailApi Email() => _emailApi.Value;
     }
 }

@@ -6,6 +6,7 @@ namespace Incontrl.Sdk.Models
     {
         public decimal SubTotal { get; set; }
         public decimal Discount { get; set; }
+        public decimal TotalOtherTax { get; set; }
         public decimal TotalTax { get; set; }
         public decimal TotalNet { get; set; }
         public decimal TotalSalesTax { get; set; }

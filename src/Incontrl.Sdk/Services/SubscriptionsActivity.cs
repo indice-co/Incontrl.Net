@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Abstractions;
-using Incontrl.Sdk.Types;
+using Indice.Types;
 
 namespace Incontrl.Sdk.Services
 {

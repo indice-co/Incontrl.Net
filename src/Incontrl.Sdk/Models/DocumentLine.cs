@@ -54,6 +54,11 @@ namespace Incontrl.Sdk.Models
         public decimal TotalNet { get; set; }
 
         /// <summary>
+        /// The total amount of other taxes in the line.
+        /// </summary>
+        public decimal TotalOtherTax { get; set; }
+
+        /// <summary>
         /// The total amount of taxes in the line.
         /// </summary>
         public decimal TotalTax { get; set; }

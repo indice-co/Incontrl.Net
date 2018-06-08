@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Incontrl.Sdk.Types
+namespace Indice.Types
 {
     public class IncontrlHttpException : Exception
     {

@@ -82,11 +82,5 @@ namespace Incontrl.Sdk.Abstractions
         /// </summary>
         /// <param name="globalAccess">Request global access for the request.</param>
         ISubscriptionsApi Subscriptions(bool globalAccess);
-
-        /// <summary>
-        /// Creates an instance of class <see cref="EmailApi"/>, that provides functionality to send email messages.
-        /// </summary>
-        /// <returns></returns>
-        IEmailApi Email();
     }
 }

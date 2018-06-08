@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
-using Incontrl.Sdk.Types;
+using Indice.Types;
 using Xunit;
 
 namespace Incontrl.Sdk.Tests
@@ -485,14 +485,6 @@ namespace Incontrl.Sdk.Tests
             await api.Subscriptions(subscriptionId)
                      .Taxes(taxId)
                      .DeleteAsync();
-            #endregion
-
-            #region Email
-            await api.Email().SendAsync(new EmailRequest {
-                Recipients = new string[] { "g.manoltzas@indice.gr" },
-                Subject = "Welcome",
-                 Body = "<h1>Hello World!</h1>"
-            });
             #endregion
         }
     }

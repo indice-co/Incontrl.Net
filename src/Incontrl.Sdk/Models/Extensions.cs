@@ -2,7 +2,7 @@
 using System.Net.Http;
 using IdentityModel.Client;
 using Incontrl.Sdk.Http;
-using Incontrl.Sdk.Types;
+using Indice.Types;
 
 namespace Incontrl.Sdk.Models
 {
