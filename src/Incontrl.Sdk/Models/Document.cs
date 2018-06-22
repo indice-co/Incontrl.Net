@@ -146,5 +146,10 @@ namespace Incontrl.Sdk.Models
         /// Progress as a rate of parent document total net and chlidren's total net.
         /// </summary>
         public decimal? Progress { get; set; }
+
+        /// <summary>
+        /// Additional/custom information for the document.
+        /// </summary>
+        public dynamic CustomData { get; set; }
     }
 }

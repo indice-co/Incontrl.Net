@@ -28,5 +28,6 @@ namespace Incontrl.Sdk.Models
         public decimal? TotalTax { get; set; }
         public decimal? Total { get; set; }
         public decimal? TotalPayable { get; set; }
+        public dynamic CustomData { get; set; }
     }
 }
