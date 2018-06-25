@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Incontrl.Sdk.Models
 {
     /// <summary>
-    /// A class that describes a document.
+    /// A class that describes a document with basic properties.
     /// </summary>
-    public class Document
+    public class DocumentBase
     {
         /// <summary>
         /// The unique id of the document.
@@ -28,6 +29,11 @@ namespace Incontrl.Sdk.Models
         public string NumberPrintable { get; set; }
 
         /// <summary>
+        /// An optional title for the document.
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
         /// The date that the document was created.
         /// </summary>
         public DateTimeOffset? Date { get; set; }
@@ -38,7 +44,7 @@ namespace Incontrl.Sdk.Models
         public DateTimeOffset? DueDate { get; set; }
 
         /// <summary>
-        /// 
+        /// An optional time period that may apply for the document.
         /// </summary>
         public Period Period { get; set; }
 
@@ -55,37 +61,12 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// The rate of the currency. Defaults to 1.
         /// </summary>
-        public double? CurrencyRate { get; set; } = 1;
-
-        /// <summary>
-        /// Information about the recipient of the document.
-        /// </summary>
-        public Recipient Recipient { get; set; }
+        public double? CurrencyRate { get; set; }
 
         /// <summary>
         /// A payment code for the document.
         /// </summary>
         public string PaymentCode { get; set; }
-
-        /// <summary>
-        /// The lines of the document.
-        /// </summary>
-        public virtual DocumentLine[] Lines { get; set; } = new DocumentLine[0];
-
-        /// <summary>
-        /// Optional (internal) notes for the document.
-        /// </summary>
-        public string Notes { get; set; }
-
-        /// <summary>
-        /// Optional (public) notes for the document.
-        /// </summary>
-        public string PublicNotes { get; set; }
-
-        /// <summary>
-        /// Tags that describe the document.
-        /// </summary>
-        public string Tags { get; set; }
 
         /// <summary>
         /// A permalink that displays the document as a web page.
@@ -136,20 +117,128 @@ namespace Incontrl.Sdk.Models
         /// The type of the document.
         /// </summary>
         public DocumentType Type { get; set; }
+    }
 
+    /// <summary>
+    /// A class that describes a document.
+    /// </summary>
+    public class Document : DocumentBase
+    {
+        /// <summary>
+        /// Information about the recipient of the document.
+        /// </summary>
+        public Recipient Recipient { get; set; }
+
+        /// <summary>
+        /// The lines of the document.
+        /// </summary>
+        public virtual DocumentLine[] Lines { get; set; }
+
+        /// <summary>
+        /// Optional (internal) notes for the document.
+        /// </summary>
+        public string Notes { get; set; }
+
+        /// <summary>
+        /// Optional (public) notes for the document.
+        /// </summary>
+        public string PublicNotes { get; set; }
+
+        /// <summary>
+        /// Tags that describe the document.
+        /// </summary>
+        public string Tags { get; set; }
+
+        /// <summary>
+        /// Progress as a rate of parent document total net and chlidren's total net.
+        /// </summary>
+        public DocumentProgress Progress { get; set; }
+
+        /// <summary>
+        /// Total amount performed by children.
+        /// </summary>
+        public DocumentBase Parent { get; set; }
+
+        /// <summary>
+        /// Additional/custom information for the document.
+        /// </summary>
+        public virtual object CustomData { get; set; }
+    }
+
+    /// <summary>
+    /// A class that describes the monetary progress of a document.
+    /// </summary>
+    public class DocumentProgress
+    {
         /// <summary>
         /// Total amount performed by children.
         /// </summary>
         public decimal? Fulfilled { get; set; }
 
         /// <summary>
-        /// Progress as a rate of parent document total net and chlidren's total net.
+        /// The value of the progress that is the ratio of <see cref="Fulfilled"/> / <see cref="Total"/>.
         /// </summary>
-        public decimal? Progress { get; set; }
+        public double Rate { get; set; }
 
         /// <summary>
-        /// Additional/custom information for the document.
+        /// The total net of the parent document.
         /// </summary>
-        public dynamic CustomData { get; set; }
+        public decimal? Total { get; set; }
+    }
+
+    /// <summary>
+    /// An enum that describes the status of the document.
+    /// </summary>
+    public enum DocumentStatus : short
+    {
+        /// <summary>
+        /// Draft
+        /// </summary>
+        Draft = 0,
+
+        /// <summary>
+        /// Issued
+        /// </summary>
+        Issued = 1,
+
+        /// <summary>
+        /// Overdue
+        /// </summary>
+        Overdue = 2,
+
+        /// <summary>
+        /// Partial
+        /// </summary>
+        Partial = 3,
+
+        /// <summary>
+        /// Paid
+        /// </summary>
+        Paid = 4,
+
+        /// <summary>
+        /// Void
+        /// </summary>
+        Void = 5,
+
+        /// <summary>
+        /// Deleted
+        /// </summary>
+        Deleted = 6,
+
+        /// <summary>
+        /// Pending
+        /// </summary>
+        Pending = 10,
+
+        /// <summary>
+        /// InProgress
+        /// </summary>
+        InProgress = 11,
+
+        /// <summary>
+        /// Closed
+        /// </summary>
+        Closed = 12
     }
 }
