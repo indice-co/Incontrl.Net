@@ -12,7 +12,7 @@ namespace Incontrl.Sdk.Models
         public UiHint UiHint { get; set; }
         public List<Service> Services { get; set; }
         public List<LimitPolicy> Limits { get; set; }
-        public bool UnΑvailable { get; set; }
+        public bool Unavailable { get; set; }
     }
 
     public enum BillingFrequency : short

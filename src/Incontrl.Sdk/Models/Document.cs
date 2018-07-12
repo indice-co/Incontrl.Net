@@ -46,7 +46,7 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// An optional time period that may apply for the document.
         /// </summary>
-        public Period Period { get; set; }
+        public Period Period { get; set; } = new Period();
 
         /// <summary>
         /// The current status of the document.
@@ -132,7 +132,7 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// The lines of the document.
         /// </summary>
-        public virtual DocumentLine[] Lines { get; set; }
+        public virtual DocumentLine[] Lines { get; set; } = new DocumentLine[0];
 
         /// <summary>
         /// Optional (internal) notes for the document.
@@ -152,7 +152,7 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// Progress as a rate of parent document total net and chlidren's total net.
         /// </summary>
-        public DocumentProgress Progress { get; set; }
+        public DocumentProgress Progress { get; set; } = new DocumentProgress();
 
         /// <summary>
         /// Total amount performed by children.

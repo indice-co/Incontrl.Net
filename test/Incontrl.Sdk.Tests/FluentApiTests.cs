@@ -486,6 +486,12 @@ namespace Incontrl.Sdk.Tests
                      .Taxes(taxId)
                      .DeleteAsync();
             #endregion
+
+            #region Reports
+            var reports = await api.Subscriptions()
+                                   .Reports()
+                                   .ListAsync();
+            #endregion
         }
     }
 }

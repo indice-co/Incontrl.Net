@@ -38,6 +38,11 @@ namespace Incontrl.Sdk.Abstractions
         IMetricsApi Metrics();
 
         /// <summary>
+        /// Creates an instance of class <see cref="ReportsApi"/>, that provides functionality to access reporting services.
+        /// </summary>
+        IReportsApi Reports();
+
+        /// <summary>
         /// 
         /// </summary>
         IGlobalPaymentOptionsApi PaymentOptions();

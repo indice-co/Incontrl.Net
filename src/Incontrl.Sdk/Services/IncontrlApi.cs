@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel.Client;
@@ -60,6 +61,9 @@ namespace Incontrl.Sdk
                         BaseAddress = _baseAddress
                     };
 
+#if !NETSTANDARD14
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+#endif
                     httpCLient.SetBearerToken(_accessToken);
                     _incontrlApiClientBase = new ClientBase(httpCLient);
                 }
@@ -73,6 +77,9 @@ namespace Incontrl.Sdk
                         BaseAddress = _authorityAddress
                     };
 
+#if !NETSTANDARD14
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+#endif
                     httpCLient.SetBearerToken(_accessToken);
                     _identityApiClientBase = new ClientBase(httpCLient);
                 }
