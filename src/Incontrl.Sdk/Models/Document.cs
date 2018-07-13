@@ -76,7 +76,7 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// The sub total of the document (UnitAmounts * Quantities).
         /// </summary>
-        public decimal? SubTotal { get; set; }
+        public virtual decimal? SubTotal { get; set; }
 
         /// <summary>
         /// The total discount applied to the document.
