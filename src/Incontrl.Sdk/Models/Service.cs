@@ -20,6 +20,8 @@ namespace Incontrl.Sdk.Models
         Reconciliation = 1,
         WebHooks,
         PaymentOption,
-        Trial
+        Trial,
+        Reporting,
+        Metrics
     }
 }
