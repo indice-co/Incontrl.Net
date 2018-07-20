@@ -66,7 +66,7 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// A payment code for the document.
         /// </summary>
-        public string PaymentCode { get; set; }
+        public string CustomerReference { get; set; }
 
         /// <summary>
         /// A permalink that displays the document as a web page.
