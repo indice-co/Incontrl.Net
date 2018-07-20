@@ -15,7 +15,7 @@
   <PropertyGroup Label="Package">
     <PackageId>Incontrl.Net</PackageId>
     <PackageTags>incontrl;incontrl.io;http client</PackageTags>
-    <PackageReleaseNotes>Enhance ServiceType enum.</PackageReleaseNotes>
+    <PackageReleaseNotes>Rename to CustomerReference (PaymentCode)</PackageReleaseNotes>
     <PackageIconUrl>https://github.com/indice-co/Incontrl.Net/blob/master/icon/icon-128.png?raw=true</PackageIconUrl>
     <PackageProjectUrl>https://github.com/indice-co/Incontrl.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/indice-co/Incontrl.Net/blob/master/LICENSE</PackageLicenseUrl>
