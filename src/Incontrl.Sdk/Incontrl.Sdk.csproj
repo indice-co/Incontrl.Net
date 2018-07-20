@@ -3,7 +3,7 @@
     <Description>Incontrl.io .Net SDK</Description>
     <Title>Incontrl.Net Class Library</Title>
     <Copyright>Copyright (c) 2017 Indice</Copyright>
-    <VersionPrefix>2.8.7</VersionPrefix>
+    <VersionPrefix>2.8.8</VersionPrefix>
     <!--<VersionSuffix>beta3</VersionSuffix>-->
     <Authors>Constantinos Leftheris, Giorgos Manoltzas</Authors>
     <TargetFrameworks>net452;netstandard1.4;netstandard2.0</TargetFrameworks>
