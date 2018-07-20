@@ -16,6 +16,6 @@ namespace Incontrl.Sdk.Models
         public string RecipientName { get; set; }
         public Guid? RecipientId { get; set; }
         public Guid[] TypeId { get; set; }
-        public string PaymentCode { get; set; }
+        public string CustomerReference { get; set; }
     }
 }
