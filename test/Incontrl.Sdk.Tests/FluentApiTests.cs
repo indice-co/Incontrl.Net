@@ -168,7 +168,7 @@ namespace Incontrl.Sdk.Tests
                                              TypeId = new[] {
                                                  Guid.NewGuid()
                                              },
-                                             PaymentCode = string.Empty
+                                             CustomerReference = string.Empty
                                          }
                                      }, summary: true);
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Incontrl.Sdk.Models
 {
@@ -77,6 +78,19 @@ namespace Incontrl.Sdk.Models
         /// Public comments that are rendered by default for this document type.
         /// </summary>
         public string DefaultPublicComments { get; set; }
+
+
+        /// <summary>
+        /// Gets Payment options used for displaying bank account information.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PaymentOption> GetPaymentInfos() => (PaymentOptions ?? new List<PaymentOption>()).Where(x => x.Type == PaymentOptionType.Info);
+
+        /// <summary>
+        /// Gets Payment options to pay online through a payment gateway provider like Paypal, a bank wallet or a Bank ecomerce integration.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PaymentOption> GetPaymentGateways() => (PaymentOptions ?? new List<PaymentOption>()).Where(x => x.Type == PaymentOptionType.PISP && x.Provider?.Class != null && x.Provider.Enabled);
     }
 
     /// <summary>
