@@ -32,6 +32,7 @@ namespace Incontrl.Sdk.Services
         private readonly Lazy<ITaxApi> _taxApi;
         private readonly Lazy<IInvitationApi> _invitationApi;
         private readonly Lazy<ISubscriptionActivityApi> _subscriptionActivityApi;
+        private readonly Lazy<IReportApi> _reportsApi;
 
         public SubscriptionApi(Func<ClientBase> clientBaseFactory) {
             _clientBase = clientBaseFactory();
@@ -58,6 +59,7 @@ namespace Incontrl.Sdk.Services
             _taxApi = new Lazy<ITaxApi>(() => new TaxApi(_clientBase));
             _invitationApi = new Lazy<IInvitationApi>(() => new InvitationApi(_clientBase));
             _subscriptionActivityApi = new Lazy<ISubscriptionActivityApi>(() => new SubscriptionActivityApi(_clientBase));
+            _reportsApi = new Lazy<IReportApi>(() => new ReportApi(_clientBase));
         }
 
         public string SubscriptionId { get; set; }
@@ -234,5 +236,12 @@ namespace Incontrl.Sdk.Services
         }
 
         public Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken)) => _clientBase.DeleteAsync($"subscriptions/{SubscriptionId}", cancellationToken);
+
+        public IReportApi Reports() {
+            var reportApi = _reportsApi.Value;
+            reportApi.SubscriptionId = SubscriptionId;
+
+            return reportApi;
+        }
     }
 }

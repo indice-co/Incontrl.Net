@@ -6,27 +6,12 @@ namespace Incontrl.Sdk.Models
     /// <summary>
     /// A class that describes the type of a <see cref="Document"/>.
     /// </summary>
-    public class DocumentType
+    public class DocumentType : DocumentTypeBase
     {
-        /// <summary>
-        /// The unique identifier for the document type.
-        /// </summary>
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Unique short code for the item.
         /// </summary>
         public string Code { get; set; }
-
-        /// <summary>
-        /// Discriminator for the document type.
-        /// </summary>
-        public RecordType RecordType { get; set; }
-
-        /// <summary>
-        /// The name of the document type.
-        /// </summary>
-        public string Name { get; set; }
 
         /// <summary>
         /// The alias (a human friendly id) of the document type.
@@ -92,5 +77,26 @@ namespace Incontrl.Sdk.Models
         /// Public comments that are rendered by default for this document type.
         /// </summary>
         public string DefaultPublicComments { get; set; }
+    }
+
+    /// <summary>
+    /// Basic info for a document type.
+    /// </summary>
+    public class DocumentTypeBase
+    {
+        /// <summary>
+        /// A unique identifier for the item.
+        /// </summary>
+        public Guid Id { get; set; }
+
+        /// <summary>
+        /// The name of the document type.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The category of Document Type.
+        /// </summary>
+        public RecordType RecordType { get; set; }
     }
 }

@@ -11,6 +11,8 @@ namespace Incontrl.Sdk.Services
 
         public ReportsApi(ClientBase clientBase) => _clientBase = clientBase;
 
+        public string SubscriptionId { get; set; }
+
         public Task<Service[]> ListAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             _clientBase.GetAsync<Service[]>($"subscriptions/reports", cancellationToken);
     }

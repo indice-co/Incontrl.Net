@@ -160,5 +160,10 @@ namespace Incontrl.Sdk.Abstractions
         /// </summary>
         /// <returns></returns>
         IInvitationApi Invitation();
+
+        /// <summary>
+        /// Creates an instance of class <see cref="ReportsApi"/>, that provides functionality to access reporting services.
+        /// </summary>
+        IReportApi Reports();
     }
 }

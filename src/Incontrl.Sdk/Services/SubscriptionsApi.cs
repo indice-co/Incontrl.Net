@@ -25,6 +25,12 @@ namespace Incontrl.Sdk.Services
 
         public bool GlobalAccess { get; set; }
 
+        public IReportsApi Reports() => _reportsApi.Value;
+
+        public IGlobalPaymentOptionsApi PaymentOptions() => _globalPaymentOptionsApi.Value;
+
+        public IMetricsApi Metrics() => _metricsApi.Value;
+
         public Task<Subscription> CreateAsync(CreateSubscriptionRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
             _clientBase.PostAsync<CreateSubscriptionRequest, Subscription>("subscriptions", request, cancellationToken);
 
@@ -42,11 +48,5 @@ namespace Incontrl.Sdk.Services
 
             return _clientBase.GetAsync<ResultSet<Subscription>>($"subscriptions", options, cancellationToken);
         }
-
-        public IMetricsApi Metrics() => _metricsApi.Value;
-
-        public IGlobalPaymentOptionsApi PaymentOptions() => _globalPaymentOptionsApi.Value;
-
-        public IReportsApi Reports() => _reportsApi.Value;
     }
 }

@@ -488,9 +488,8 @@ namespace Incontrl.Sdk.Tests
             #endregion
 
             #region Reports
-            var reports = await api.Subscriptions()
-                                   .Reports()
-                                   .ListAsync();
+            var reports = await api.Subscriptions().Reports().ListAsync();
+            var generatedReport = await api.Subscriptions(subscriptionId).Reports().GenerateAsync(new Period { });
             #endregion
         }
     }

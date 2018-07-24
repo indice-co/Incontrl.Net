@@ -6,17 +6,17 @@
     public enum RecordType : short
     {
         /// <summary>
-        /// Accounts Payable
+        /// Accounts payable.
         /// </summary>
         AccountsPayable = -1,
 
         /// <summary>
-        /// Accounts Neutral
+        /// Accounts neutral.
         /// </summary>
         AccountsNeutral = 0,
 
         /// <summary>
-        /// Accounts Receivable
+        /// Accounts receivable.
         /// </summary>
         AccountsReceivable = 1
     }

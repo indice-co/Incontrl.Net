@@ -7,7 +7,7 @@ using Indice.Types;
 namespace Incontrl.Sdk.Abstractions
 {
     /// <summary>
-    /// 
+    /// Provides functionality for manipulating subscriptions and contains all the actions that a subscription can perform.
     /// </summary>
     public interface ISubscriptionsApi
     {

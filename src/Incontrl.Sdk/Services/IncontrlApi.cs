@@ -184,7 +184,7 @@ namespace Incontrl.Sdk
         public ILookupsApi Lookups() => _lookupsApi.Value;
 
         /// <summary>
-        /// Creates an instance of class SubscriptionApi, that gives access to a subscription's allowed operations.
+        /// Creates an instance of class <see cref="SubscriptionApi"/>, that gives access to a subscription's allowed operations.
         /// </summary>
         /// <param name="subscriptionId">The subscription's unique id.</param>
         public ISubscriptionApi Subscriptions(Guid subscriptionId) {
