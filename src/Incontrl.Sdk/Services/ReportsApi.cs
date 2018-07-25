@@ -13,7 +13,7 @@ namespace Incontrl.Sdk.Services
 
         public string SubscriptionId { get; set; }
 
-        public Task<Service[]> ListAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<Service[]>($"subscriptions/reports", cancellationToken);
+        public Task<Subscription[]> ListAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.GetAsync<Subscription[]>($"subscriptions/reports", cancellationToken);
     }
 }

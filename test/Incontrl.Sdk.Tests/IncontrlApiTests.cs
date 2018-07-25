@@ -385,6 +385,22 @@ namespace Incontrl.Sdk.Tests
         }
 
         [Fact]
+        public void QuerySerializationDocumentList() {
+            var options = new ListOptions<DocumentListFilter> {
+                Filter = new DocumentListFilter {
+                    From = new DateTime(2018, 07, 20),
+                    To = new DateTime(2018, 07, 24)
+                },
+                Page = 1,
+                Size = 10,
+                Sort = "DisplayName-"
+            };
+
+            var query = new QueryStringParams(options);
+            Assert.Equal("page=1&size=10&sort=DisplayName-&Filter.From=2018-07-20&Filter.To=2018-07-24", query.ToFormUrlEncodedString());
+        }
+
+        [Fact]
         public async Task CanUpdateTracker() {
             await _api.LoginAsync(ScopeFlags.Core);
 
