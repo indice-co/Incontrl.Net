@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
+using Indice.Types;
 
 namespace Incontrl.Sdk.Abstractions
 {
@@ -33,5 +34,12 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
         Task<DocumentStatusResponse> UpdateAsync(UpdateDocumentStatusRequest request, CancellationToken cancellationToken = default(CancellationToken));
+        
+        /// <summary>
+        /// Gets list of available status options based on the current document and its status.
+        /// </summary>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Returns the task object representing the asynchronous operation.</returns>
+        Task<ResultSet<DocumentStatusOption>> ListAvailableAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

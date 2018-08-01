@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Incontrl.Sdk.Abstractions;
 using Incontrl.Sdk.Models;
+using Indice.Types;
 
 namespace Incontrl.Sdk.Services
 {
@@ -16,8 +17,11 @@ namespace Incontrl.Sdk.Services
 
         public Task<DocumentStatusResponse> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             _clientBase.GetAsync<DocumentStatusResponse>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/status", cancellationToken);
-
+        
         public Task<DocumentStatusResponse> UpdateAsync(UpdateDocumentStatusRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
             _clientBase.PutAsync<UpdateDocumentStatusRequest, DocumentStatusResponse>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/status", request, cancellationToken);
+        
+        public Task<ResultSet<DocumentStatusOption>> ListAvailableAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.GetAsync<ResultSet<DocumentStatusOption>>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/available-states", cancellationToken);
     }
 }
