@@ -8,40 +8,55 @@ namespace Incontrl.Sdk.Models
     public class Report
     {
         /// <summary>
-        /// Unique identifier.
+        /// The year in which the report applies to.
         /// </summary>
-        public Guid Id { get; set; }
+        public int Year { get; set; }
 
         /// <summary>
-        /// The subscription id.
+        /// An integer value that indicates the order of the report according to it's <see cref="ReportingFrequency"/>.
         /// </summary>
-        public Guid SubscriptionId { get; set; }
+        public int Position { get; set; }
 
         /// <summary>
-        /// The period the the report covers.
+        /// The type of this report.
         /// </summary>
-        public Period Period { get; set; }
+        public ReportingFrequency Frequency { get; set; }
+
+        /// <summary>
+        /// The total sales tax for all record types.
+        /// </summary>
+        public decimal? TotalSalesTax { get; set; }
+
+        /// <summary>
+        /// The total other tax for all record types.
+        /// </summary>
+        public decimal? TotalOtherTax { get; set; }
+
+        /// <summary>
+        /// The total tax for all record types.
+        /// </summary>
+        public decimal? TotalTax { get; set; }
 
         /// <summary>
         /// An overall report for all document types.
         /// </summary>
-        public ReportInfo Overall { get; set; }
+        public ReportDetails Overall { get; set; }
 
         /// <summary>
-        /// A report for every document type.
+        /// A report for every record type.
         /// </summary>
-        public ReportInfo[] PerType { get; set; }
+        public ReportDetails[] PerRecordType { get; set; }
     }
 
     /// <summary>
     /// Contains that data of a report.
     /// </summary>
-    public class ReportInfo
+    public class ReportDetails
     {
         /// <summary>
         /// Basic info for the document type.
         /// </summary>
-        public DocumentTypeBase Type { get; set; }
+        public RecordType? RecordType { get; set; }
 
         /// <summary>
         /// The total number of documents.
@@ -62,5 +77,36 @@ namespace Incontrl.Sdk.Models
         /// The overall tax.
         /// </summary>
         public decimal? TotalTax { get; set; }
+    }
+
+    /// <summary>
+    /// An enum that describes the frequency that a report is generated.
+    /// </summary>
+    public enum ReportingFrequency : short
+    {
+        /// <summary>
+        /// Monthly report.
+        /// </summary>
+        Monthly = 1,
+
+        /// <summary>
+        /// Quarterly report.
+        /// </summary>
+        Quarterly = 3,
+
+        /// <summary>
+        /// Semesterly report.
+        /// </summary>
+        Semesterly = 6,
+
+        /// <summary>
+        /// Yearly report.
+        /// </summary>
+        Yearly = 12,
+
+        /// <summary>
+        /// Biyearly report.
+        /// </summary>
+        Biyearly = 24
     }
 }

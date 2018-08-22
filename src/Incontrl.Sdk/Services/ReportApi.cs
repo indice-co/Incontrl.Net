@@ -13,7 +13,7 @@ namespace Incontrl.Sdk.Services
 
         public string SubscriptionId { get; set; }
 
-        public Task<Report> GenerateAsync(Period period, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.PostAsync<Period, Report>($"subscriptions/{SubscriptionId}/reports", period, cancellationToken);
+        public Task<Report> CreateAsync(ReportingFrequency frequency, Document document, CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.PostAsync<Document, Report>($"subscriptions/{SubscriptionId}/reports/{frequency}", document, cancellationToken);
     }
 }

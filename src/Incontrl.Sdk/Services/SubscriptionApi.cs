@@ -33,6 +33,7 @@ namespace Incontrl.Sdk.Services
         private readonly Lazy<IInvitationApi> _invitationApi;
         private readonly Lazy<ISubscriptionActivityApi> _subscriptionActivityApi;
         private readonly Lazy<IReportApi> _reportsApi;
+        private readonly Lazy<IPastReportApi> _pastReportsApi;
 
         public SubscriptionApi(Func<ClientBase> clientBaseFactory) {
             _clientBase = clientBaseFactory();
@@ -60,6 +61,7 @@ namespace Incontrl.Sdk.Services
             _invitationApi = new Lazy<IInvitationApi>(() => new InvitationApi(_clientBase));
             _subscriptionActivityApi = new Lazy<ISubscriptionActivityApi>(() => new SubscriptionActivityApi(_clientBase));
             _reportsApi = new Lazy<IReportApi>(() => new ReportApi(_clientBase));
+            _pastReportsApi = new Lazy<IPastReportApi>(() => new PastReportApi(_clientBase));
         }
 
         public string SubscriptionId { get; set; }
@@ -67,14 +69,12 @@ namespace Incontrl.Sdk.Services
         public ISubscriptionCompanyApi Company() {
             var subscriptionCompanyApi = _subscriptionCompanyApi.Value;
             subscriptionCompanyApi.SubscriptionId = SubscriptionId;
-
             return subscriptionCompanyApi;
         }
 
         public ISubscriptionContactApi Contact() {
             var subscriptionContactApi = _subscriptionContactApi.Value;
             subscriptionContactApi.SubscriptionId = SubscriptionId;
-
             return subscriptionContactApi;
         }
 
@@ -82,14 +82,12 @@ namespace Incontrl.Sdk.Services
             var contactApi = _contactApi.Value;
             contactApi.SubscriptionId = SubscriptionId;
             contactApi.ContactId = contactId.ToString();
-
             return contactApi;
         }
 
         public IContactsApi Contacts() {
             var subscriptionContactsApi = _subscriptionContactsApi.Value;
             subscriptionContactsApi.SubscriptionId = SubscriptionId;
-
             return subscriptionContactsApi;
         }
 
@@ -100,14 +98,12 @@ namespace Incontrl.Sdk.Services
             var documentApi = _documentApi.Value;
             documentApi.SubscriptionId = SubscriptionId;
             documentApi.DocumentId = documentId.ToString();
-
             return documentApi;
         }
 
         public IDocumentsApi Documents() {
             var documentsApi = _documentsApi.Value;
             documentsApi.SubscriptionId = SubscriptionId;
-
             return documentsApi;
         }
 
@@ -115,28 +111,24 @@ namespace Incontrl.Sdk.Services
             var documentTypeApi = _documentTypeApi.Value;
             documentTypeApi.SubscriptionId = SubscriptionId;
             documentTypeApi.DocumentTypeId = documentTypeId.ToString();
-
             return documentTypeApi;
         }
 
         public IDocumentTypesApi DocumentTypes() {
             var documentTypesApi = _documentTypesApi.Value;
             documentTypesApi.SubscriptionId = SubscriptionId;
-
             return documentTypesApi;
         }
 
         public ISubscriptionMembersApi Members() {
             var subscriptionMembersApi = _subscriptionMembersApi.Value;
             subscriptionMembersApi.SubscriptionId = SubscriptionId;
-
             return subscriptionMembersApi;
         }
 
         public ISubscriptionMetricsApi Metrics() {
             var subscriptionMetricsApi = _subscriptionMetricsApi.Value;
             subscriptionMetricsApi.SubscriptionId = SubscriptionId;
-
             return subscriptionMetricsApi;
         }
 
@@ -144,21 +136,18 @@ namespace Incontrl.Sdk.Services
             var organisationApi = _organisationApi.Value;
             organisationApi.SubscriptionId = SubscriptionId;
             organisationApi.OrganisationId = organisationId.ToString();
-
             return organisationApi;
         }
 
         public IOrganisationsApi Organisations() {
             var organisationsApi = _organisationsApi.Value;
             organisationsApi.SubscriptionId = SubscriptionId;
-
             return organisationsApi;
         }
 
         public ISubscriptionPlanApi Plan() {
             var subscriptionPlanApi = _subscriptionPlanApi.Value;
             subscriptionPlanApi.SubscriptionId = SubscriptionId;
-
             return subscriptionPlanApi;
         }
 
@@ -166,35 +155,30 @@ namespace Incontrl.Sdk.Services
             var productApi = _productApi.Value;
             productApi.SubscriptionId = SubscriptionId;
             productApi.ProductId = productId.ToString();
-
             return productApi;
         }
 
         public IProductsApi Products() {
             var productsApi = _productsApi.Value;
             productsApi.SubscriptionId = SubscriptionId;
-
             return productsApi;
         }
 
         public ISubscriptionStatusApi Status() {
             var subscriptionStatusApi = _subscriptionStatusApi.Value;
             subscriptionStatusApi.SubscriptionId = SubscriptionId;
-
             return subscriptionStatusApi;
         }
 
         public ISubscriptionTimeZoneApi TimeZone() {
             var subscriptionTimeZoneApi = _subscriptionTimeZoneApi.Value;
             subscriptionTimeZoneApi.SubscriptionId = SubscriptionId;
-
             return subscriptionTimeZoneApi;
         }
 
         public IPaymentOptionsApi PaymentOptions() {
             var paymentOptionsApi = _paymentOptionsApi.Value;
             paymentOptionsApi.SubscriptionId = SubscriptionId;
-
             return paymentOptionsApi;
         }
 
@@ -202,14 +186,12 @@ namespace Incontrl.Sdk.Services
             var paymentOptionApi = _paymentOptionApi.Value;
             paymentOptionApi.SubscriptionId = SubscriptionId;
             paymentOptionApi.PaymentOptionId = paymentOptionId.ToString();
-
             return paymentOptionApi;
         }
 
         public ITaxesApi Taxes() {
             var taxesApi = _taxesApi.Value;
             taxesApi.SubscriptionId = SubscriptionId;
-
             return taxesApi;
         }
 
@@ -217,21 +199,18 @@ namespace Incontrl.Sdk.Services
             var taxApi = _taxApi.Value;
             taxApi.SubscriptionId = SubscriptionId;
             taxApi.TaxId = taxId.ToString();
-
             return taxApi;
         }
 
         public ISubscriptionActivityApi Activity() {
             var subscriptionActivityApi = _subscriptionActivityApi.Value;
             subscriptionActivityApi.SubscriptionId = SubscriptionId;
-
             return subscriptionActivityApi;
         }
 
         public IInvitationApi Invitation() {
             var invitationApi = _invitationApi.Value;
             invitationApi.SubscriptionId = SubscriptionId;
-
             return invitationApi;
         }
 
@@ -240,8 +219,13 @@ namespace Incontrl.Sdk.Services
         public IReportApi Reports() {
             var reportApi = _reportsApi.Value;
             reportApi.SubscriptionId = SubscriptionId;
-
             return reportApi;
+        }
+
+        public IPastReportApi PastReports() {
+            var pastReportApi = _pastReportsApi.Value;
+            pastReportApi.SubscriptionId = SubscriptionId;
+            return pastReportApi;
         }
     }
 }

@@ -165,5 +165,10 @@ namespace Incontrl.Sdk.Abstractions
         /// Creates an instance of class <see cref="ReportsApi"/>, that provides functionality to access reporting services.
         /// </summary>
         IReportApi Reports();
+
+        /// <summary>
+        /// Creates an instance of class <see cref="ReportsApi"/>, that provides functionality to access reporting services.
+        /// </summary>
+        IPastReportApi PastReports();
     }
 }
