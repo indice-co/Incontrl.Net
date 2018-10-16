@@ -26,7 +26,6 @@ namespace Incontrl.Sdk
         private readonly Uri _authorityAddress;
         private readonly string _appId;
         private readonly string _apiKey;
-        private string _accessToken;
         private ClientBase _incontrlApiClientBase;
         private ClientBase _identityApiClientBase;
 
@@ -64,7 +63,7 @@ namespace Incontrl.Sdk
 #if !NETSTANDARD14
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 #endif
-                    httpCLient.SetBearerToken(_accessToken);
+                    httpCLient.SetBearerToken(AccessToken);
                     _incontrlApiClientBase = new ClientBase(httpCLient);
                 }
 
@@ -80,7 +79,7 @@ namespace Incontrl.Sdk
 #if !NETSTANDARD14
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 #endif
-                    httpCLient.SetBearerToken(_accessToken);
+                    httpCLient.SetBearerToken(AccessToken);
                     _identityApiClientBase = new ClientBase(httpCLient);
                 }
 
@@ -97,6 +96,11 @@ namespace Incontrl.Sdk
             _appsApi = new Lazy<IAppsApi>(() => new AppsApi(CreateIdentityClientBase));
             _appApi = new Lazy<IAppApi>(() => new AppApi(CreateIdentityClientBase));
         }
+
+        /// <summary>
+        /// The access token used to make the call to incontrl API.
+        /// </summary>
+        public string AccessToken { get; private set; }
 
         /// <summary>
         /// Creates an instance of class <see cref="AppsApi"/>, that gives access to a applications's allowed operations.
@@ -140,7 +144,7 @@ namespace Incontrl.Sdk
                 tokenResponse.HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
 
-            _accessToken = tokenResponse.AccessToken;
+            AccessToken = tokenResponse.AccessToken;
         }
 
         /// <summary>
@@ -157,7 +161,7 @@ namespace Incontrl.Sdk
                 tokenResponse.HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
 
-            _accessToken = tokenResponse.AccessToken;
+            AccessToken = tokenResponse.AccessToken;
         }
 
         /// <summary>
@@ -175,7 +179,7 @@ namespace Incontrl.Sdk
                 tokenResponse.HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
 
-            _accessToken = tokenResponse.AccessToken;
+            AccessToken = tokenResponse.AccessToken;
         }
 
         /// <summary>
