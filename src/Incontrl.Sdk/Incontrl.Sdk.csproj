@@ -44,7 +44,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="3.7.1" />
-    <PackageReference Include="Indice.Common" Version="1.2.5" />
+    <PackageReference Include="IdentityModel" Version="3.10.0" />
+    <PackageReference Include="Indice.Common" Version="1.2.13" />
   </ItemGroup>
 </Project>
