@@ -17,27 +17,23 @@ namespace Incontrl.Sdk.Http
 
     internal class JsonResponse<T>
     {
-        // Private variables.
-        private readonly T _data;
-        private bool _isHttpError;
-        private HttpStatusCode _httpErrorstatusCode;
-        private string _httpErrorReason;
+        private readonly string _httpErrorReason;
         private JObject _errors;
-        
+
         // Class properties.
-        public bool IsHttpError => _isHttpError;
-        public HttpStatusCode HttpErrorStatusCode => _httpErrorstatusCode;
-        public T Data => _data;
+        public bool IsHttpError { get; private set; }
+        public HttpStatusCode HttpErrorStatusCode { get; private set; }
+        public T Data { get; private set; }
 
         public JsonResponse(string raw) {
             try {
                 if (null == raw) {
-                    _data = default(T);
+                    Data = default(T);
                 } else if (typeof(T).Equals(typeof(string))) {
-                    _data = (T)(object)raw;
+                    Data = (T)(object)raw;
                 } else {
                     var settings = new JsonSerializerSettings();
-                    _data = JsonConvert.DeserializeObject<T>(raw, settings);
+                    Data = JsonConvert.DeserializeObject<T>(raw, settings);
                 }
             } catch (Exception exception) {
                 throw new InvalidOperationException($"Invalid JSON response: {exception}");
@@ -45,8 +41,8 @@ namespace Incontrl.Sdk.Http
         }
 
         public JsonResponse(string raw, HttpStatusCode statusCode, string reason) {
-            _isHttpError = true;
-            _httpErrorstatusCode = statusCode;
+            IsHttpError = true;
+            HttpErrorStatusCode = statusCode;
             _httpErrorReason = reason;
 
             try {
