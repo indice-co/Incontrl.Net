@@ -46,6 +46,11 @@ namespace Incontrl.Sdk.Models
         /// A report for every record type.
         /// </summary>
         public ReportDetails[] PerRecordType { get; set; }
+
+        /// <summary>
+        /// The <see cref="DateTime"/> where the report was created.
+        /// </summary>
+        public DateTimeOffset? CreatedAt { get; set; }
     }
 
     /// <summary>
@@ -77,6 +82,31 @@ namespace Incontrl.Sdk.Models
         /// The overall tax.
         /// </summary>
         public decimal? TotalTax { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public decimal? Total { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public decimal? TotalNet { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public decimal? SubTotal { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public decimal? TotalDiscount { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public decimal? TotalPayable { get; set; }
     }
 
     /// <summary>
@@ -108,5 +138,26 @@ namespace Incontrl.Sdk.Models
         /// Biyearly report.
         /// </summary>
         Biyearly = 24
+    }
+
+    /// <summary>
+    /// The type of the report.
+    /// </summary>
+    public enum ReportType : short
+    {
+        /// <summary>
+        /// Issued
+        /// </summary>
+        Issued,
+
+        /// <summary>
+        /// Paid
+        /// </summary>
+        Paid,
+
+        /// <summary>
+        /// Due
+        /// </summary>
+        Due
     }
 }

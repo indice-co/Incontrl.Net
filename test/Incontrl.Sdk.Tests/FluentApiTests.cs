@@ -489,8 +489,8 @@ namespace Incontrl.Sdk.Tests
 
             #region Reports
             var reports = await api.Subscriptions().Reports().ListAsync();
-            var generatedReport = await api.Subscriptions(subscriptionId).Reports().CreateAsync(ReportingFrequency.Monthly, new Document { });
-            var generatedPastReport = await api.Subscriptions(subscriptionId).PastReports().CreateAsync(ReportingFrequency.Monthly, 1, 2018);
+            var generatedReport = await api.Subscriptions(subscriptionId).Reports().UpsertAsync(ReportingFrequency.Semesterly, ReportType.Issued, new Document { });
+            var generatedPastReport = await api.Subscriptions(subscriptionId).PastReports().CreateAsync(ReportingFrequency.Monthly, ReportType.Paid, 1, 2018);
             #endregion
         }
     }

@@ -62,7 +62,8 @@ namespace Incontrl.Sdk.Services
 
         public async Task<TResponse> PostAsync<TRequest, TResponse>(string requestUri, TRequest model, CancellationToken cancellationToken = default(CancellationToken)) {
             var response = default(JsonResponse<TResponse>);
-            var httpMessage = await _httpClient.PostAsync(requestUri, JsonRequest.For(model), cancellationToken).ConfigureAwait(false);
+            var uri = string.Format(requestUri);
+            var httpMessage = await _httpClient.PostAsync(uri, JsonRequest.For(model), cancellationToken).ConfigureAwait(false);
             var content = await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             if (httpMessage.IsSuccessStatusCode) {
