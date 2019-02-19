@@ -13,7 +13,7 @@ namespace Incontrl.Sdk.Services
 
         public string SubscriptionId { get; set; }
 
-        public Task<Report> UpsertAsync(ReportingFrequency frequency, ReportType type, Document document, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PostAsync<Document, Report>($"subscriptions/{SubscriptionId}/reports?frequency={frequency}&type={type}", document, cancellationToken);
+        public Task<Report> UpsertAsync(ReportType type, ReportingFrequency frequency, Document document, CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.PostAsync<Document, Report>($"subscriptions/{SubscriptionId}/reports/types/{type}/frequencies/{frequency}", document, cancellationToken);
     }
 }
