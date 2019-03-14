@@ -15,7 +15,7 @@
   <PropertyGroup Label="Package">
     <PackageId>Incontrl.Net</PackageId>
     <PackageTags>incontrl;incontrl.io;http client</PackageTags>
-    <PackageReleaseNotes>New reporting features.</PackageReleaseNotes>
+    <PackageReleaseNotes>Add RecipientOrganizationName and RecipientContactName on documents list filter.</PackageReleaseNotes>
     <PackageIconUrl>https://github.com/indice-co/Incontrl.Net/blob/master/icon/icon-128.png?raw=true</PackageIconUrl>
     <PackageProjectUrl>https://github.com/indice-co/Incontrl.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/indice-co/Incontrl.Net/blob/master/LICENSE</PackageLicenseUrl>
