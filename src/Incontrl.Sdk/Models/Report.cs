@@ -146,18 +146,24 @@ namespace Incontrl.Sdk.Models
     public enum ReportType : short
     {
         /// <summary>
+        /// Due
+        /// </summary>
+        Due,
+        /// <summary>
+        /// Due Unpaid
+        /// </summary>
+        DueUnpaid,
+        /// <summary>
         /// Issued
         /// </summary>
         Issued,
-
         /// <summary>
         /// Paid
         /// </summary>
         Paid,
-
         /// <summary>
-        /// Due
+        /// Payments
         /// </summary>
-        Due
+        Payments
     }
 }
