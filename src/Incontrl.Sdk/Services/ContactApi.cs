@@ -23,7 +23,6 @@ namespace Incontrl.Sdk.Services
             var contactCompaniesApi = _contactCompaniesApi.Value;
             contactCompaniesApi.SubscriptionId = SubscriptionId;
             contactCompaniesApi.ContactId = ContactId;
-
             return contactCompaniesApi;
         }
 

@@ -28,6 +28,8 @@ namespace Incontrl.Sdk
         private readonly string _apiKey;
         private ClientBase _incontrlApiClientBase;
         private ClientBase _identityApiClientBase;
+        private HttpClient _incontrlApiHttpClient;
+        private HttpClient _incontrlIdentityHttpClient;
 
         /// <summary>
         /// Class constructor.
@@ -41,11 +43,9 @@ namespace Incontrl.Sdk
             if (string.IsNullOrWhiteSpace(appId)) {
                 throw new ArgumentNullException(nameof(appId), "Please specify the application id.");
             }
-
             if (string.IsNullOrWhiteSpace(apiKey)) {
                 throw new ArgumentNullException(nameof(apiKey), "Please specify the API key.");
             }
-
             _appId = appId;
             _apiKey = apiKey;
             // If the developer specifies an alternative base or authority address, then we make use of them. In any other case we use our production endpoints.
@@ -56,36 +56,30 @@ namespace Incontrl.Sdk
             // This is equivalent to: Func<ClientBase> CreateIncontrlClientBase = () => { };
             ClientBase CreateIncontrlClientBase() {
                 if (_incontrlApiClientBase == null) {
-                    var httpCLient = new HttpClient(httpMessageHandler) {
+                    _incontrlApiHttpClient = _incontrlApiHttpClient ?? new HttpClient(httpMessageHandler) {
                         BaseAddress = _baseAddress
                     };
-
 #if !NETSTANDARD14
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 #endif
-                    httpCLient.SetBearerToken(AccessToken);
-                    _incontrlApiClientBase = new ClientBase(httpCLient);
+                    _incontrlApiHttpClient.SetBearerToken(AccessToken);
+                    _incontrlApiClientBase = new ClientBase(_incontrlApiHttpClient);
                 }
-
                 return _incontrlApiClientBase;
             }
-
             ClientBase CreateIdentityClientBase() {
                 if (_identityApiClientBase == null) {
-                    var httpCLient = new HttpClient(httpMessageHandler) {
+                    _incontrlIdentityHttpClient = _incontrlIdentityHttpClient ?? new HttpClient(httpMessageHandler) {
                         BaseAddress = _authorityAddress
                     };
-
 #if !NETSTANDARD14
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 #endif
-                    httpCLient.SetBearerToken(AccessToken);
-                    _identityApiClientBase = new ClientBase(httpCLient);
+                    _incontrlIdentityHttpClient.SetBearerToken(AccessToken);
+                    _identityApiClientBase = new ClientBase(_incontrlIdentityHttpClient);
                 }
-
                 return _identityApiClientBase;
             }
-
             // Interfaces that target Incontrl core API.
             _subscriptionsApi = new Lazy<ISubscriptionsApi>(() => new SubscriptionsApi(CreateIncontrlClientBase));
             _subscriptionApi = new Lazy<ISubscriptionApi>(() => new SubscriptionApi(CreateIncontrlClientBase));
@@ -109,7 +103,6 @@ namespace Incontrl.Sdk
         public IAppApi App(Guid appId) {
             var appApi = _appApi.Value;
             appApi.AppId = appApi.ToString();
-
             return appApi;
         }
 
@@ -139,11 +132,9 @@ namespace Incontrl.Sdk
             var discoveryResponse = await DiscoveryClient.GetAsync(_authorityAddress.AbsoluteUri);
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
             var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(userName, password, scopes.ToScopesText());
-
             if (tokenResponse.IsError) {
                 tokenResponse.HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
-
             AccessToken = tokenResponse.AccessToken;
         }
 
@@ -156,11 +147,9 @@ namespace Incontrl.Sdk
             var discoveryResponse = await DiscoveryClient.GetAsync(_authorityAddress.AbsoluteUri);
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
             var tokenResponse = await tokenClient.RequestClientCredentialsAsync(scopes.ToScopesText());
-
             if (tokenResponse.IsError) {
                 tokenResponse.HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
-
             AccessToken = tokenResponse.AccessToken;
         }
 
@@ -174,11 +163,9 @@ namespace Incontrl.Sdk
             var discoveryResponse = await DiscoveryClient.GetAsync(_authorityAddress.AbsoluteUri);
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
             var tokenResponse = await tokenClient.RequestRefreshTokenAsync(refreshToken, scopes.ToScopesText());
-
             if (tokenResponse.IsError) {
                 tokenResponse.HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
-
             AccessToken = tokenResponse.AccessToken;
         }
 
@@ -194,7 +181,6 @@ namespace Incontrl.Sdk
         public ISubscriptionApi Subscriptions(Guid subscriptionId) {
             var subscriptionApi = _subscriptionApi.Value;
             subscriptionApi.SubscriptionId = subscriptionId.ToString();
-
             return subscriptionApi;
         }
 
@@ -205,7 +191,6 @@ namespace Incontrl.Sdk
         public ISubscriptionApi Subscriptions(string subscriptionAlias) {
             var subscriptionApi = _subscriptionApi.Value;
             subscriptionApi.SubscriptionId = subscriptionAlias;
-
             return subscriptionApi;
         }
 
@@ -221,7 +206,6 @@ namespace Incontrl.Sdk
         public ISubscriptionsApi Subscriptions(bool globalAccess) {
             var subscriptionsApi = _subscriptionsApi.Value;
             subscriptionsApi.GlobalAccess = globalAccess;
-
             return subscriptionsApi;
         }
     }
