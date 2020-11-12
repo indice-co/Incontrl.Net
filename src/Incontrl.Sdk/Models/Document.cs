@@ -176,7 +176,7 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// Date and time that document was successfully sent to Aade.
         /// </summary>
-        public DateTimeOffset SentToAade { get; set; }
+        public DateTimeOffset? MarkDate { get; set; }
 
         /// <summary>
         /// Additional/custom information for the document.
