@@ -14,5 +14,6 @@ namespace Incontrl.Sdk.Models
         public string Notes { get; set; }
         public string PublicNotes { get; set; }
         public string Tags { get; set; }
+        public string Classification { get; set; }
     }
 }

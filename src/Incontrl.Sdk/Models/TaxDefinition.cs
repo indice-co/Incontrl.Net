@@ -12,6 +12,7 @@ namespace Incontrl.Sdk.Models
         public bool IsSalesTax { get; set; }
         public bool IncursSalesTax { get; set; }
         public string DisplayName { get; set; }
+        public string Classification { get; set; }
     }
 
     public enum TaxType : short

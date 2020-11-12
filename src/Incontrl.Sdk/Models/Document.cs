@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Incontrl.Sdk.Models
 {
@@ -158,6 +157,26 @@ namespace Incontrl.Sdk.Models
         /// Total amount performed by children.
         /// </summary>
         public DocumentBase Parent { get; set; }
+
+        /// <summary>
+        /// CLassification
+        /// </summary>
+        public string Classification { get; set; }
+
+        /// <summary>
+        /// Unique InvoiceRegistration Number
+        /// </summary>
+        public string Mark { get; set; }
+
+        /// <summary>
+        /// Invoice identifier
+        /// </summary>
+        public string Uid { get; set; }
+
+        /// <summary>
+        /// Date and time that document was successfully sent to Aade.
+        /// </summary>
+        public DateTimeOffset? MarkDate { get; set; }
 
         /// <summary>
         /// Additional/custom information for the document.

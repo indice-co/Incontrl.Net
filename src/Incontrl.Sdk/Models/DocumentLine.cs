@@ -92,6 +92,11 @@ namespace Incontrl.Sdk.Models
         /// Tags that accompany the line.
         /// </summary>
         public string Tags { get; set; }
+
+        /// <summary>
+        /// Classification
+        /// </summary>
+        public string Classification { get; set; }
     }
 
     /// <summary>
