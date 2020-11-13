@@ -62,30 +62,29 @@ namespace Incontrl.Sdk.Models
         /// Reconciliation service.
         /// </summary>
         Reconciliation = 1,
-
         /// <summary>
         /// Reconciliation service.
         /// </summary>
         WebHooks,
-
         /// <summary>
         /// Payment option service.
         /// </summary>
         PaymentOption,
-
         /// <summary>
         /// Trial service.
         /// </summary>
         Trial,
-
         /// <summary>
         /// Reporting service.
         /// </summary>
         Reporting,
-
         /// <summary>
         /// Metrics service.
         /// </summary>
-        Metrics
+        Metrics,
+        /// <summary>
+        /// AADE myData service.
+        /// </summary>
+        AadeMyData
     }
 }

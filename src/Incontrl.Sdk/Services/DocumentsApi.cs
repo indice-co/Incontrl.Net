@@ -30,7 +30,6 @@ namespace Incontrl.Sdk.Services
             if (summary) {
                 var parameters = options.ToDictionary();
                 parameters.Add(nameof(summary), bool.TrueString.ToLower());
-
                 return _clientBase.GetAsync<ResultSet<Document, DocumentSummary>>($"subscriptions/{SubscriptionId}/documents", parameters, cancellationToken);
             }
 

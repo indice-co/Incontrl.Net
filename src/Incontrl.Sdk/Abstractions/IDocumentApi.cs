@@ -36,19 +36,11 @@ namespace Incontrl.Sdk.Abstractions
         Task<Document> UpdateAsync(UpdateDocumentRequest request, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Updates a document's mark.
-        /// </summary>
-        /// <param name="request">An object of type <see cref="UpdateDocumentAadeFieldsRequest"/> that contains information about the document to update.</param>
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<Document> UpdateMarkAsync(UpdateDocumentAadeFieldsRequest request, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Submits the specified document to Aade.
         /// </summary>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<MyDataResponse> SendToIAPR(CancellationToken cancellationToken = default(CancellationToken));
+        Task<MyDataResponse> SendToIapr(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Permanently deletes the specified document.

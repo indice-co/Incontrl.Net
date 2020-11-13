@@ -46,16 +46,14 @@ namespace Incontrl.Sdk.Services
 
         public Task<Document> UpdateAsync(UpdateDocumentRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
             _clientBase.PutAsync<UpdateDocumentRequest, Document>($"subscriptions/{SubscriptionId}/documents/{DocumentId}", request, cancellationToken);
-        public Task<MyDataResponse> SendToIAPR(CancellationToken cancellationToken = default) =>
+
+        public Task<MyDataResponse> SendToIapr(CancellationToken cancellationToken = default) =>
             _clientBase.PostAsync<MyDataResponse>($"subscriptions/{SubscriptionId}/my-data/documents/{DocumentId}", null, cancellationToken);
-        public Task<Document> UpdateMarkAsync(UpdateDocumentAadeFieldsRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PutAsync<UpdateDocumentAadeFieldsRequest, Document>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/mark", request, cancellationToken);
 
         public IDocumentStatusApi Status() {
             var documentStatusApi = _documentStatusApi.Value;
             documentStatusApi.SubscriptionId = SubscriptionId;
             documentStatusApi.DocumentId = DocumentId;
-
             return documentStatusApi;
         }
 
@@ -63,7 +61,6 @@ namespace Incontrl.Sdk.Services
             var documentTrackingsApi = _documentTrackingsApi.Value;
             documentTrackingsApi.SubscriptionId = SubscriptionId;
             documentTrackingsApi.DocumentId = DocumentId;
-
             return documentTrackingsApi;
         }
 
@@ -71,7 +68,6 @@ namespace Incontrl.Sdk.Services
             var documentDocumentTypeApi = _documentDocumentTypeApi.Value;
             documentDocumentTypeApi.SubscriptionId = SubscriptionId;
             documentDocumentTypeApi.DocumentId = DocumentId;
-
             return documentDocumentTypeApi;
         }
 
@@ -79,7 +75,6 @@ namespace Incontrl.Sdk.Services
             var documentPaymentsApi = _documentPaymentsApi.Value;
             documentPaymentsApi.SubscriptionId = SubscriptionId;
             documentPaymentsApi.DocumentId = DocumentId;
-
             return documentPaymentsApi;
         }
 
@@ -88,7 +83,6 @@ namespace Incontrl.Sdk.Services
             documentTrackingApi.SubscriptionId = SubscriptionId;
             documentTrackingApi.DocumentId = DocumentId;
             documentTrackingApi.TrackingId = trackingId;
-
             return documentTrackingApi;
         }
     }
