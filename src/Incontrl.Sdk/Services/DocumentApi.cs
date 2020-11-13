@@ -46,8 +46,8 @@ namespace Incontrl.Sdk.Services
 
         public Task<Document> UpdateAsync(UpdateDocumentRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
             _clientBase.PutAsync<UpdateDocumentRequest, Document>($"subscriptions/{SubscriptionId}/documents/{DocumentId}", request, cancellationToken);
-        public Task<MyDataResponse> SendToIAPR(CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<MyDataResponse>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/aade", cancellationToken);
+        public Task<MyDataResponse> SendToIAPR(CancellationToken cancellationToken = default) =>
+            _clientBase.PostAsync<MyDataResponse>($"subscriptions/{SubscriptionId}/my-data/documents/{DocumentId}", null, cancellationToken);
         public Task<Document> UpdateMarkAsync(UpdateDocumentAadeFieldsRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
             _clientBase.PutAsync<UpdateDocumentAadeFieldsRequest, Document>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/mark", request, cancellationToken);
 
