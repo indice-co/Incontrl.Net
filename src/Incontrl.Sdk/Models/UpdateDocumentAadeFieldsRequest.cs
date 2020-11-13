@@ -24,8 +24,13 @@ namespace Incontrl.Sdk.Models
         public DateTimeOffset? SynchronizationDate { get; set; }
 
         /// <summary>
-        /// Log of the synchronization attempts made to IAPR
+        /// List of Error Details
         /// </summary>
-        public string SynchronizationLog { get; set; }
+        public List<ErrorResult> ErrorDetails { get; set; } = new List<ErrorResult>();
+        public class ErrorResult
+        {
+            public string Code { get; set; }
+            public string Message { get; set; }
+        }
     }
 }
