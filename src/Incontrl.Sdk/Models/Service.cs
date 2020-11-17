@@ -11,42 +11,34 @@ namespace Incontrl.Sdk.Models
         /// Unique identifier.
         /// </summary>
         public Guid? Id { get; set; }
-
         /// <summary>
         /// Name.
         /// </summary>
         public string Name { get; set; }
-
         /// <summary>
         /// Description.
         /// </summary>
         public string Description { get; set; }
-
         /// <summary>
         /// Class.
         /// </summary>
         public string Class { get; set; }
-
         /// <summary>
         /// Determines if the service is enabled.
         /// </summary>
         public bool Enabled { get; set; }
-
         /// <summary>
         /// UI hint.
         /// </summary>
         public UiHint UiHint { get; set; }
-
         /// <summary>
         /// Settings
         /// </summary>
         public dynamic Settings { get; set; }
-
         /// <summary>
         /// Settings schema.
         /// </summary>
         public object SettingsSchema { get; set; }
-
         /// <summary>
         /// Service type.
         /// </summary>

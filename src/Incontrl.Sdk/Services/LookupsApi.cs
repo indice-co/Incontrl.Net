@@ -25,7 +25,6 @@ namespace Incontrl.Sdk.Services
         public ILookupCountriesDefaultsApi Countries(string countryIso) {
             var lookupCountriesDefaultsApi = _lookupCountriesDefaultsApi.Value;
             lookupCountriesDefaultsApi.CountryIso = countryIso;
-
             return lookupCountriesDefaultsApi;
         }
 

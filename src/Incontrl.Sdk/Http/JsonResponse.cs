@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
+using Incontrl.Sdk.Json;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 
 namespace Incontrl.Sdk.Http
@@ -18,22 +21,28 @@ namespace Incontrl.Sdk.Http
     internal class JsonResponse<T>
     {
         private readonly string _httpErrorReason;
-        private JObject _errors;
+        private readonly JObject _errors;
+        private static readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings {
+            Culture = CultureInfo.CurrentCulture,
+            ContractResolver = new CamelCaseExceptDictionaryKeysResolver(),
+            DateTimeZoneHandling = DateTimeZoneHandling.Utc
+        };
 
-        // Class properties.
         public bool IsHttpError { get; private set; }
         public HttpStatusCode HttpErrorStatusCode { get; private set; }
         public T Data { get; private set; }
 
         public JsonResponse(string raw) {
+            _serializerSettings.Converters.Add(new StringEnumConverter {
+                CamelCaseText = false
+            });
             try {
                 if (null == raw) {
-                    Data = default(T);
+                    Data = default;
                 } else if (typeof(T).Equals(typeof(string))) {
                     Data = (T)(object)raw;
                 } else {
-                    var settings = new JsonSerializerSettings();
-                    Data = JsonConvert.DeserializeObject<T>(raw, settings);
+                    Data = JsonConvert.DeserializeObject<T>(raw, _serializerSettings);
                 }
             } catch (Exception exception) {
                 throw new InvalidOperationException($"Invalid JSON response: {exception}");
@@ -44,10 +53,8 @@ namespace Incontrl.Sdk.Http
             IsHttpError = true;
             HttpErrorStatusCode = statusCode;
             _httpErrorReason = reason;
-
             try {
                 _errors = new JObject { };
-
                 if (!string.IsNullOrEmpty(raw) && raw.StartsWith("{")) {
                     _errors = JObject.Parse(raw);
                 } else if (!string.IsNullOrEmpty(raw) && raw.StartsWith("<")) {
@@ -64,37 +71,29 @@ namespace Incontrl.Sdk.Http
         public string[] Errors {
             get {
                 var errors = new List<string>();
-
                 if (IsHttpError && _errors.Count > 0) {
                     if (_errors["ModelState"] != null) {
                         foreach (var item in _errors["ModelState"].Values()) {
-                            foreach (var msg in item.Values<string>()) {
-                                errors.Add(msg);
+                            foreach (var message in item.Values<string>()) {
+                                errors.Add(message);
                             }
                         }
-
                         return errors.ToArray();
                     }
-
                     if (_errors["Message"] != null) {
                         return new[] { _errors["Message"].ToString() };
                     }
-
                     foreach (var item in _errors.Values()) {
                         if (!item.HasValues) {
                             errors.Add(item.Value<string>());
                             continue;
                         }
-
                         foreach (var msg in item.Values<string>()) {
                             errors.Add(msg);
                         }
                     }
-
                     return errors.ToArray();
-
                 }
-
                 return new[] { _httpErrorReason };
             }
         }
