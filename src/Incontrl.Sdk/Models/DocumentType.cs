@@ -91,6 +91,11 @@ namespace Incontrl.Sdk.Models
         /// </summary>
         /// <returns></returns>
         public IEnumerable<PaymentOption> GetPaymentGateways() => (PaymentOptions ?? new List<PaymentOption>()).Where(x => x.Type == PaymentOptionType.PISP && x.Provider?.Class != null && x.Provider.Enabled);
+
+        /// <summary>
+        /// Specifies the classification used by AADE
+        /// </summary>
+        public string Classification { get; set; }
     }
 
     /// <summary>

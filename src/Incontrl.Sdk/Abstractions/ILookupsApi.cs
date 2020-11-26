@@ -31,5 +31,12 @@
         /// </summary>
         /// <returns></returns>
         ILookupPlansApi Plans();
+        ILookupExpenseClassificationCategoriesApi ExpenseCategories();
+        ILookupExpenseClassificationTypesApi ExpenseTypes();
+        ILookupIncomeClassificationTypesApi IncomeTypes();
+        ILookupIncomeClassificationCategoriesApi IncomeCategories();
+        ILookupDocumentTypeClassificationApi DocumentTypeClassifications();
+        ILookupPaymentMethodClassificationApi PaymentMethodClassifications();
+        ILookupTaxClassificationApi TaxClassifications();
     }
 }
