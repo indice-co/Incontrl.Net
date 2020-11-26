@@ -15,6 +15,7 @@ namespace Incontrl.Sdk.Services
         private readonly Lazy<IDocumentTrackingApi> _documentTrackingApi;
         private readonly Lazy<IDocumentDocumentTypeApi> _documentDocumentTypeApi;
         private readonly Lazy<IDocumentPaymentsApi> _documentPaymentsApi;
+        private readonly Lazy<IDocumentLinesApi> _documentLinesApi;
 
         public DocumentApi(ClientBase clientBase) {
             _clientBase = clientBase;
@@ -24,6 +25,7 @@ namespace Incontrl.Sdk.Services
             _documentTrackingApi = new Lazy<IDocumentTrackingApi>(() => new DocumentTrackingApi(_clientBase));
             _documentDocumentTypeApi = new Lazy<IDocumentDocumentTypeApi>(() => new DocumentDocumentTypeApi(_clientBase));
             _documentPaymentsApi = new Lazy<IDocumentPaymentsApi>(() => new DocumentPaymentsApi(_clientBase));
+            _documentLinesApi = new Lazy<IDocumentLinesApi>(() => new DocumentLinesApi(_clientBase));
         }
 
         public string SubscriptionId { get; set; }
@@ -84,6 +86,14 @@ namespace Incontrl.Sdk.Services
             documentTrackingApi.DocumentId = DocumentId;
             documentTrackingApi.TrackingId = trackingId;
             return documentTrackingApi;
+        }
+
+        public IDocumentLinesApi Lines(Guid lineId) {
+            var documentLinesApi = _documentLinesApi.Value;
+            documentLinesApi.SubscriptionId = SubscriptionId;
+            documentLinesApi.DocumentId = DocumentId;
+            documentLinesApi.LineId = lineId.ToString();
+            return documentLinesApi;
         }
     }
 }
