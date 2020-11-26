@@ -5,8 +5,16 @@ using Indice.Types;
 
 namespace Incontrl.Sdk.Abstractions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ILookupTimeZonesApi
     {
-        Task<ResultSet<TimeZone>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        Task<ResultSet<TimeZone>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default);
     }
 }

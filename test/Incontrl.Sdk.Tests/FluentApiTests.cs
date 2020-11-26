@@ -78,6 +78,15 @@ namespace Incontrl.Sdk.Tests
                                             .Plan()
                                             .GetAsync();
 
+            // PUT: /subscriptions/{subscriptionId}/plan/services/{serviceId}
+            var updatedService = await api.Subscriptions(subscriptionId)
+                                          .Plan()
+                                          .Services(Guid.NewGuid())
+                                          .UpdateAsync(new UpdateServiceRequest {
+                                              Enabled = true,
+                                              Settings = new AadeMyDataSettings { }
+                                          });
+
             // PUT: /subscriptions/{subscriptionId}/plan
             await api.Subscriptions(subscriptionId)
                      .Plan()
