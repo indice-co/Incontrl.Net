@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
 using Incontrl.Sdk.Services;
@@ -41,6 +42,11 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
         Task<MyDataResponse> SendToIapr(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        ///
+        /// </summary>
+        IDocumentLinesApi Lines(Guid lineId);
 
         /// <summary>
         /// Permanently deletes the specified document.
