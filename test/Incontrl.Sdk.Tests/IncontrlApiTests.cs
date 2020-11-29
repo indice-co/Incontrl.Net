@@ -373,5 +373,11 @@ namespace Incontrl.Sdk.Tests
                                            .Services(Guid.Parse("904971A4-DED2-4B32-A408-343ADBD7522E"))
                                            .UpdateAsync(request);
         }
+
+        [Fact]
+        public async Task CanRetrieveDocumentTypesLookup() {
+            var result = await _api.Lookups().DocumentTypeClassifications().ListAsync();
+            Assert.True(result?.Items.Length == 13);
+        }
     }
 }
