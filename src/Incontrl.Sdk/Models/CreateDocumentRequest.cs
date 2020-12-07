@@ -29,5 +29,13 @@ namespace Incontrl.Sdk.Models
         public decimal? Total { get; set; }
         public decimal? TotalPayable { get; set; }
         public dynamic CustomData { get; set; }
+        public IEnumerable<DocumentPaymentRequest> Payments { get; set; } = new List<DocumentPaymentRequest>();
+    }
+
+    public class DocumentPaymentRequest
+    {
+        public Guid? TransactionId { get; set; }
+        public Guid? PaymentOptionId { get; set; }
+        public Money Value { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Incontrl.Sdk.Models
 {
@@ -95,6 +96,10 @@ namespace Incontrl.Sdk.Models
         /// The type of the document.
         /// </summary>
         public DocumentType Type { get; set; }
+        /// <summary>
+        /// Provides a list of messages that have occured during synchronization.
+        /// </summary>
+        public IEnumerable<ErrorResult> SyncErrors { get; set; }
     }
 
     /// <summary>
