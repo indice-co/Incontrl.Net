@@ -142,7 +142,7 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// Invoice identifier
         /// </summary>
-        public string Uid { get; set; }
+        public string Uuid { get; set; }
         /// <summary>
         /// Date and time that document was successfully sent to Aade.
         /// </summary>
