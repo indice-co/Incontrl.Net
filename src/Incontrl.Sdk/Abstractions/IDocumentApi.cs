@@ -41,7 +41,7 @@ namespace Incontrl.Sdk.Abstractions
         /// </summary>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<MyDataResponse> SendToIapr(CancellationToken cancellationToken = default(CancellationToken));
+        Task<MyDataResult> SendToAade(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         ///

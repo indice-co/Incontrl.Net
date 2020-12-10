@@ -4,7 +4,7 @@
     <Title>Incontrl.Net Class Library</Title>
     <Copyright>Copyright (c) 2017 Indice</Copyright>
     <VersionPrefix>2.10.0</VersionPrefix>
-    <VersionSuffix>beta8</VersionSuffix>
+    <VersionSuffix>beta9</VersionSuffix>
     <Authors>Constantinos Leftheris, Giorgos Manoltzas</Authors>
     <TargetFrameworks>net452;netstandard1.4;netstandard2.0</TargetFrameworks>
     <AssemblyTitle>Incontrl.Sdk</AssemblyTitle>
@@ -15,7 +15,7 @@
   <PropertyGroup Label="Package">
     <PackageId>Incontrl.Net</PackageId>
     <PackageTags>incontrl;incontrl.io;http client</PackageTags>
-    <PackageReleaseNotes>Fix Uuid property name in Document model.</PackageReleaseNotes>
+    <PackageReleaseNotes>Return specific model when submitting invoice to AADE.</PackageReleaseNotes>
     <PackageIconUrl>https://github.com/indice-co/Incontrl.Net/blob/master/icon/icon-128.png?raw=true</PackageIconUrl>
     <PackageProjectUrl>https://github.com/indice-co/Incontrl.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/indice-co/Incontrl.Net/blob/master/LICENSE</PackageLicenseUrl>

@@ -5,21 +5,19 @@ namespace Incontrl.Sdk.Models
 {
     public class MyDataResponse
     {
-        public bool HasErrors => ErrorDetails?.Count > 0;
-        /// <summary>
-        /// Unique Invoice Registration Number
-        /// </summary>
         public string Uuid { get; set; }
-        /// <summary>
-        /// Invoice identifier
-        /// </summary>
         public string Mark { get; set; }
         public string AuthenticationCode { get; set; }
-        public List<ErrorResult> ErrorDetails { get; set; } = new List<ErrorResult>();
-        /// <summary>
-        /// Date and time that document was successfully sent to Aade.
-        /// </summary>
         public DateTimeOffset? SynchronizationDate { get; set; }
+        public List<ErrorResult> ErrorDetails { get; set; } = new List<ErrorResult>();
+        public bool HasErrors => ErrorDetails?.Count > 0;
+    }
+
+    public class MyDataResult
+    {
+        public string Mark { get; set; }
+        public string Uuid { get; set; }
+        public DateTimeOffset MarkDate { get; set; }
     }
 
     public class ErrorResult
