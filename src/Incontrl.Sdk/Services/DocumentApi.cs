@@ -42,15 +42,14 @@ namespace Incontrl.Sdk.Services
             documentDocumentApi.SubscriptionId = SubscriptionId;
             documentDocumentApi.DocumentId = DocumentId;
             documentDocumentApi.Format = format;
-
             return documentDocumentApi;
         }
 
         public Task<Document> UpdateAsync(UpdateDocumentRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
             _clientBase.PutAsync<UpdateDocumentRequest, Document>($"subscriptions/{SubscriptionId}/documents/{DocumentId}", request, cancellationToken);
 
-        public Task<MyDataResult> SendToAade(CancellationToken cancellationToken = default) =>
-            _clientBase.PostAsync<MyDataResponse, MyDataResult>($"subscriptions/{SubscriptionId}/my-data/documents/{DocumentId}", null, cancellationToken);
+        public Task<MyDataResult> SendToAade(SubmitInvoiceRequest request = null, CancellationToken cancellationToken = default) =>
+            _clientBase.PostAsync<SubmitInvoiceRequest, MyDataResult>($"subscriptions/{SubscriptionId}/my-data/documents/{DocumentId}", request ?? new SubmitInvoiceRequest(), cancellationToken);
 
         public IDocumentStatusApi Status() {
             var documentStatusApi = _documentStatusApi.Value;
