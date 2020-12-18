@@ -6,7 +6,7 @@ namespace Incontrl.Sdk.Models
     public class SubmitInvoiceRequest
     {
         public Guid[] RelatedDocumentIds { get; set; }
-        public IEnumerable<SubmitInvoicePaymentRequest> Payments { get; set; } = new List<SubmitInvoicePaymentRequest>();
+        public SubmitInvoicePaymentRequest[] Payments { get; set; }
     }
 
     public class SubmitInvoicePaymentRequest
