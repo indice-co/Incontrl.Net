@@ -13,7 +13,7 @@ namespace Incontrl.Sdk.Tests
     {
         private static IncontrlApi _api;
         private IConfigurationRoot _configuration;
-        private const string subscriptionId = "wayne-corp";
+        private const string subscriptionId = "a4ab1442-b568-4817-87c3-63fb71ddea71";
         private const string documentTypeId = "8C1A6FD6-37C1-414B-AC57-1BC5D6011C51";
         private const string paymentOptionId = "5B6C0CAE-C4BB-4084-AB9C-66D8491839F0";
         private const string userId = "ab9769f1-d532-4b7d-9922-3da003157ebd";
@@ -297,7 +297,11 @@ namespace Incontrl.Sdk.Tests
                                       .Documents()
                                       .ListAsync(new ListOptions<DocumentListFilter> {
                                           Page = 1,
-                                          Size = 50
+                                          Size = 50,
+                                          Filter = new DocumentListFilter {
+                                              IsMarked = true,
+                                              Status = new[] { DocumentStatus.Issued, DocumentStatus.Paid }
+                                          }
                                       }, summary: true);
             Assert.True(documents.Count > 0 && documents.Summary != null);
         }

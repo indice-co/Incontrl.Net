@@ -32,7 +32,6 @@ namespace Incontrl.Sdk.Services
                 parameters.Add(nameof(summary), bool.TrueString.ToLower());
                 return _clientBase.GetAsync<ResultSet<Document, DocumentSummary>>($"subscriptions/{SubscriptionId}/documents", parameters, cancellationToken);
             }
-
             return _clientBase.GetAsync<ResultSet<Document, DocumentSummary>>($"subscriptions/{SubscriptionId}/documents", options, cancellationToken);
         }
     }

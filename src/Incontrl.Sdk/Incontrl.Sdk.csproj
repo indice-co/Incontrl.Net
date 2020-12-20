@@ -4,9 +4,9 @@
     <Title>Incontrl.Net Class Library</Title>
     <Copyright>Copyright (c) 2017 Indice</Copyright>
     <VersionPrefix>2.10.0</VersionPrefix>
-    <VersionSuffix>beta12</VersionSuffix>
+    <VersionSuffix>beta13</VersionSuffix>
     <Authors>Constantinos Leftheris, Giorgos Manoltzas</Authors>
-    <TargetFrameworks>net452;netstandard1.4;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <AssemblyTitle>Incontrl.Sdk</AssemblyTitle>
     <AssemblyName>Incontrl.Sdk</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -15,7 +15,7 @@
   <PropertyGroup Label="Package">
     <PackageId>Incontrl.Net</PackageId>
     <PackageTags>incontrl;incontrl.io;http client</PackageTags>
-    <PackageReleaseNotes>Extended SubmitInvoiceRequest.</PackageReleaseNotes>
+    <PackageReleaseNotes>Update Indice.Common, update TaxAmount class.</PackageReleaseNotes>
     <PackageIconUrl>https://github.com/indice-co/Incontrl.Net/blob/master/icon/icon-128.png?raw=true</PackageIconUrl>
     <PackageProjectUrl>https://github.com/indice-co/Incontrl.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/indice-co/Incontrl.Net/blob/master/LICENSE</PackageLicenseUrl>
@@ -24,27 +24,23 @@
     <Company>Indice</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net452'">
-    <AssemblyTitle>Incontrl.Net .NET Framework 4.5.2</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NET452</DefineConstants>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net461'">
+    <AssemblyTitle>Incontrl.Net .NET Framework 4.6.1</AssemblyTitle>
+    <DefineConstants>$(DefineConstants);NET461</DefineConstants>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.4'">
-    <AssemblyTitle>Incontrl.Net .NET Standard 1.4</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NETSTANDARD14;</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net452|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
     <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>Incontrl.Sdk</RootNamespace>
   </PropertyGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="IdentityModel" Version="3.7.1" />
-    <PackageReference Include="Indice.Common" Version="1.2.5" />
+    <PackageReference Include="Indice.Common" Version="4.0.3" />
   </ItemGroup>
 </Project>

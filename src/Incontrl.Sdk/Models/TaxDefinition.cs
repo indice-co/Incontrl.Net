@@ -13,6 +13,7 @@ namespace Incontrl.Sdk.Models
         public bool IncursSalesTax { get; set; }
         public string DisplayName { get; set; }
         public string Classification { get; set; }
+        public TranslationDictionary<string> Translations { get; set; } = new TranslationDictionary<string>();
     }
 
     public enum TaxType : short

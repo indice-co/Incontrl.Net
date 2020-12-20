@@ -59,9 +59,7 @@ namespace Incontrl.Sdk
                     _incontrlApiHttpClient = _incontrlApiHttpClient ?? new HttpClient(httpMessageHandler) {
                         BaseAddress = _baseAddress
                     };
-#if !NETSTANDARD14
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-#endif
                     _incontrlApiHttpClient.SetBearerToken(AccessToken);
                     _incontrlApiClientBase = new ClientBase(_incontrlApiHttpClient);
                 }
@@ -72,9 +70,7 @@ namespace Incontrl.Sdk
                     _incontrlIdentityHttpClient = _incontrlIdentityHttpClient ?? new HttpClient(httpMessageHandler) {
                         BaseAddress = _authorityAddress
                     };
-#if !NETSTANDARD14
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-#endif
                     _incontrlIdentityHttpClient.SetBearerToken(AccessToken);
                     _identityApiClientBase = new ClientBase(_incontrlIdentityHttpClient);
                 }
