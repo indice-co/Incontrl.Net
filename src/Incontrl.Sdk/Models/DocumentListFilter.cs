@@ -27,7 +27,7 @@ namespace Incontrl.Sdk.Models
         public string CustomerReference { get; set; }
         public string PaymentCode { get; set; }
         public string Title { get; set; }
-        public bool IsMarked { get; set; }
+        public bool? IsMarked { get; set; }
         public bool? HasSyncError { get; set; }
     }
 }
