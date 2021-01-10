@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
@@ -30,7 +31,7 @@ namespace Incontrl.Sdk.Tests
                 // %APPDATA%\microsoft\UserSecrets\<userSecretsId>\secrets.json
                 .AddUserSecrets<IncontrlApiTests>();
             _configuration = builder.Build();
-            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"], new Uri("https://sandbox.incontrl.io"), new Uri("https://identity.incontrl.io"));
+            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"], new Uri("http://localhost:20202"), new Uri("https://identity.incontrl.io"));
         }
 
         [Theory]
@@ -369,12 +370,17 @@ namespace Incontrl.Sdk.Tests
             var request = new UpdateServiceRequest {
                 Enabled = true,
                 Settings = new AadeMyDataSettings {
-                    SubscriptionKey = "123"
+                    BaseUrl = "https://mydata-dev.azure-api.net",
+                    UserId = "XXX",
+                    SubscriptionKey = "XXX",
+                    TransmissionOptions = new List<TransmissionOption> { 
+                        new TransmissionOption { DocumentTypeId = Guid.Parse("949b1031-11e0-4641-2fa9-08d57d183663"), Type = TransmissionType.Manual }
+                    }
                 }
             };
             var updatedService = await _api.Subscriptions("a4ab1442-b568-4817-87c3-63fb71ddea71")
                                            .Plan()
-                                           .Services(Guid.Parse("904971A4-DED2-4B32-A408-343ADBD7522E"))
+                                           .Services(Guid.Parse("904971a4-ded2-4b32-a408-343adbd7522e"))
                                            .UpdateAsync(request);
         }
 

@@ -23,8 +23,8 @@ namespace Incontrl.Sdk.Services
                 queryString = "?" + new QueryStringParams(query).ToString();
             }
             var uri = string.Format($"{requestUri}{queryString}");
-            var httpMessage = await _httpClient.GetAsync(uri, cancellationToken).ConfigureAwait(false);
-            var content = await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var httpMessage = await _httpClient.GetAsync(uri, cancellationToken);
+            var content = await httpMessage.Content.ReadAsStringAsync();
             JsonResponse<TResponse> response;
             if (httpMessage.IsSuccessStatusCode) {
                 response = new JsonResponse<TResponse>(content);
@@ -42,7 +42,7 @@ namespace Incontrl.Sdk.Services
             }
             FileResult response = null;
             var uri = string.Format($"{requestUri}{queryString}");
-            var httpMessage = await _httpClient.GetAsync(uri, cancellationToken).ConfigureAwait(false);
+            var httpMessage = await _httpClient.GetAsync(uri, cancellationToken);
             if (httpMessage.IsSuccessStatusCode && httpMessage.Content.Headers.ContentDisposition != null) {
                 response = new FileResult {
                     FileName = httpMessage.Content.Headers.ContentDisposition.FileName,
@@ -54,8 +54,8 @@ namespace Incontrl.Sdk.Services
 
         public async Task<TResponse> PostAsync<TRequest, TResponse>(string requestUri, TRequest model, CancellationToken cancellationToken = default) {
             var uri = string.Format(requestUri);
-            var httpMessage = await _httpClient.PostAsync(uri, JsonRequest.For(model), cancellationToken).ConfigureAwait(false);
-            var content = await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var httpMessage = await _httpClient.PostAsync(uri, JsonRequest.For(model), cancellationToken);
+            var content = await httpMessage.Content.ReadAsStringAsync();
             JsonResponse<TResponse> response;
             if (httpMessage.IsSuccessStatusCode) {
                 response = new JsonResponse<TResponse>(content);
@@ -72,13 +72,13 @@ namespace Incontrl.Sdk.Services
                 var fileExtension = Path.GetExtension(fileName);
                 streamContent.Headers.ContentType = new MediaTypeHeaderValue(GetMimeTypeFromExtension(fileExtension));
                 formDataContent.Add(streamContent, "file", fileName);
-                await _httpClient.PostAsync(requestUri, formDataContent, cancellationToken).ConfigureAwait(false);
+                await _httpClient.PostAsync(requestUri, formDataContent, cancellationToken);
             }
         }
 
         public async Task<TResponse> PostAsync<TResponse>(string requestUri, MultipartContent multiPartContent, CancellationToken cancellationToken = default) {
-            var httpMessage = await _httpClient.PostAsync(requestUri, multiPartContent, cancellationToken).ConfigureAwait(false);
-            var content = await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var httpMessage = await _httpClient.PostAsync(requestUri, multiPartContent, cancellationToken);
+            var content = await httpMessage.Content.ReadAsStringAsync();
             JsonResponse<TResponse> response;
             if (httpMessage.IsSuccessStatusCode) {
                 response = new JsonResponse<TResponse>(content);
@@ -90,8 +90,8 @@ namespace Incontrl.Sdk.Services
         }
 
         public async Task<TResponse> PutAsync<TRequest, TResponse>(string requestUri, TRequest model, CancellationToken cancellationToken = default) {
-            var httpMessage = await _httpClient.PutAsync(requestUri, JsonRequest.For(model), cancellationToken).ConfigureAwait(false);
-            var content = await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var httpMessage = await _httpClient.PutAsync(requestUri, JsonRequest.For(model), cancellationToken);
+            var content = await httpMessage.Content.ReadAsStringAsync();
             JsonResponse<TResponse> response;
             if (httpMessage.IsSuccessStatusCode) {
                 response = new JsonResponse<TResponse>(content);
@@ -107,7 +107,7 @@ namespace Incontrl.Sdk.Services
             if (query != null) {
                 queryString = "?" + new QueryStringParams(query).ToString();
             }
-            var httpMessage = await _httpClient.DeleteAsync($"{requestUri}{queryString}", cancellationToken).ConfigureAwait(false);
+            var httpMessage = await _httpClient.DeleteAsync($"{requestUri}{queryString}", cancellationToken);
             if (!httpMessage.IsSuccessStatusCode) {
                 httpMessage.HandleHttpError(new JsonResponse(string.Empty, httpMessage.StatusCode, string.Empty));
             }

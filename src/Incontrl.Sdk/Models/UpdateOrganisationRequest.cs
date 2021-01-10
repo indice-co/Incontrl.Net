@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Incontrl.Sdk.Models
 {
@@ -67,6 +68,7 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// additional/custom information for the organisation
         /// </summary>
+        [JsonProperty(NamingStrategyType = typeof(DefaultNamingStrategy))]
         public dynamic CustomData { get; set; }
     }
 }

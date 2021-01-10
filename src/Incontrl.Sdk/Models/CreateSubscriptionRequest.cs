@@ -1,4 +1,7 @@
-﻿namespace Incontrl.Sdk.Models
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
+namespace Incontrl.Sdk.Models
 {
     /// <summary>
     /// Request model for subscriptions.
@@ -43,6 +46,7 @@
         /// <summary>
         /// Custom data for this subscription.
         /// </summary>
+        [JsonProperty(NamingStrategyType = typeof(DefaultNamingStrategy))]
         public object CustomData { get; set; }
     }
 

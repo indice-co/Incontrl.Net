@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Incontrl.Sdk.Models
 {
@@ -25,6 +27,7 @@ namespace Incontrl.Sdk.Models
         public decimal? TotalTax { get; set; }
         public decimal? Total { get; set; }
         public decimal? TotalPayable { get; set; }
+        [JsonProperty(NamingStrategyType = typeof(DefaultNamingStrategy))]
         public dynamic CustomData { get; set; }
         public Guid? ParentId { get; set; }
     }
