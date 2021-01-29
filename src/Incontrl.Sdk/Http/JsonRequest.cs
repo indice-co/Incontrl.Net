@@ -13,7 +13,9 @@ namespace Incontrl.Sdk.Http
             Culture = CultureInfo.CurrentCulture,
             DateTimeZoneHandling = DateTimeZoneHandling.Utc,
             ContractResolver = new DefaultContractResolver {
-                NamingStrategy = new CamelCaseNamingStrategy()
+                NamingStrategy = new CamelCaseNamingStrategy { 
+                    ProcessDictionaryKeys = false 
+                }
             }
         };
 

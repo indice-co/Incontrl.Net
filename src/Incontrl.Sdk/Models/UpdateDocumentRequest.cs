@@ -1,11 +1,10 @@
 ﻿using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Incontrl.Sdk.Models
 {
     public class UpdateDocumentRequest
     {
+        private object _customData;
         public string Code { get; set; }
         public int? Number { get; set; }
         public DateTimeOffset? Date { get; set; }
@@ -27,8 +26,10 @@ namespace Incontrl.Sdk.Models
         public decimal? TotalTax { get; set; }
         public decimal? Total { get; set; }
         public decimal? TotalPayable { get; set; }
-        [JsonProperty(NamingStrategyType = typeof(DefaultNamingStrategy))]
-        public dynamic CustomData { get; set; }
+        public object CustomData {
+            get { return _customData; }
+            set { _customData = value.ToExpandoObject(); }
+        }
         public Guid? ParentId { get; set; }
     }
 }

@@ -3,7 +3,7 @@
     <Description>Incontrl.io .Net SDK</Description>
     <Title>Incontrl.Net Class Library</Title>
     <Copyright>Copyright (c) 2017 Indice</Copyright>
-    <VersionPrefix>2.10.3</VersionPrefix>
+    <VersionPrefix>2.10.4</VersionPrefix>
     <!--<VersionSuffix>beta14</VersionSuffix>-->
     <Authors>Constantinos Leftheris, Giorgos Manoltzas</Authors>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
@@ -11,11 +11,12 @@
     <AssemblyName>Incontrl.Sdk</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NetStandardImplicitPackageVersion>2.0.0</NetStandardImplicitPackageVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Label="Package">
     <PackageId>Incontrl.Net</PackageId>
     <PackageTags>incontrl;incontrl.io;http client</PackageTags>
-    <PackageReleaseNotes>Remove camel case resolver for json requests.</PackageReleaseNotes>
+    <PackageReleaseNotes>Handle custom data in order to maintain casing.</PackageReleaseNotes>
     <PackageIconUrl>https://github.com/indice-co/Incontrl.Net/blob/master/icon/icon-128.png?raw=true</PackageIconUrl>
     <PackageProjectUrl>https://github.com/indice-co/Incontrl.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/indice-co/Incontrl.Net/blob/master/LICENSE</PackageLicenseUrl>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
@@ -216,10 +217,11 @@ namespace Incontrl.Sdk.Tests
             if (File.Exists(createDocumentJsonPath)) {
                 var createDocumentJson = File.ReadAllText(createDocumentJsonPath);
                 var newDocument = JsonConvert.DeserializeObject<CreateDocumentRequest>(createDocumentJson);
+                newDocument.CustomData = new { Nikos = "Discoveroom", Age = 36, city = "London" };
                 await _api.LoginAsync(ScopeFlags.Core);
                 var createdDocument = await _api.Subscriptions(subscriptionId)
-                                               .Documents()
-                                               .CreateAsync(newDocument);
+                                                .Documents()
+                                                .CreateAsync(newDocument);
                 Assert.True(createdDocument != null, $"An document was created with id: {createdDocument.Id}");
             } else {
                 Assert.True(false);

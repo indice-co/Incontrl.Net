@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json.Serialization;
 
-namespace Incontrl.Sdk.Json
+namespace Incontrl.Sdk
 {
     internal class CamelCaseExceptDictionaryKeysResolver : CamelCasePropertyNamesContractResolver
     {
