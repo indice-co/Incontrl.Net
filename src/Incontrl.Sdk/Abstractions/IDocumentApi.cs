@@ -40,7 +40,7 @@ namespace Incontrl.Sdk.Abstractions
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
         Task<MyDataResult> SendToAade(SubmitInvoiceRequest request = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        ///
+        /// Gets the document lines.
         /// </summary>
         IDocumentLinesApi Lines(Guid lineId);
         /// <summary>
@@ -48,7 +48,7 @@ namespace Incontrl.Sdk.Abstractions
         /// </summary>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task DeleteAsync(CancellationToken cancellationToken = default);
         /// <summary>
         /// Creates an instance of class DocumentDocumentApi, that provides functionality to download an document in the specified mime type.
         /// </summary>
