@@ -174,11 +174,7 @@ namespace Incontrl.Sdk
         /// Creates an instance of class <see cref="SubscriptionApi"/>, that gives access to a subscription's allowed operations.
         /// </summary>
         /// <param name="subscriptionId">The subscription's unique id.</param>
-        public ISubscriptionApi Subscriptions(Guid subscriptionId) {
-            var subscriptionApi = _subscriptionApi.Value;
-            subscriptionApi.SubscriptionId = subscriptionId.ToString();
-            return subscriptionApi;
-        }
+        public ISubscriptionApi Subscriptions(Guid subscriptionId) => Subscriptions(subscriptionId.ToString());
 
         /// <summary>
         /// Creates an instance of class <see cref="SubscriptionApi"/>, that gives access to a subscription's allowed operations.

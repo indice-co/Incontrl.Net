@@ -168,66 +168,32 @@ namespace Incontrl.Sdk.Tests
 
             #region Documents
             // GET: /subscriptions/{subscriptionId}/documents
-            var documents = await api.Subscriptions(subscriptionId)
-                                     .Documents()
-                                     .ListAsync(new ListOptions<DocumentListFilter> {
-                                         Page = 1,
-                                         Size = 25,
-                                         Filter = new DocumentListFilter {
-                                             TypeId = new[] {
-                                                 Guid.NewGuid()
-                                             },
-                                             CustomerReference = string.Empty
-                                         }
-                                     }, summary: true);
-
+            var documents = await api.Subscriptions(subscriptionId).Documents().ListAsync(new ListOptions<DocumentListFilter> {
+                Page = 1,
+                Size = 25,
+                Filter = new DocumentListFilter {
+                    TypeId = new[] {
+                        Guid.NewGuid()
+                    },
+                    CustomerReference = string.Empty
+                }
+            }, summary: true);
             // POST: /subscriptions/{subscriptionId}/documents
-            var createdDocument = await api.Subscriptions(subscriptionId)
-                                           .Documents()
-                                           .CreateAsync(new CreateDocumentRequest { });
-
+            var createdDocument = await api.Subscriptions(subscriptionId).Documents().CreateAsync(new CreateDocumentRequest { });
             // DELETE: /subscriptions/{subscriptionId}/documents/{documentId}
-            await api.Subscriptions(subscriptionId)
-                     .Documents(documentId)
-                     .DeleteAsync();
-
+            await api.Subscriptions(subscriptionId).Documents(documentId).DeleteAsync();
             // GET: /subscriptions/{subscriptionId}/documents/{documentId}
-            var document = await api.Subscriptions(subscriptionId)
-                                   .Documents(documentId)
-                                   .GetAsync();
-
+            var document = await api.Subscriptions(subscriptionId).Documents(documentId).GetAsync();
             // PUT: /subscriptions/{subscriptionId}/documents/{documentId}
-            document = await api.Subscriptions(subscriptionId)
-                                .Documents(documentId)
-                                .UpdateAsync(new UpdateDocumentRequest { });
-
+            document = await api.Subscriptions(subscriptionId).Documents(documentId).UpdateAsync(new UpdateDocumentRequest { });
             // GET: /subscriptions/{subscriptionId}/documents/{documentId}/payments
-            var documentPayments = await api.Subscriptions(subscriptionId)
-                                            .Documents(documentId)
-                                            .Payments()
-                                            .ListAsync();
-
+            var documentPayments = await api.Subscriptions(subscriptionId).Documents(documentId).Payments().ListAsync();
             // POST: /subscriptions/{subscriptionId}/documents/{documentId}/payments
-            var newDocumentPayment = await api.Subscriptions(subscriptionId)
-                                              .Documents(documentId)
-                                              .Payments()
-                                              .CreateAsync(new Payment { });
-
+            var newDocumentPayment = await api.Subscriptions(subscriptionId).Documents(documentId).Payments().CreateAsync(new Payment { });
             // DELETE: /subscriptions/{subscriptionId}/documents/{documentId}/payments/{transactionId}
-            await api.Subscriptions(subscriptionId)
-                     .Documents(documentId)
-                     .Payments()
-                     .Transactions(transactionId)
-                     .DeleteAsync();
-
+            await api.Subscriptions(subscriptionId).Documents(documentId).Payments().Transactions(transactionId).DeleteAsync();
             // GET: /subscriptions/{subscriptionId}/documents/{documentId}/payments/{transactionId}/approval
-            await api.Subscriptions(subscriptionId)
-                     .Documents(documentId)
-                     .Payments()
-                     .Transactions(transactionId)
-                     .Approval()
-                     .UpdateAsync(new UpdateApprovalRequest { });
-
+            await api.Subscriptions(subscriptionId).Documents(documentId).Payments().Transactions(transactionId).Approval().UpdateAsync(new UpdateApprovalRequest { });
             // GET: /subscriptions/{subscriptionId}/documents/{documentId}/status
             var documentStatus = await api.Subscriptions(subscriptionId)
                                           .Documents(documentId)
@@ -261,24 +227,15 @@ namespace Incontrl.Sdk.Tests
                      .UpdateAsync(new UpdateDocumentTrackingRequest { });
 
             // GET: /subscriptions/{subscriptionId}/documents/{documentId}/type
-            var documentType = await api.Subscriptions(subscriptionId)
-                                        .Documents(documentId)
-                                        .Type()
-                                        .GetAsync();
-
+            var documentType = await api.Subscriptions(subscriptionId).Documents(documentId).Type().GetAsync();
             // PUT: /subscriptions/{subscriptionId}/documents/{documentId}/type
-            documentType = await api.Subscriptions(subscriptionId)
-                                    .Documents(documentId)
-                                    .Type()
-                                    .UpdateAsync(new UpdateDocumentDocumentType {
-                                        TypeId = Guid.NewGuid()
-                                    });
-
+            documentType = await api.Subscriptions(subscriptionId).Documents(documentId).Type().UpdateAsync(new UpdateDocumentDocumentType {
+                TypeId = Guid.NewGuid()
+            });
             // GET: documents/{documentId}.{format?}
-            var documentDocument = await api.Subscriptions(subscriptionId)
-                                            .Documents(documentId)
-                                            .As(DocumentFormat.Pdf)
-                                            .DownloadAsync();
+            var documentDocument = await api.Subscriptions(subscriptionId).Documents(documentId).As(DocumentFormat.Pdf).DownloadAsync();
+            // POST: subscriptions/{subscriptionId:subscription}/my-data/cancel
+            var aadeCancelResult = await api.Subscriptions(subscriptionId).Documents(documentId).MyData().CancelAsync();
             #endregion
 
             #region Document Types

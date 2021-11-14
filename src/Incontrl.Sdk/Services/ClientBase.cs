@@ -66,16 +66,6 @@ namespace Incontrl.Sdk.Services
             return response.Data;
         }
 
-        public async Task PostFileAsync(string requestUri, Stream fileContent, string fileName, CancellationToken cancellationToken = default) {
-            using (var formDataContent = new MultipartFormDataContent("upload-" + Guid.NewGuid().ToString().ToLower())) {
-                var streamContent = new StreamContent(fileContent);
-                var fileExtension = Path.GetExtension(fileName);
-                streamContent.Headers.ContentType = new MediaTypeHeaderValue(GetMimeTypeFromExtension(fileExtension));
-                formDataContent.Add(streamContent, "file", fileName);
-                await _httpClient.PostAsync(requestUri, formDataContent, cancellationToken);
-            }
-        }
-
         public async Task<TResponse> PostAsync<TResponse>(string requestUri, MultipartContent multiPartContent, CancellationToken cancellationToken = default) {
             var httpMessage = await _httpClient.PostAsync(requestUri, multiPartContent, cancellationToken);
             var content = await httpMessage.Content.ReadAsStringAsync();
@@ -87,6 +77,16 @@ namespace Incontrl.Sdk.Services
                 httpMessage.HandleHttpError(response);
             }
             return response.Data;
+        }
+
+        public async Task PostFileAsync(string requestUri, Stream fileContent, string fileName, CancellationToken cancellationToken = default) {
+            using (var formDataContent = new MultipartFormDataContent("upload-" + Guid.NewGuid().ToString().ToLower())) {
+                var streamContent = new StreamContent(fileContent);
+                var fileExtension = Path.GetExtension(fileName);
+                streamContent.Headers.ContentType = new MediaTypeHeaderValue(GetMimeTypeFromExtension(fileExtension));
+                formDataContent.Add(streamContent, "file", fileName);
+                await _httpClient.PostAsync(requestUri, formDataContent, cancellationToken);
+            }
         }
 
         public async Task<TResponse> PutAsync<TRequest, TResponse>(string requestUri, TRequest model, CancellationToken cancellationToken = default) {

@@ -16,6 +16,7 @@ namespace Incontrl.Sdk.Services
         private readonly Lazy<IDocumentDocumentTypeApi> _documentDocumentTypeApi;
         private readonly Lazy<IDocumentPaymentsApi> _documentPaymentsApi;
         private readonly Lazy<IDocumentLinesApi> _documentLinesApi;
+        private readonly Lazy<IDocumentMyDataApi> _documentAadeApi;
 
         public DocumentApi(ClientBase clientBase) {
             _clientBase = clientBase;
@@ -26,6 +27,7 @@ namespace Incontrl.Sdk.Services
             _documentDocumentTypeApi = new Lazy<IDocumentDocumentTypeApi>(() => new DocumentDocumentTypeApi(_clientBase));
             _documentPaymentsApi = new Lazy<IDocumentPaymentsApi>(() => new DocumentPaymentsApi(_clientBase));
             _documentLinesApi = new Lazy<IDocumentLinesApi>(() => new DocumentLinesApi(_clientBase));
+            _documentAadeApi = new Lazy<IDocumentMyDataApi>(() => new DocumentMyDataApi(_clientBase));
         }
 
         public string SubscriptionId { get; set; }
@@ -47,9 +49,6 @@ namespace Incontrl.Sdk.Services
 
         public Task<Document> UpdateAsync(UpdateDocumentRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
             _clientBase.PutAsync<UpdateDocumentRequest, Document>($"subscriptions/{SubscriptionId}/documents/{DocumentId}", request, cancellationToken);
-
-        public Task<MyDataResult> SendToAade(SubmitInvoiceRequest request = null, CancellationToken cancellationToken = default) =>
-            _clientBase.PostAsync<SubmitInvoiceRequest, MyDataResult>($"subscriptions/{SubscriptionId}/my-data/documents/{DocumentId}", request ?? new SubmitInvoiceRequest(), cancellationToken);
 
         public IDocumentStatusApi Status() {
             var documentStatusApi = _documentStatusApi.Value;
@@ -93,6 +92,13 @@ namespace Incontrl.Sdk.Services
             documentLinesApi.DocumentId = DocumentId;
             documentLinesApi.LineId = lineId.ToString();
             return documentLinesApi;
+        }
+
+        public IDocumentMyDataApi MyData() {
+            var documentAadeApi = _documentAadeApi.Value;
+            documentAadeApi.SubscriptionId = SubscriptionId;
+            documentAadeApi.DocumentId = DocumentId;
+            return documentAadeApi;
         }
     }
 }
