@@ -13,7 +13,7 @@ namespace Incontrl.Sdk.Models
         internal static void HandleHttpError<TResponse>(this HttpResponseMessage httpResponseMessage, JsonResponse<TResponse> httpResponse) => HandleHttpError(httpResponse);
 
         private static void HandleHttpError<TResponse>(JsonResponse<TResponse> httpResponse) {
-            switch (httpResponse.HttpErrorStatusCode) {
+            switch (httpResponse.HttpStatusCode) {
                 case HttpStatusCode.InternalServerError:
                     throw new IncontrlHttpInternalServerErrorException($"There was an error on our server. It's recorded and it will be fixed. Reason Phrase: {httpResponse.HttpErrorReason}");
                 case HttpStatusCode.Forbidden:

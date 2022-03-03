@@ -2,6 +2,9 @@
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
 
+/// <summary>
+/// 
+/// </summary>
 namespace Incontrl.Sdk.Abstractions
 {
     public interface IDocumentMyDataApi

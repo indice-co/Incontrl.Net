@@ -28,8 +28,8 @@ namespace Incontrl.Sdk
         private readonly string _apiKey;
         private ClientBase _incontrlApiClientBase;
         private ClientBase _identityApiClientBase;
-        private HttpClient _incontrlApiHttpClient;
-        private HttpClient _incontrlIdentityHttpClient;
+        private static HttpClient _incontrlApiHttpClient;
+        private static HttpClient _incontrlIdentityHttpClient;
 
         /// <summary>
         /// Class constructor.
@@ -51,14 +51,17 @@ namespace Incontrl.Sdk
             // If the developer specifies an alternative base or authority address, then we make use of them. In any other case we use our production endpoints.
             _baseAddress = baseAddress ?? new Uri("https://api.incontrl.io");
             _authorityAddress = authorityAddress ?? new Uri("https://identity.incontrl.io");
-            httpMessageHandler = httpMessageHandler ?? new HttpClientHandler();
+            httpMessageHandler ??= new HttpClientHandler();
+            _incontrlApiHttpClient ??= new HttpClient(httpMessageHandler) { 
+                BaseAddress = _baseAddress 
+            }; 
+            _incontrlIdentityHttpClient ??= new HttpClient(httpMessageHandler) {
+                BaseAddress = _authorityAddress
+            };
             // Create one ClientBase (that practically means one HttpClient) per API.
             // This is equivalent to: Func<ClientBase> CreateIncontrlClientBase = () => { };
             ClientBase CreateIncontrlClientBase() {
                 if (_incontrlApiClientBase == null) {
-                    _incontrlApiHttpClient = _incontrlApiHttpClient ?? new HttpClient(httpMessageHandler) {
-                        BaseAddress = _baseAddress
-                    };
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
                     _incontrlApiHttpClient.SetBearerToken(AccessToken);
                     _incontrlApiClientBase = new ClientBase(_incontrlApiHttpClient);
@@ -67,9 +70,7 @@ namespace Incontrl.Sdk
             }
             ClientBase CreateIdentityClientBase() {
                 if (_identityApiClientBase == null) {
-                    _incontrlIdentityHttpClient = _incontrlIdentityHttpClient ?? new HttpClient(httpMessageHandler) {
-                        BaseAddress = _authorityAddress
-                    };
+                    
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
                     _incontrlIdentityHttpClient.SetBearerToken(AccessToken);
                     _identityApiClientBase = new ClientBase(_incontrlIdentityHttpClient);
@@ -125,9 +126,15 @@ namespace Incontrl.Sdk
         /// <param name="scopes">The scopes of the API to request.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
         public async Task LoginAsync(string userName, string password, ScopeFlags scopes = ScopeFlags.Core) {
-            var discoveryResponse = await DiscoveryClient.GetAsync(_authorityAddress.AbsoluteUri);
-            var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
-            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(userName, password, scopes.ToScopesText());
+            var discoveryResponse = await _incontrlIdentityHttpClient.GetDiscoveryDocumentAsync();
+            var tokenResponse = await _incontrlIdentityHttpClient.RequestPasswordTokenAsync(new PasswordTokenRequest {
+                Address = discoveryResponse.TokenEndpoint,
+                UserName = userName,
+                Password = password,
+                ClientId = _appId,
+                ClientSecret = _apiKey,
+                Scope = scopes.ToScopesText()
+            });
             if (tokenResponse.IsError) {
                 tokenResponse.HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
@@ -140,9 +147,13 @@ namespace Incontrl.Sdk
         /// <param name="scopes">The scopes of the API to request.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
         public async Task LoginAsync(ScopeFlags scopes = ScopeFlags.Core) {
-            var discoveryResponse = await DiscoveryClient.GetAsync(_authorityAddress.AbsoluteUri);
-            var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
-            var tokenResponse = await tokenClient.RequestClientCredentialsAsync(scopes.ToScopesText());
+            var discoveryResponse = await _incontrlIdentityHttpClient.GetDiscoveryDocumentAsync();
+            var tokenResponse = await _incontrlIdentityHttpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest {
+                Address = discoveryResponse.TokenEndpoint,
+                ClientId = _appId,
+                ClientSecret = _apiKey,
+                Scope = scopes.ToScopesText()
+            });
             if (tokenResponse.IsError) {
                 tokenResponse.HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
@@ -156,9 +167,14 @@ namespace Incontrl.Sdk
         /// <param name="scopes">The scopes of the API to request.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
         public async Task LoginAsync(string refreshToken, ScopeFlags scopes = ScopeFlags.Core) {
-            var discoveryResponse = await DiscoveryClient.GetAsync(_authorityAddress.AbsoluteUri);
-            var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, _appId, _apiKey);
-            var tokenResponse = await tokenClient.RequestRefreshTokenAsync(refreshToken, scopes.ToScopesText());
+            var discoveryResponse = await _incontrlIdentityHttpClient.GetDiscoveryDocumentAsync();
+            var tokenResponse = await _incontrlIdentityHttpClient.RequestRefreshTokenAsync(new RefreshTokenRequest {
+                Address = discoveryResponse.TokenEndpoint,
+                ClientId = _appId,
+                ClientSecret = _apiKey,
+                Scope = scopes.ToScopesText(),
+                RefreshToken = refreshToken
+            });
             if (tokenResponse.IsError) {
                 tokenResponse.HandleHttpError(new JsonResponse(tokenResponse.Raw, tokenResponse.HttpStatusCode, tokenResponse.HttpErrorReason));
             }
