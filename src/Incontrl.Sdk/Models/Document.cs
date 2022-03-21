@@ -59,7 +59,7 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// A permalink that displays the document as a web page.
         /// </summary>
-        public string PermaLink { get; }
+        public string PermaLink { get; set; }
         /// <summary>
         /// The sub total of the document (UnitAmounts * Quantities).
         /// </summary>
