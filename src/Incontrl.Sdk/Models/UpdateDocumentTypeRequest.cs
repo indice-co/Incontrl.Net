@@ -53,5 +53,9 @@
         /// Specifies the classification used by AADE.
         /// </summary>
         public string Classification { get; set; }
+        /// <summary>
+        /// Specifies whether we need this document type to keep track of document versions.
+        /// </summary>
+        public bool? TrackChanges { get; set; }
     }
 }

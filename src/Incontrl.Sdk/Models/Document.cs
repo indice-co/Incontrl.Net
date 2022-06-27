@@ -159,6 +159,10 @@ namespace Incontrl.Sdk.Models
         /// Additional/custom information for the document.
         /// </summary>
         public virtual object CustomData { get; set; }
+        /// <summary>
+        /// Version history of the document.
+        /// </summary>
+        public List<DocumentVersion> Versions { get; set; } = new List<DocumentVersion>();
     }
 
     /// <summary>

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Incontrl.Sdk.Models
 {
@@ -14,6 +10,7 @@ namespace Incontrl.Sdk.Models
         public List<Classification> Classifications { get; set; }
         public TranslationDictionary<ClassificationTranslation> Translations { get; set; }
     }
+
     public class ClassificationTranslation
     {
         public string Description { get; set; }
