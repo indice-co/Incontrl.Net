@@ -63,8 +63,12 @@ namespace Incontrl.Sdk.Http
     internal class ValidationProblemDetails
     {
         public IDictionary<string, string[]> Errors { get; set; } = new Dictionary<string, string[]>();
-
+        public string Title { get; set; }
+        public string Details { get; set; }
         public IEnumerable<string> ExtractErrors() {
+            if (!string.IsNullOrWhiteSpace(Details)) {
+                yield return Details;
+            }
             foreach (var errorPair in Errors) {
                 foreach (var item in errorPair.Value) {
                     yield return item;
