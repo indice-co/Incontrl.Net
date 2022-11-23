@@ -32,7 +32,7 @@ namespace Incontrl.Sdk.Tests
                 // %APPDATA%\microsoft\UserSecrets\<userSecretsId>\secrets.json
                 .AddUserSecrets<IncontrlApiTests>();
             _configuration = builder.Build();
-            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"], new Uri("http://localhost:20202"), new Uri("https://identity.incontrl.io"));
+            _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"], new Uri(_configuration["ApiUrl"] ?? "http://localhost:20202"), new Uri("https://identity.incontrl.io"));
         }
 
         [Theory]
@@ -390,6 +390,21 @@ namespace Incontrl.Sdk.Tests
         public async Task CanRetrieveDocumentTypesLookup() {
             var result = await _api.Lookups().DocumentTypeClassifications().ListAsync();
             Assert.True(result?.Items.Length == 13);
+        }
+
+
+        [Fact]
+        public async Task UpdateOrganization() {
+            await _api.LoginAsync(ScopeFlags.Core);
+            try { 
+            await _api.Subscriptions("11ff47ee-42aa-482f-b6c6-55bcd139cf4d")
+                      .Organisations(Guid.Parse("13650aff-a42c-41e1-76d1-08dac47dac5a"))
+                      .UpdateAsync(new UpdateOrganisationRequest() {
+                          TaxCode = "sdssdsdsdsd"
+                      });
+            } catch (IncontrlHttpBadRequestException ex) {
+                Assert.True(ex.Errors.Length > 0);
+            }
         }
     }
 }

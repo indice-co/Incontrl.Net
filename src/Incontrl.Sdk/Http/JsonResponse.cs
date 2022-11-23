@@ -50,6 +50,9 @@ namespace Incontrl.Sdk.Http
                 if (statusCode == HttpStatusCode.BadRequest) {
                     var validationProblemDetails = JsonSerializer.Deserialize<ValidationProblemDetails>(raw, _serializerSettings);
                     Errors = validationProblemDetails.ExtractErrors().ToArray();
+                    if (Errors.Length == 0) {
+                        Errors = new[] { raw };
+                    }
                 }
             } catch (JsonException exception) {
                 throw new InvalidOperationException("Invalid JSON response", exception);
@@ -59,7 +62,7 @@ namespace Incontrl.Sdk.Http
 
     internal class ValidationProblemDetails
     {
-        public IDictionary<string, string[]> Errors { get; set; }
+        public IDictionary<string, string[]> Errors { get; set; } = new Dictionary<string, string[]>();
 
         public IEnumerable<string> ExtractErrors() {
             foreach (var errorPair in Errors) {
