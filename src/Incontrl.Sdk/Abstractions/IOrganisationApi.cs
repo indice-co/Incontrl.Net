@@ -23,5 +23,12 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
         Task<Organisation> UpdateAsync(UpdateOrganisationRequest request, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Deletes an organisation's information.
+        /// </summary>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Returns the task object representing the asynchronous operation.</returns>
+        Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

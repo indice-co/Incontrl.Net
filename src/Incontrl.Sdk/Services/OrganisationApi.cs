@@ -19,5 +19,8 @@ namespace Incontrl.Sdk.Services
 
         public Task<Organisation> UpdateAsync(UpdateOrganisationRequest request, CancellationToken cancellationToken = default(CancellationToken)) => 
             _clientBase.PutAsync<UpdateOrganisationRequest, Organisation>($"subscriptions/{SubscriptionId}/organisations/{OrganisationId}", request, cancellationToken);
+
+        public Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+            _clientBase.DeleteAsync($"subscriptions/{SubscriptionId}/organisations/{OrganisationId}", cancellationToken);
     }
 }
