@@ -24,5 +24,9 @@ namespace Incontrl.Sdk.Models
         /// Date and time that document was successfully cancelled in AADE.
         /// </summary>
         public DateTimeOffset? CancelMarkDate { get; set; }
+        /// <summary>
+        /// QR Code url. The url to embed to the printout in order to retrieve the document from its respective Tax Authority. Optional
+        /// </summary>
+        public string QrCodeUrl { get; set; }
     }
 }

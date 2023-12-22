@@ -8,6 +8,7 @@ namespace Incontrl.Sdk.Models
         public string Uuid { get; set; }
         public string Mark { get; set; }
         public string AuthenticationCode { get; set; }
+        public string QrCodeUrl { get; set; }
         public DateTimeOffset? SynchronizationDate { get; set; }
         public List<ErrorResult> ErrorDetails { get; set; } = new List<ErrorResult>();
         public bool HasErrors => ErrorDetails?.Count > 0;
@@ -17,6 +18,7 @@ namespace Incontrl.Sdk.Models
     {
         public string Mark { get; set; }
         public string Uuid { get; set; }
+        public string QrCodeUrl { get; set; }
         public DateTimeOffset MarkDate { get; set; }
     }
 

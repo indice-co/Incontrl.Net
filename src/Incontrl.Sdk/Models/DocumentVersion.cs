@@ -10,6 +10,7 @@ namespace Incontrl.Sdk.Models
         public string Operation { get; set; }
         public string Mark { get; set; }
         public string Uuid { get; set; }
+        public string QrCodeUrl { get; set; }
         public DateTimeOffset CreatedDate { get; set; } = DateTimeOffset.Now;
         public string CreatedBy { get; set; }
     }
