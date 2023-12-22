@@ -3,7 +3,7 @@
     <Description>Incontrl.io .Net SDK</Description>
     <Title>Incontrl.Net Class Library</Title>
     <Copyright>Copyright (c) 2017 Indice</Copyright>
-    <VersionPrefix>3.0.5</VersionPrefix>
+    <VersionPrefix>3.0.6</VersionPrefix>
     <!--<VersionSuffix>beta1</VersionSuffix>-->
     <Authors>Constantinos Leftheris, Giorgos Manoltzas</Authors>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
@@ -17,7 +17,7 @@
   <PropertyGroup Label="Package">
     <PackageId>Incontrl.Net</PackageId>
     <PackageTags>incontrl;incontrl.io;http client</PackageTags>
-    <PackageReleaseNotes>Use System.Text.Json instead of Newtonsoft. Upgrade IdentityModel.</PackageReleaseNotes>
+    <PackageReleaseNotes>QrCodeUrl.</PackageReleaseNotes>
     <PackageIcon>icon-310.png</PackageIcon>
     <PackageProjectUrl>https://github.com/indice-co/Incontrl.Net</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
