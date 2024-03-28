@@ -5,16 +5,12 @@ using Incontrl.Sdk.Models;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class SubscriptionPlanServicesApi : ISubscriptionPlanServicesApi
+    internal class SubscriptionPlanServicesApi(ClientBase clientBase) : ISubscriptionPlanServicesApi
     {
-        private readonly ClientBase _clientBase;
-
-        public SubscriptionPlanServicesApi(ClientBase clientBase) => _clientBase = clientBase;
-
         public string SubscriptionId { get; set; }
         public string ServiceId { get; set; }
 
         public Task<Service> UpdateAsync(UpdateServiceRequest request, CancellationToken cancellationToken = default) => 
-            _clientBase.PutAsync<UpdateServiceRequest, Service>($"subscriptions/{SubscriptionId}/plan/services/{ServiceId}", request, cancellationToken);
+            clientBase.PutAsync<UpdateServiceRequest, Service>($"subscriptions/{SubscriptionId}/plan/services/{ServiceId}", request, cancellationToken);
     }
 }

@@ -7,13 +7,11 @@ using Indice.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class UsersApi : IMembersApi
+    internal class UsersApi(Func<ClientBase> clientBase) : IMembersApi
     {
-        private readonly ClientBase _clientBase;
+        private readonly ClientBase _clientBase = clientBase();
 
-        public UsersApi(Func<ClientBase> clientBase) => _clientBase = clientBase();
-
-        public Task<ResultSet<MemberInfo>> ListAsync(MemberRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public Task<ResultSet<MemberInfo>> ListAsync(MemberRequest request, CancellationToken cancellationToken = default) =>
             _clientBase.GetAsync<ResultSet<MemberInfo>>($"api/users/members", request, cancellationToken);
     }
 }

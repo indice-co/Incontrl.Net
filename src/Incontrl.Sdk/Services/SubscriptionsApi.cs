@@ -31,7 +31,7 @@ namespace Incontrl.Sdk.Services
 
         public IMetricsApi Metrics() => _metricsApi.Value;
 
-        public Task<Subscription> CreateAsync(CreateSubscriptionRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public Task<Subscription> CreateAsync(CreateSubscriptionRequest request, CancellationToken cancellationToken = default) =>
             _clientBase.PostAsync<CreateSubscriptionRequest, Subscription>("subscriptions", request, cancellationToken);
 
         public IInvitationApi Invitation(string invitationId) {
@@ -41,7 +41,7 @@ namespace Incontrl.Sdk.Services
             return invitationApi;
         }
 
-        public Task<ResultSet<Subscription>> ListAsync(ListOptions<SubscriptionListFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) {
+        public Task<ResultSet<Subscription>> ListAsync(ListOptions<SubscriptionListFilter> options = null, CancellationToken cancellationToken = default) {
             if (GlobalAccess) {
                 return _clientBase.GetAsync<ResultSet<Subscription>>("subscriptions/all", options, cancellationToken);
             }

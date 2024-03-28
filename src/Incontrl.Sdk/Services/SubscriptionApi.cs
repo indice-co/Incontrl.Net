@@ -91,7 +91,7 @@ namespace Incontrl.Sdk.Services
             return subscriptionContactsApi;
         }
 
-        public Task<Subscription> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+        public Task<Subscription> GetAsync(CancellationToken cancellationToken = default) =>
             _clientBase.GetAsync<Subscription>($"subscriptions/{SubscriptionId}", cancellationToken);
 
         public IDocumentApi Documents(Guid documentId) {
@@ -214,7 +214,7 @@ namespace Incontrl.Sdk.Services
             return invitationApi;
         }
 
-        public Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken)) => _clientBase.DeleteAsync($"subscriptions/{SubscriptionId}", cancellationToken);
+        public Task DeleteAsync(CancellationToken cancellationToken = default) => _clientBase.DeleteAsync($"subscriptions/{SubscriptionId}", cancellationToken);
 
         public IReportApi Reports() {
             var reportApi = _reportsApi.Value;

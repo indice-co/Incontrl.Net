@@ -24,7 +24,7 @@ namespace Incontrl.Sdk.Abstractions
         /// </summary>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<DocumentType> GetAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<DocumentType> GetAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates the document type of the specified document.
@@ -32,6 +32,6 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="request">An object of type <see cref="UpdateDocumentTypeRequest"/> that contains information about the document type of the document that is to be updated.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<DocumentType> UpdateAsync(UpdateDocumentDocumentType request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<DocumentType> UpdateAsync(UpdateDocumentDocumentType request, CancellationToken cancellationToken = default);
     }
 }

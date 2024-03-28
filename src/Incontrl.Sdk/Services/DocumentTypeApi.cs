@@ -23,13 +23,13 @@ namespace Incontrl.Sdk.Services
         public string SubscriptionId { get; set; }
         public string DocumentTypeId { get; set; }
 
-        public Task<DocumentType> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+        public Task<DocumentType> GetAsync(CancellationToken cancellationToken = default) =>
             _clientBase.GetAsync<DocumentType>($"subscriptions/{SubscriptionId}/document-types/{DocumentTypeId}", cancellationToken);
 
-        public Task<DocumentType> UpdateAsync(UpdateDocumentTypeRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public Task<DocumentType> UpdateAsync(UpdateDocumentTypeRequest request, CancellationToken cancellationToken = default) =>
             _clientBase.PutAsync<UpdateDocumentTypeRequest, DocumentType>($"subscriptions/{SubscriptionId}/document-types/{DocumentTypeId}", request, cancellationToken);
 
-        public Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+        public Task DeleteAsync(CancellationToken cancellationToken = default) =>
             _clientBase.DeleteAsync($"subscriptions/{SubscriptionId}/document-types/{DocumentTypeId}", cancellationToken);
 
         public IDocumentTypeTemplateApi Template() {

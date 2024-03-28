@@ -8,6 +8,6 @@ namespace Incontrl.Sdk.Abstractions
 {
     public interface IMembersApi
     {
-        Task<ResultSet<MemberInfo>> ListAsync(MemberRequest request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ResultSet<MemberInfo>> ListAsync(MemberRequest request, CancellationToken cancellationToken = default);
     }
 }

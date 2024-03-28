@@ -27,6 +27,6 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<DocumentLine> UpdateClassification(UpdateDocumentLineRequest request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<DocumentLine> UpdateClassification(UpdateDocumentLineRequest request, CancellationToken cancellationToken = default);
     }
 }

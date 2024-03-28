@@ -7,6 +7,6 @@ namespace Incontrl.Sdk.Abstractions
 {
     public interface ILookupPlansApi
     {
-        Task<ResultSet<Plan>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ResultSet<Plan>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default);
     }
 }

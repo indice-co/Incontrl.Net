@@ -6,13 +6,9 @@ using Indice.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class WebHooksApi : IWebHooksApi
+    internal class WebHooksApi(ClientBase clientBase) : IWebHooksApi
     {
-        private readonly ClientBase _clientBase;
-
-        public WebHooksApi(ClientBase clientBase) => _clientBase = clientBase;
-
-        public Task<ResultSet<Webhook>> ListAsync(ListOptions<WebhookFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<ResultSet<Webhook>>($"api/apps/all/webhooks", options, cancellationToken);
+        public Task<ResultSet<Webhook>> ListAsync(ListOptions<WebhookFilter> options = null, CancellationToken cancellationToken = default) => 
+            clientBase.GetAsync<ResultSet<Webhook>>($"api/apps/all/webhooks", options, cancellationToken);
     }
 }

@@ -5,15 +5,11 @@ using Incontrl.Sdk.Models;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class SubscriptionTimeZoneApi : ISubscriptionTimeZoneApi
+    internal class SubscriptionTimeZoneApi(ClientBase clientBase) : ISubscriptionTimeZoneApi
     {
-        private readonly ClientBase _clientBase;
-
-        public SubscriptionTimeZoneApi(ClientBase clientBase) => _clientBase = clientBase;
-
         public string SubscriptionId { get; set; }
 
-        public Task<Subscription> UpdateAsync(UpdateSubscriptionTimeZoneRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PutAsync<UpdateSubscriptionTimeZoneRequest, Subscription>($"subscriptions/{SubscriptionId}/time-zone", request, cancellationToken);
+        public Task<Subscription> UpdateAsync(UpdateSubscriptionTimeZoneRequest request, CancellationToken cancellationToken = default) =>
+            clientBase.PutAsync<UpdateSubscriptionTimeZoneRequest, Subscription>($"subscriptions/{SubscriptionId}/time-zone", request, cancellationToken);
     }
 }

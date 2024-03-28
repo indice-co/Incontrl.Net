@@ -11,6 +11,6 @@ namespace Incontrl.Sdk.Abstractions
 {
     public interface ILookupIncomeClassificationCategoriesApi
     {
-        Task<ResultSet<Classification>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ResultSet<Classification>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default);
     }
 }

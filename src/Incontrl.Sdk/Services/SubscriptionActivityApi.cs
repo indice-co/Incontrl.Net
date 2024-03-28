@@ -5,15 +5,11 @@ using Incontrl.Sdk.Models;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class SubscriptionActivityApi : ISubscriptionActivityApi
+    internal class SubscriptionActivityApi(ClientBase clientBase) : ISubscriptionActivityApi
     {
-        private readonly ClientBase _clientBase;
-
-        public SubscriptionActivityApi(ClientBase clientBase) => _clientBase = clientBase;
-
         public string SubscriptionId { get; set; }
 
         public Task<SubscriptionActivity> GetAsync(CancellationToken cancellationToken) =>
-            _clientBase.GetAsync<SubscriptionActivity>($"subscriptions/{SubscriptionId}/activity", cancellationToken);
+            clientBase.GetAsync<SubscriptionActivity>($"subscriptions/{SubscriptionId}/activity", cancellationToken);
     }
 }

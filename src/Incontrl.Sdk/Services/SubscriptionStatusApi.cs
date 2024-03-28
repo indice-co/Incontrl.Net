@@ -5,18 +5,14 @@ using Incontrl.Sdk.Models;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class SubscriptionStatusApi : ISubscriptionStatusApi
+    internal class SubscriptionStatusApi(ClientBase clientBase) : ISubscriptionStatusApi
     {
-        private readonly ClientBase _clientBase;
-
-        public SubscriptionStatusApi(ClientBase clientBase) => _clientBase = clientBase;
-
         public string SubscriptionId { get; set; }
 
-        public async Task<SubscriptionStatus> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
-            (await _clientBase.GetAsync<SubscriptionStatusResponse>($"subscriptions/{SubscriptionId}/status", cancellationToken)).Status;
+        public async Task<SubscriptionStatus> GetAsync(CancellationToken cancellationToken = default) => 
+            (await clientBase.GetAsync<SubscriptionStatusResponse>($"subscriptions/{SubscriptionId}/status", cancellationToken)).Status;
 
-        public async Task<SubscriptionStatus> UpdateAsync(SubscriptionStatus request, CancellationToken cancellationToken = default(CancellationToken)) => 
-            (await _clientBase.PutAsync<UpdateSubscriptionStatusRequest, SubscriptionStatusResponse>($"subscriptions/{SubscriptionId}/status", new UpdateSubscriptionStatusRequest { Status = request }, cancellationToken)).Status;
+        public async Task<SubscriptionStatus> UpdateAsync(SubscriptionStatus request, CancellationToken cancellationToken = default) => 
+            (await clientBase.PutAsync<UpdateSubscriptionStatusRequest, SubscriptionStatusResponse>($"subscriptions/{SubscriptionId}/status", new UpdateSubscriptionStatusRequest { Status = request }, cancellationToken)).Status;
     }
 }

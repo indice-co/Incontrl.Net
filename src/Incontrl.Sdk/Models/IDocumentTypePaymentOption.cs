@@ -28,6 +28,6 @@ namespace Incontrl.Sdk.Models
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task DeleteAsync(CancellationToken cancellationToken = default);
     }
 }

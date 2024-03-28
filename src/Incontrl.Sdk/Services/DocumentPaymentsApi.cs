@@ -20,10 +20,10 @@ namespace Incontrl.Sdk.Services
         public string SubscriptionId { get; set; }
         public string DocumentId { get; set; }
 
-        public Task<Payment> CreateAsync(Payment request, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public Task<Payment> CreateAsync(Payment request, CancellationToken cancellationToken = default) =>
             _clientBase.PostAsync<Payment, Payment>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/payments", request, cancellationToken);
 
-        public Task<ResultSet<Payment>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public Task<ResultSet<Payment>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default) =>
             _clientBase.GetAsync<ResultSet<Payment>>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/payments", options, cancellationToken);
 
         public IDocumentPaymentTransactionApi Transactions(Guid transactionId) {

@@ -6,13 +6,9 @@ using Indice.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class LookupCurrenciesApi : ILookupCurrenciesApi
+    internal class LookupCurrenciesApi(ClientBase clientBase) : ILookupCurrenciesApi
     {
-        private readonly ClientBase _clientBase;
-
-        public LookupCurrenciesApi(ClientBase clientBase) => _clientBase = clientBase;
-
-        public Task<ResultSet<CurrencyInfo>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<ResultSet<CurrencyInfo>>("currencies");
+        public Task<ResultSet<CurrencyInfo>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default) =>
+            clientBase.GetAsync<ResultSet<CurrencyInfo>>("currencies");
     }
 }

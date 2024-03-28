@@ -20,6 +20,6 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Subscription> UpdateAsync(UpdateSubscriptionTimeZoneRequest request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Subscription> UpdateAsync(UpdateSubscriptionTimeZoneRequest request, CancellationToken cancellationToken = default);
     }
 }

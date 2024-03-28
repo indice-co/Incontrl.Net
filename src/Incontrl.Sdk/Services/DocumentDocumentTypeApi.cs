@@ -5,19 +5,15 @@ using Incontrl.Sdk.Models;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class DocumentDocumentTypeApi : IDocumentDocumentTypeApi
+    internal class DocumentDocumentTypeApi(ClientBase clientBase) : IDocumentDocumentTypeApi
     {
-        private readonly ClientBase _clientBase;
-
-        public DocumentDocumentTypeApi(ClientBase clientBase) => _clientBase = clientBase;
-
         public string SubscriptionId { get; set; }
         public string DocumentId { get; set; }
 
-        public Task<DocumentType> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<DocumentType>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/type", cancellationToken);
+        public Task<DocumentType> GetAsync(CancellationToken cancellationToken = default) => 
+            clientBase.GetAsync<DocumentType>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/type", cancellationToken);
 
-        public Task<DocumentType> UpdateAsync(UpdateDocumentDocumentType request, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.PutAsync<UpdateDocumentDocumentType, DocumentType>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/type", request, cancellationToken);
+        public Task<DocumentType> UpdateAsync(UpdateDocumentDocumentType request, CancellationToken cancellationToken = default) => 
+            clientBase.PutAsync<UpdateDocumentDocumentType, DocumentType>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/type", request, cancellationToken);
     }
 }

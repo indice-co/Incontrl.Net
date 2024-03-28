@@ -6,15 +6,13 @@ using Incontrl.Sdk.Models;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class AppApi : IAppApi
+    internal class AppApi(Func<ClientBase> clientBaseFactory) : IAppApi
     {
-        private readonly ClientBase _clientBase;
-
-        public AppApi(Func<ClientBase> clientBaseFactory) => _clientBase = clientBaseFactory();
+        private readonly ClientBase _clientBase = clientBaseFactory();
 
         public string AppId { get; set; }
 
-        public Task<App> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+        public Task<App> GetAsync(CancellationToken cancellationToken = default) =>
             _clientBase.GetAsync<App>($"api/apps/{AppId}", cancellationToken);
     }
 }

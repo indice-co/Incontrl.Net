@@ -10,13 +10,9 @@ using Indice.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    class LookupTaxClassificationApi : ILookupTaxClassificationApi
+    class LookupTaxClassificationApi(ClientBase clientBase) : ILookupTaxClassificationApi
     {
-        private readonly ClientBase _clientBase;
-
-        public LookupTaxClassificationApi(ClientBase clientBase) => _clientBase = clientBase;
-
-        public Task<ResultSet<Classification>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<ResultSet<Classification>>("classifications/taxes");
+        public Task<ResultSet<Classification>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default) =>
+            clientBase.GetAsync<ResultSet<Classification>>("classifications/taxes");
     }
 }

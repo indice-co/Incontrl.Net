@@ -27,7 +27,7 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<ResultSet<Payment>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ResultSet<Payment>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 
@@ -35,7 +35,7 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Payment> CreateAsync(Payment request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Payment> CreateAsync(Payment request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 

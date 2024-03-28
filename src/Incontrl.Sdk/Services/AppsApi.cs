@@ -19,7 +19,7 @@ namespace Incontrl.Sdk.Services
             _membersApi = new Lazy<IMembersApi>(() => new MembersApi(_clientBase));
         }
 
-        public Task<ResultSet<App>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public Task<ResultSet<App>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default) =>
             _clientBase.GetAsync<ResultSet<App>>($"api/apps", cancellationToken);
 
         public IMembersApi Members() => _membersApi.Value;

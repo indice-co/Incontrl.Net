@@ -6,13 +6,9 @@ using Indice.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class GlobalPaymentOptionsApi : IGlobalPaymentOptionsApi
+    internal class GlobalPaymentOptionsApi(ClientBase clientBase) : IGlobalPaymentOptionsApi
     {
-        private readonly ClientBase _clientBase;
-
-        public GlobalPaymentOptionsApi(ClientBase clientBase) => _clientBase = clientBase;
-
-        public Task<ResultSet<PaymentOption>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<ResultSet<PaymentOption>>("subscriptions/all/payment-options", options, cancellationToken);
+        public Task<ResultSet<PaymentOption>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default) => 
+            clientBase.GetAsync<ResultSet<PaymentOption>>("subscriptions/all/payment-options", options, cancellationToken);
     }
 }

@@ -16,7 +16,7 @@ namespace Incontrl.Sdk.Abstractions
         /// </summary>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<SubscriptionStatus> GetAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<SubscriptionStatus> GetAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates the status information of the subscription.
@@ -24,6 +24,6 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="request">An enum of type <see cref="SubscriptionStatus"/> that describes the status of the subscription to update.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<SubscriptionStatus> UpdateAsync(SubscriptionStatus request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<SubscriptionStatus> UpdateAsync(SubscriptionStatus request, CancellationToken cancellationToken = default);
     }
 }

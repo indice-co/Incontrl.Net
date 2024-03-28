@@ -23,6 +23,6 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="year">The year of the past report to generate.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<Report> CreateAsync(ReportType type, ReportingFrequency frequency, int month, int year, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Report> CreateAsync(ReportType type, ReportingFrequency frequency, int month, int year, CancellationToken cancellationToken = default);
     }
 }

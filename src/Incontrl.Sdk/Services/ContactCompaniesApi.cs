@@ -6,16 +6,12 @@ using Indice.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class ContactCompaniesApi : IContactCompaniesApi
+    internal class ContactCompaniesApi(ClientBase clientBase) : IContactCompaniesApi
     {
-        private readonly ClientBase _clientBase;
-
-        public ContactCompaniesApi(ClientBase clientBase) => _clientBase = clientBase;
-
         public string SubscriptionId { get; set; }
         public string ContactId { get; set; }
 
-        public Task<ResultSet<Organisation>> ListAsync(ListOptions<OrganisationFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) => 
-            _clientBase.GetAsync<ResultSet<Organisation>>($"subscriptions/{SubscriptionId}/contacts/{ContactId}/companies", options, cancellationToken);
+        public Task<ResultSet<Organisation>> ListAsync(ListOptions<OrganisationFilter> options = null, CancellationToken cancellationToken = default) => 
+            clientBase.GetAsync<ResultSet<Organisation>>($"subscriptions/{SubscriptionId}/contacts/{ContactId}/companies", options, cancellationToken);
     }
 }

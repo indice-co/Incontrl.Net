@@ -16,7 +16,7 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="summary">Specify whether to include a summary for the chosen documnets.</param>
         /// <param name="cancellationToken">Returns the task object representing the asynchronous operation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<ResultSet<Document, DocumentSummary>> ListAsync(ListOptions<DocumentListFilter> options = null, bool summary = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ResultSet<Document, DocumentSummary>> ListAsync(ListOptions<DocumentListFilter> options = null, bool summary = false, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new document.
@@ -24,9 +24,9 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="request">An object of type <see cref="CreateDocumentRequest"/> that contains information about the document to create.</param>
         /// <param name="cancellationToken">Returns the task object representing the asynchronous operation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<Document> CreateAsync(CreateDocumentRequest request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Document> CreateAsync(CreateDocumentRequest request, CancellationToken cancellationToken = default);
 
-        Task<DocumentCalculationResult> CalculateAsync(DocumentCalculationRequest request, CancellationToken cancellationToken = default(CancellationToken));
-        Task<DocumentCalculationResult> CalculateAsync(Document request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<DocumentCalculationResult> CalculateAsync(DocumentCalculationRequest request, CancellationToken cancellationToken = default);
+        Task<DocumentCalculationResult> CalculateAsync(Document request, CancellationToken cancellationToken = default);
     }
 }

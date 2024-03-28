@@ -6,13 +6,9 @@ using Indice.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    class LookupExpenseClassificationTypesApi : ILookupExpenseClassificationTypesApi
+    class LookupExpenseClassificationTypesApi(ClientBase clientBase) : ILookupExpenseClassificationTypesApi
     {
-        private readonly ClientBase _clientBase;
-
-        public LookupExpenseClassificationTypesApi(ClientBase clientBase) => _clientBase = clientBase;
-
-        public Task<ResultSet<Classification>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<ResultSet<Classification>>("classifications/expenses/types");
+        public Task<ResultSet<Classification>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default) =>
+            clientBase.GetAsync<ResultSet<Classification>>("classifications/expenses/types");
     }
 }

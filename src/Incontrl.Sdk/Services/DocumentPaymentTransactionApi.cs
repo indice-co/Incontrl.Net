@@ -28,7 +28,7 @@ namespace Incontrl.Sdk.Services
             return documentPaymentTransactionApprovalApi;
         }
 
-        public Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+        public Task DeleteAsync(CancellationToken cancellationToken = default) =>
             _clientBase.DeleteAsync($"subscriptions/{SubscriptionId}/documents/{DocumentId}/payments/{TransactionId}", cancellationToken);
     }
 }

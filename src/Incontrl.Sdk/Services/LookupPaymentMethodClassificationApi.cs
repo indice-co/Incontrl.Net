@@ -6,13 +6,9 @@ using Indice.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    class LookupPaymentMethodClassificationApi : ILookupPaymentMethodClassificationApi
+    class LookupPaymentMethodClassificationApi(ClientBase clientBase) : ILookupPaymentMethodClassificationApi
     {
-        private readonly ClientBase _clientBase;
-
-        public LookupPaymentMethodClassificationApi(ClientBase clientBase) => _clientBase = clientBase;
-
         public Task<ResultSet<Classification>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default) =>
-            _clientBase.GetAsync<ResultSet<Classification>>("classifications/payment-methods");
+            clientBase.GetAsync<ResultSet<Classification>>("classifications/payment-methods");
     }
 }

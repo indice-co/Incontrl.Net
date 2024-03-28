@@ -16,6 +16,6 @@ namespace Incontrl.Sdk.Abstractions
         /// </summary>
         /// <param name="cancellationToken">Returns the task object representing the asynchronous operation.</param>
         /// <returns>>Returns the task object representing the asynchronous operation.</returns>
-        Task<SubscriptionActivity> GetAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<SubscriptionActivity> GetAsync(CancellationToken cancellationToken = default);
     }
 }

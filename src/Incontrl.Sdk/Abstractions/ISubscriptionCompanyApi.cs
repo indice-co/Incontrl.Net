@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
 
@@ -6,6 +7,7 @@ namespace Incontrl.Sdk.Abstractions
 {
     public interface ISubscriptionCompanyApi
     {
+        /// <summary>Subscription id</summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
@@ -13,7 +15,7 @@ namespace Incontrl.Sdk.Abstractions
         /// </summary>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<Organisation> GetAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<Organisation> GetAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates the company information that is associated with the subscription.
@@ -21,6 +23,15 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="request">An object of type <see cref="UpdateCompanyRequest"/> that contains information about the subscription's associated company.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<Organisation> UpdateAsync(UpdateCompanyRequest request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Organisation> UpdateAsync(UpdateCompanyRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Updates the company logo.
+        /// </summary>
+        /// <param name="fileContent">The contents of the template file.</param>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Returns the task object representing the asynchronous operation.</returns>
+        Task LogoUploadAsync(Stream fileContent, string fileName, CancellationToken cancellationToken = default);
     }
 }

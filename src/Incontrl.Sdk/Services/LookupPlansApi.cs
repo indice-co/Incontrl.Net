@@ -6,13 +6,9 @@ using Indice.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class LookupPlansApi : ILookupPlansApi
+    internal class LookupPlansApi(ClientBase clientBase) : ILookupPlansApi
     {
-        private readonly ClientBase _clientBase;
-
-        public LookupPlansApi(ClientBase clientBase) => _clientBase = clientBase;
-
-        public Task<ResultSet<Plan>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken))
-            => _clientBase.GetAsync<ResultSet<Plan>>("plans");
+        public Task<ResultSet<Plan>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default)
+            => clientBase.GetAsync<ResultSet<Plan>>("plans");
     }
 }

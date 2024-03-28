@@ -20,7 +20,7 @@ namespace Incontrl.Sdk.Services
         public string PaymentOptionId { get; set; }
         public string TransactionId { get; set; }
 
-        public Task<Transaction> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) => 
+        public Task<Transaction> GetAsync(CancellationToken cancellationToken = default) => 
             _clientBase.GetAsync<Transaction>($"subscriptions/{SubscriptionId}/payment-options/{PaymentOptionId}/transactions/{TransactionId}/payments", cancellationToken);
 
         public IPaymentOptionTransactionPaymentsApi Payments() {

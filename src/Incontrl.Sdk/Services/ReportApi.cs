@@ -5,15 +5,11 @@ using Incontrl.Sdk.Models;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class ReportApi : IReportApi
+    internal class ReportApi(ClientBase clientBase) : IReportApi
     {
-        private readonly ClientBase _clientBase;
-
-        public ReportApi(ClientBase clientBase) => _clientBase = clientBase;
-
         public string SubscriptionId { get; set; }
 
-        public Task<Report> UpsertAsync(ReportType type, ReportingFrequency frequency, Document document, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PostAsync<Document, Report>($"subscriptions/{SubscriptionId}/reports/types/{type}/frequencies/{frequency}", document, cancellationToken);
+        public Task<Report> UpsertAsync(ReportType type, ReportingFrequency frequency, Document document, CancellationToken cancellationToken = default) =>
+            clientBase.PostAsync<Document, Report>($"subscriptions/{SubscriptionId}/reports/types/{type}/frequencies/{frequency}", document, cancellationToken);
     }
 }

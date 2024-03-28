@@ -8,6 +8,6 @@ namespace Incontrl.Sdk.Abstractions
     public interface ILookupCountriesDefaultsApi
     {
         string CountryIso { get; set; }
-        Task<CountryDefaults> GetAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<CountryDefaults> GetAsync(ListOptions options = null, CancellationToken cancellationToken = default);
     }
 }

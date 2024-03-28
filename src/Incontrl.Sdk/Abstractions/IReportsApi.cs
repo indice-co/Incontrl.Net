@@ -16,6 +16,6 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="frequency">The <see cref="ReportingFrequency"/> of the report.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<Subscription[]> ListAsync(ReportType type, ReportingFrequency? frequency, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Subscription[]> ListAsync(ReportType type, ReportingFrequency? frequency, CancellationToken cancellationToken = default);
     }
 }

@@ -6,15 +6,11 @@ using Indice.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class SubscriptionMetricsApi : ISubscriptionMetricsApi
+    internal class SubscriptionMetricsApi(ClientBase clientBase) : ISubscriptionMetricsApi
     {
-        private readonly ClientBase _clientBase;
-
-        public SubscriptionMetricsApi(ClientBase clientBase) => _clientBase = clientBase;
-
         public string SubscriptionId { get; set; }
 
-        public Task<ResultSet<MetricsRecord, Metrics>> ListAsync(ListOptions<RangeFilter> options = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.GetAsync<ResultSet<MetricsRecord, Metrics>>($"subscriptions/{SubscriptionId}/metrics", cancellationToken);
+        public Task<ResultSet<MetricsRecord, Metrics>> ListAsync(ListOptions<RangeFilter> options = null, CancellationToken cancellationToken = default) =>
+            clientBase.GetAsync<ResultSet<MetricsRecord, Metrics>>($"subscriptions/{SubscriptionId}/metrics", cancellationToken);
     }
 }

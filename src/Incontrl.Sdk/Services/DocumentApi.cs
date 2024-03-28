@@ -33,10 +33,10 @@ namespace Incontrl.Sdk.Services
         public string SubscriptionId { get; set; }
         public string DocumentId { get; set; }
 
-        public Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+        public Task DeleteAsync(CancellationToken cancellationToken = default) =>
             _clientBase.DeleteAsync($"subscriptions/{SubscriptionId}/documents/{DocumentId}", cancellationToken);
 
-        public Task<Document> GetAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+        public Task<Document> GetAsync(CancellationToken cancellationToken = default) =>
             _clientBase.GetAsync<Document>($"subscriptions/{SubscriptionId}/documents/{DocumentId}", cancellationToken);
 
         public IDocumentDocumentApi As(DocumentFormat format) {
@@ -47,7 +47,7 @@ namespace Incontrl.Sdk.Services
             return documentDocumentApi;
         }
 
-        public Task<Document> UpdateAsync(UpdateDocumentRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public Task<Document> UpdateAsync(UpdateDocumentRequest request, CancellationToken cancellationToken = default) =>
             _clientBase.PutAsync<UpdateDocumentRequest, Document>($"subscriptions/{SubscriptionId}/documents/{DocumentId}", request, cancellationToken);
 
         public IDocumentStatusApi Status() {

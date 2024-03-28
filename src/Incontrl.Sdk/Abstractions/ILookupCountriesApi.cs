@@ -7,6 +7,6 @@ namespace Incontrl.Sdk.Abstractions
 {
     public interface ILookupCountriesApi
     {
-        Task<ResultSet<CountryInfo>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ResultSet<CountryInfo>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default);
     }
 }

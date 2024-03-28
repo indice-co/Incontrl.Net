@@ -7,6 +7,6 @@ namespace Incontrl.Sdk.Abstractions
 {
     public interface IGlobalPaymentOptionsApi
     {
-        Task<ResultSet<PaymentOption>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ResultSet<PaymentOption>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default);
     }
 }

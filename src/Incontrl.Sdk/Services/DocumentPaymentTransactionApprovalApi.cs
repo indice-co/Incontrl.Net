@@ -5,17 +5,13 @@ using Incontrl.Sdk.Models;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class DocumentPaymentTransactionApprovalApi : IDocumentPaymentTransactionApprovalApi
+    internal class DocumentPaymentTransactionApprovalApi(ClientBase clientBase) : IDocumentPaymentTransactionApprovalApi
     {
-        private readonly ClientBase _clientBase;
-
-        public DocumentPaymentTransactionApprovalApi(ClientBase clientBase) => _clientBase = clientBase;
-
         public string SubscriptionId { get; set; }
         public string DocumentId { get; set; }
         public string TransactionId { get; set; }
 
-        public Task UpdateAsync(UpdateApprovalRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PutAsync<UpdateApprovalRequest, Document>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/payments/{TransactionId}/approval", request, cancellationToken);
+        public Task UpdateAsync(UpdateApprovalRequest request, CancellationToken cancellationToken = default) =>
+            clientBase.PutAsync<UpdateApprovalRequest, Document>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/payments/{TransactionId}/approval", request, cancellationToken);
     }
 }

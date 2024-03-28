@@ -7,13 +7,9 @@ using Indice.Types;
 
 namespace Incontrl.Sdk.Services
 {
-    class LookupIncomeClassificationTypesApi : ILookupIncomeClassificationTypesApi
+    class LookupIncomeClassificationTypesApi(ClientBase clientBase) : ILookupIncomeClassificationTypesApi
     {
-        private readonly ClientBase _clientBase;
-
-        public LookupIncomeClassificationTypesApi(ClientBase clientBase) => _clientBase = clientBase;
-
         public Task<ResultSet<Classification>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default) =>
-            _clientBase.GetAsync<ResultSet<Classification>>("classifications/income/types");     
+            clientBase.GetAsync<ResultSet<Classification>>("classifications/income/types");     
     }
 }

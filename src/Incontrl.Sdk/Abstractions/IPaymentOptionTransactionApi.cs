@@ -29,7 +29,7 @@ namespace Incontrl.Sdk.Abstractions
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Transaction> GetAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<Transaction> GetAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 

@@ -22,6 +22,6 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="document">The document that was created and will be included in the report.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<Report> UpsertAsync(ReportType type, ReportingFrequency frequency, Document document, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Report> UpsertAsync(ReportType type, ReportingFrequency frequency, Document document, CancellationToken cancellationToken = default);
     }
 }

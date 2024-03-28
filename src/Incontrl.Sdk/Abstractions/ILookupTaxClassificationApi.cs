@@ -7,6 +7,6 @@ namespace Incontrl.Sdk.Abstractions
 {
     public interface ILookupTaxClassificationApi
     {
-        Task<ResultSet<Classification>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ResultSet<Classification>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default);
     }
 }

@@ -26,7 +26,7 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="options">An object of type <see cref="ListOptions"/> that is used to paginate or filter the request.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<ResultSet<DocumentTracking>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ResultSet<DocumentTracking>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new document tracker for the specified document.
@@ -34,6 +34,6 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="request">An object of type <see cref="CreateDocumentTrackingRequest"/> that contains information about the document tracker to generate.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<Tracker> CreateAsync(CreateDocumentTrackingRequest request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Tracker> CreateAsync(CreateDocumentTrackingRequest request, CancellationToken cancellationToken = default);
     }
 }

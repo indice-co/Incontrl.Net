@@ -16,6 +16,6 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<ResultSet<SubscriptionActivity>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ResultSet<SubscriptionActivity>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default);
     }
 }

@@ -26,7 +26,7 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Transaction> CreateAsync(Transaction request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Transaction> CreateAsync(Transaction request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 
@@ -34,7 +34,7 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task BulkCreateAsync(BulkLoadTransactionsRequest request, CancellationToken cancellationToken = default(CancellationToken));
+        Task BulkCreateAsync(BulkLoadTransactionsRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 
@@ -42,6 +42,6 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<ResultSet<Transaction>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ResultSet<Transaction>> ListAsync(ListOptions options = null, CancellationToken cancellationToken = default);
     }
 }

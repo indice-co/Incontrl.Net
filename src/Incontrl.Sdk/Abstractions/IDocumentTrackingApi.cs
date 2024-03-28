@@ -27,6 +27,6 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<DocumentTracking> UpdateAsync(UpdateDocumentTrackingRequest request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<DocumentTracking> UpdateAsync(UpdateDocumentTrackingRequest request, CancellationToken cancellationToken = default);
     }
 }

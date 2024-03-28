@@ -24,7 +24,7 @@ namespace Incontrl.Sdk.Abstractions
         /// </summary>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<Product> GetAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<Product> GetAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates a specific product's information.
@@ -32,13 +32,13 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="request">An object if type <see cref="Product"/>that contains information about the product to be updated.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task<Product> UpdateAsync(Product request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Product> UpdateAsync(Product request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a specific product.
         /// </summary>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task DeleteAsync(CancellationToken cancellationToken = default);
     }
 }

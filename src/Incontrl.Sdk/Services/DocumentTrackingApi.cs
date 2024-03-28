@@ -5,17 +5,13 @@ using Incontrl.Sdk.Models;
 
 namespace Incontrl.Sdk.Services
 {
-    internal class DocumentTrackingApi : IDocumentTrackingApi
+    internal class DocumentTrackingApi(ClientBase clientBase) : IDocumentTrackingApi
     {
-        private readonly ClientBase _clientBase;
-
-        public DocumentTrackingApi(ClientBase clientBase) => _clientBase = clientBase;
-
         public string SubscriptionId { get; set; }
         public string DocumentId { get; set; }
         public string TrackingId { get; set; }
 
-        public Task<DocumentTracking> UpdateAsync(UpdateDocumentTrackingRequest request, CancellationToken cancellationToken = default(CancellationToken)) =>
-            _clientBase.PutAsync<UpdateDocumentTrackingRequest, DocumentTracking>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/trackings/{TrackingId}", request, cancellationToken);
+        public Task<DocumentTracking> UpdateAsync(UpdateDocumentTrackingRequest request, CancellationToken cancellationToken = default) =>
+            clientBase.PutAsync<UpdateDocumentTrackingRequest, DocumentTracking>($"subscriptions/{SubscriptionId}/documents/{DocumentId}/trackings/{TrackingId}", request, cancellationToken);
     }
 }
