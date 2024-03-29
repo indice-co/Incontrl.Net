@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Models;
@@ -39,6 +40,14 @@ namespace Incontrl.Sdk.Abstractions
         /// <param name="fileName">The name of the file.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Returns the task object representing the asynchronous operation.</returns>
-        Task LogoUploadAsync(Stream fileContent, string fileName, CancellationToken cancellationToken = default);
+        Task<Link> LogoUploadAsync(Stream fileContent, string fileName, CancellationToken cancellationToken = default);
+        
+        /// <summary>
+        /// Updates the organization logo url with an external absolute link.
+        /// </summary>
+        /// <param name="absoluteUri">The absolute link</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Returns the task object representing the asynchronous operation.</returns>
+        Task<Link> LogoSetUriAsync(Uri absoluteUri, CancellationToken cancellationToken = default);
     }
 }

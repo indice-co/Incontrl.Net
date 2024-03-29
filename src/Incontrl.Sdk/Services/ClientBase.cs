@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Http;
 using Incontrl.Sdk.Models;
+using Indice.Services;
 using Indice.Types;
+using Polly;
 
 namespace Incontrl.Sdk.Services
 {
@@ -87,6 +91,34 @@ namespace Incontrl.Sdk.Services
                 formDataContent.Add(streamContent, "file", fileName);
                 await _httpClient.PostAsync(requestUri, formDataContent, cancellationToken);
             }
+        }
+        public async Task<TResponse> PostFileAsync<TResponse>(HttpMethod method, string requestUri, Stream fileContent, string fileName, NameValueCollection formData = null, CancellationToken cancellationToken = default) {
+            using var formDataContent = new MultipartFormDataContent("upload-" + Guid.NewGuid().ToString().ToLower());
+            if (fileContent != null) {  
+                var streamContent = new StreamContent(fileContent);
+                var fileExtension = Path.GetExtension(fileName);
+                streamContent.Headers.ContentType = new MediaTypeHeaderValue(GetMimeTypeFromExtension(fileExtension));
+                formDataContent.Add(streamContent, "file", fileName);
+            }
+            if (formData?.Count > 0) {
+                var items = formData.AllKeys.SelectMany(formData.GetValues, (k, v) => new { key = k, value = v });
+                foreach (var item in items) {
+                    formDataContent.Add(new StringContent(item.value), item.key);
+                }
+            }
+            var httpRequest = new HttpRequestMessage(method, requestUri);
+            httpRequest.Content = formDataContent;
+            httpRequest.Headers.Add("Accept", "application/json");
+            var httpMessage = await _httpClient.SendAsync(httpRequest, cancellationToken);
+            var content = await httpMessage.Content.ReadAsStringAsync();
+            JsonResponse<TResponse> response;
+            if (httpMessage.IsSuccessStatusCode) {
+                response = new JsonResponse<TResponse>(content);
+            } else {
+                response = new JsonResponse<TResponse>(content, httpMessage.StatusCode, httpMessage.ReasonPhrase);
+                httpMessage.HandleHttpError(response);
+            }
+            return response.Data;
         }
 
         public async Task<TResponse> PutAsync<TRequest, TResponse>(string requestUri, TRequest model, CancellationToken cancellationToken = default) {

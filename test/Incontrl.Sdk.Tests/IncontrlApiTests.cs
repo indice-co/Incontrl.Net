@@ -50,7 +50,7 @@ namespace Incontrl.Sdk.Tests
             var image = Image.Load(Convert.FromBase64String(base64), out var format);
             image.Save(stream, format);
             stream.Position = 0;
-            await _api.Subscriptions(subscriptionId).Company().LogoUploadAsync(stream, "test.png");
+            var link = await _api.Subscriptions(subscriptionId).Company().LogoUploadAsync(stream, "test.png");
             Assert.True(true);
         }
 
