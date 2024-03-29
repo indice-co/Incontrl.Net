@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Incontrl.Sdk.Abstractions;
@@ -18,5 +19,6 @@ namespace Incontrl.Sdk.Services
 
         public Task LogoUploadAsync(Stream fileContent, string fileName, CancellationToken cancellationToken = default) =>
             clientBase.PostFileAsync($"subscriptions/{SubscriptionId}/company/logo", fileContent, fileName, cancellationToken);
+        
     }
 }

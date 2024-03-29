@@ -7,6 +7,7 @@ using Incontrl.Sdk.Models;
 using Indice.Types;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using SixLabors.ImageSharp;
 using Xunit;
 
 namespace Incontrl.Sdk.Tests
@@ -22,6 +23,7 @@ namespace Incontrl.Sdk.Tests
         private const string transactionId = "9300C9FF-5AFA-45AC-6B8D-08D529A5F249";
         private const string documentId = "D5BE6763-D4D0-404B-46DE-08D529A58B8E";
         private const string productId = "3193F130-1539-4E4D-AF41-EA2667CD3467";
+        private readonly string ImageBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAAZCAYAAAAc5SFpAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDcuMi1jMDAwIDc5LjFiNjVhNzliNCwgMjAyMi8wNi8xMy0yMjowMTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIzLjUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjlGODE0M0M0M0Q2NzExRUQ4N0RGQjU3MERENzRCQkU0IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjlGODE0M0M1M0Q2NzExRUQ4N0RGQjU3MERENzRCQkU0Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6OUY4MTQzQzIzRDY3MTFFRDg3REZCNTcwREQ3NEJCRTQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6OUY4MTQzQzMzRDY3MTFFRDg3REZCNTcwREQ3NEJCRTQiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7ww8v7AAAGXElEQVR42sxa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";
 
         public IncontrlApiTests() {
             var builder = new ConfigurationBuilder()
@@ -33,6 +35,23 @@ namespace Incontrl.Sdk.Tests
                 .AddUserSecrets<IncontrlApiTests>();
             _configuration = builder.Build();
             _api = new IncontrlApi(_configuration["AppId"], _configuration["ApiKey"], new Uri(_configuration["ApiUrl"] ?? "http://localhost:20202"), new Uri("https://identity.incontrl.io"));
+        }
+
+
+        [Theory]
+        [InlineData(subscriptionId)]
+        public async Task CanUploadImage(string subscriptionId) {
+            await _api.LoginAsync(ScopeFlags.Core);
+            var parts = ImageBase64.Split(',');
+            var mime = "image/png";
+            var base64 = parts[1];
+            using var stream = new MemoryStream();
+            
+            var image = Image.Load(Convert.FromBase64String(base64), out var format);
+            image.Save(stream, format);
+            stream.Position = 0;
+            await _api.Subscriptions(subscriptionId).Company().LogoUploadAsync(stream, "test.png");
+            Assert.True(true);
         }
 
         [Theory]

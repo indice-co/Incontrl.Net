@@ -116,9 +116,13 @@ namespace Incontrl.Sdk.Services
         #region Private Methods
         private static string GetMimeTypeFromExtension(string extension) {
             var mappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {
-                {".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
-                {".htm", "text/html"},
-                {".html", "text/html"}
+                [".docx"] = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                [".htm"] = "text/html",
+                [".html"] = "text/html",
+                [".jpg"] = "image/jpeg",
+                [".png"] = "image/png",
+                [".gif"] = "image/gif",
+                [".svg"] = "image/svg+xml",
             };
             return mappings.ContainsKey(extension) ? mappings[extension] : string.Empty;
         }
