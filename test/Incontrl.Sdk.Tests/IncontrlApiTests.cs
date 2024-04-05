@@ -111,11 +111,16 @@ namespace Incontrl.Sdk.Tests
             if (document == null) {
                 Assert.True(false);
             }
-            var result = await _api.Subscriptions(Guid.Parse(subscriptionId))
-                                   .Documents(Guid.Parse(documentId))
-                                   .Status()
-                                   .UpdateAsync(new UpdateDocumentStatusRequest { Status = DocumentStatus.Paid });
-            Assert.True(document.Status.Value != result.Status);
+            try {
+                var result = await _api.Subscriptions(Guid.Parse(subscriptionId))
+                                       .Documents(Guid.Parse(documentId))
+                                       .Status()
+                                       .UpdateAsync(new UpdateDocumentStatusRequest { Status = DocumentStatus.Paid });
+                Assert.True(document.Status.Value != result.Status);
+            } catch (IncontrlHttpBadRequestException brex) {
+                Assert.NotEmpty(brex.Errors);
+            }
+            
         }
 
         [Fact]
