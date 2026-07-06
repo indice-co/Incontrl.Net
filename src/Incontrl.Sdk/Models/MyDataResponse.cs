@@ -20,6 +20,10 @@ namespace Incontrl.Sdk.Models
         public string Uuid { get; set; }
         public string QrCodeUrl { get; set; }
         public DateTimeOffset MarkDate { get; set; }
+        /// <summary>
+        /// Authentication code for the MyData submission.
+        /// </summary>
+        public string AuthenticationCode { get; set; }
     }
 
     public class ErrorResult

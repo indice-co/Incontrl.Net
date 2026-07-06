@@ -27,6 +27,10 @@ namespace Incontrl.Sdk.Models
         /// </summary>
         public string LineOfBusiness { get; set; }
         /// <summary>
+        /// Company registration number (max length 64).
+        /// </summary>
+        public string RegistrationNumber { get; set; }
+        /// <summary>
         /// Tax identification code (number) of the organisation.
         /// </summary>
         public string TaxCode { get; set; }

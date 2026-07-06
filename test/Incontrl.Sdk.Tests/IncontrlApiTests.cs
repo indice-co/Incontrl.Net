@@ -63,7 +63,8 @@ namespace Incontrl.Sdk.Tests
                                        .Transactions(Guid.Parse(transactionId))
                                        .Payments()
                                        .CreateAsync(new Payment {
-                                           Approval = ApprovalStatus.Approved,
+                                           State = ApprovalStatus.Approved,
+                                           Date = DateTimeOffset.Now,
                                            Comments = "A description",
                                            Value = new Money {
                                                Amount = 123m,

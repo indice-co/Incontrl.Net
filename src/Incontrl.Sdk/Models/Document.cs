@@ -37,6 +37,10 @@ namespace Incontrl.Sdk.Models
         /// </summary>
         public DateTimeOffset? DueDate { get; set; }
         /// <summary>
+        /// The fiscal year of the document.
+        /// </summary>
+        public int? FiscalYear { get; set; }
+        /// <summary>
         /// An optional time period that may apply for the document.
         /// </summary>
         public Period Period { get; set; } = new Period();
@@ -53,9 +57,13 @@ namespace Incontrl.Sdk.Models
         /// </summary>
         public double? CurrencyRate { get; set; }
         /// <summary>
-        /// A payment code for the document.
+        /// A customer reference code for the document.
         /// </summary>
         public string CustomerReference { get; set; }
+        /// <summary>
+        /// A payment code for the document.
+        /// </summary>
+        public string PaymentCode { get; set; }
         /// <summary>
         /// A permalink that displays the document as a web page.
         /// </summary>
@@ -96,10 +104,6 @@ namespace Incontrl.Sdk.Models
         /// The type of the document.
         /// </summary>
         public DocumentType Type { get; set; }
-        /// <summary>
-        /// Provides a list of messages that have occured during synchronization.
-        /// </summary>
-        public IEnumerable<ErrorResult> SyncErrors { get; set; }
     }
 
     /// <summary>
@@ -163,6 +167,14 @@ namespace Incontrl.Sdk.Models
         /// Additional/custom information for the document.
         /// </summary>
         public virtual object CustomData { get; set; }
+        /// <summary>
+        /// Provides a list of messages that have occured during synchronization.
+        /// </summary>
+        public IEnumerable<MyDataErrorResult> SyncErrors { get; set; }
+        /// <summary>
+        /// UI hints for document rendering and capabilities.
+        /// </summary>
+        public DocumentUiHint UiHint { get; set; }
         /// <summary>
         /// Version history of the document.
         /// </summary>
@@ -233,5 +245,16 @@ namespace Incontrl.Sdk.Models
         /// Closed
         /// </summary>
         Closed = 12
+    }
+
+    /// <summary>
+    /// UI hints for document rendering and capabilities.
+    /// </summary>
+    public class DocumentUiHint
+    {
+        /// <summary>
+        /// Indicates whether the document can be submitted to AADE (Greek Tax Authority).
+        /// </summary>
+        public bool CanSubmitToAade { get; set; }
     }
 }
