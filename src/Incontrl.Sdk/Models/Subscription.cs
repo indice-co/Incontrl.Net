@@ -18,6 +18,10 @@ namespace Incontrl.Sdk.Models
         /// </summary>
         public string TimeZone { get; set; }
         /// <summary>
+        /// The culture/language setting for the subscription.
+        /// </summary>
+        public string Culture { get; set; }
+        /// <summary>
         /// Subscription status.
         /// </summary>
         public SubscriptionStatus Status { get; set; }
@@ -34,6 +38,10 @@ namespace Incontrl.Sdk.Models
         /// </summary>
         public Plan Plan { get; set; }
         /// <summary>
+        /// The subscription recipe/template for initial setup.
+        /// </summary>
+        public SubscriptionRecipe? Recipe { get; set; }
+        /// <summary>
         /// Notes about this subscription.
         /// </summary>
         public string Notes { get; set; }
@@ -41,5 +49,32 @@ namespace Incontrl.Sdk.Models
         /// Custom data for this subscription.
         /// </summary>
         public object CustomData { get; set; }
+    }
+
+    /// <summary>
+    /// Subscription recipe/template types for initial configuration.
+    /// </summary>
+    public enum SubscriptionRecipe
+    {
+        /// <summary>
+        /// Default configuration.
+        /// </summary>
+        Default = 0,
+        /// <summary>
+        /// Business services configuration.
+        /// </summary>
+        BusinessServices = 1,
+        /// <summary>
+        /// Freelance services configuration.
+        /// </summary>
+        FreelanceServices = 2,
+        /// <summary>
+        /// Enterprise configuration.
+        /// </summary>
+        Enterprise = 3,
+        /// <summary>
+        /// Goods/products configuration.
+        /// </summary>
+        Goods = 4
     }
 }

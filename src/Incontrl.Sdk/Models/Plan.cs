@@ -17,9 +17,25 @@ namespace Incontrl.Sdk.Models
 
     public enum BillingFrequency : short
     {
+        /// <summary>
+        /// No billing frequency.
+        /// </summary>
+        Never = 0,
+        /// <summary>
+        /// Monthly billing.
+        /// </summary>
         Monthly = 1,
+        /// <summary>
+        /// Quarterly billing (every 3 months).
+        /// </summary>
         Quarterly = 3,
-        Biannually = 6,
+        /// <summary>
+        /// Semesterly/Semi-annual billing (every 6 months).
+        /// </summary>
+        Semesterly = 6,
+        /// <summary>
+        /// Annual billing (every 12 months).
+        /// </summary>
         Annually = 12
     }
 }

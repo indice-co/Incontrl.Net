@@ -31,6 +31,10 @@
         /// </summary>
         public string Plan { get; set; }
         /// <summary>
+        /// The subscription recipe/template for initial setup.
+        /// </summary>
+        public SubscriptionRecipe? Recipe { get; set; }
+        /// <summary>
         /// Notes about this subscription.
         /// </summary>
         public string Notes { get; set; }
