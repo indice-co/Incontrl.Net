@@ -170,7 +170,7 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// Provides a list of messages that have occured during synchronization.
         /// </summary>
-        public IEnumerable<MyDataErrorResult> SyncErrors { get; set; }
+        public IEnumerable<ErrorResult> SyncErrors { get; set; }
         /// <summary>
         /// UI hints for document rendering and capabilities.
         /// </summary>
