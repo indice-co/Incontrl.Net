@@ -1,8 +1,12 @@
 ﻿using System.Net;
 using System.Net.Http;
-using IdentityModel.Client;
 using Incontrl.Sdk.Http;
 using Indice.Types;
+#if NET461
+using IdentityModel.Client;
+#else
+using Duende.IdentityModel.Client;
+#endif
 
 namespace Incontrl.Sdk.Models
 {

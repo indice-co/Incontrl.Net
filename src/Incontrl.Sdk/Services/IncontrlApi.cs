@@ -2,11 +2,15 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using IdentityModel.Client;
 using Incontrl.Sdk.Abstractions;
 using Incontrl.Sdk.Http;
 using Incontrl.Sdk.Models;
 using Incontrl.Sdk.Services;
+#if NET461
+using IdentityModel.Client;
+#else
+using Duende.IdentityModel.Client;
+#endif
 
 namespace Incontrl.Sdk
 {
