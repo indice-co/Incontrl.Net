@@ -77,6 +77,10 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// AADE myData service.
         /// </summary>
-        AadeMyData
+        AadeMyData,
+        /// <summary>
+        /// AADE myDataImpact service.
+        /// </summary>
+        AadeMyDataImpact
     }
 }
