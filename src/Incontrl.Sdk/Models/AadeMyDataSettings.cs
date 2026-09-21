@@ -57,6 +57,10 @@ namespace Incontrl.Sdk.Models
         /// <summary>
         /// Send at the end of the day.
         /// </summary>
-        EndOfDay = 2
+        EndOfDay = 2,
+        /// <summary>
+        /// Pull invoices from AADE.
+        /// </summary>
+        Pull = 3
     }
 }
